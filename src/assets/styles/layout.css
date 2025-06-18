@@ -1,0 +1,32 @@
+:root {
+    --header-h: 72px;
+    --nav-tab-h: 100px;
+    --options-h: 136px;
+    --grid-gap-x: 40px;
+}
+
+.html,
+body {
+    height: 100%;
+}
+
+body{
+    position: relative;
+}
+
+.App {
+    width: fit-content;
+    margin: auto;
+}
+
+.app-grid {
+    display: flex;
+    align-items: flex-start;
+    height: calc(100% - var(--header-h));
+    column-gap: var(--grid-gap-x);
+}
+
+.app-grid > * {
+    width: calc(50% - calc(0.5 * var(--grid-gap-x)));
+    height: 100%;
+}

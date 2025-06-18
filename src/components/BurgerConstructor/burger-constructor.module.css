@@ -1,0 +1,30 @@
+.wrap {
+    padding-top: var(--nav-tab-h);
+    height: calc(100vh - var(--header-h) - var(--options-h));
+    width: min-content;
+}
+
+.list {
+    height: calc(100% - var(--options-h));
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-cl) transparent;
+}
+
+.list > *:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+.listOptions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 40px;
+    padding: 40px 16px;
+}
+
+.priceTotal {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+}

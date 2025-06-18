@@ -1,0 +1,24 @@
+.wrap {
+    padding: 32px;
+    width: min-content;
+    height: calc(100vh - var(--header-h));
+}
+
+.menu {
+    display: flex;
+    align-items: flex-start;
+}
+
+.grid {
+    --gap-x: 16px;
+    --gap-y: 16px;
+
+    display: grid;
+    height: calc(100% - 72px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-cl) transparent;
+    grid-template-columns: repeat(2, calc(50% - var(--gap-x)));
+    row-gap: var(--gap-y);
+    column-gap: var(--gap-x);
+}

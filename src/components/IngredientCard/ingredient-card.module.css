@@ -1,0 +1,24 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.figure {
+
+}
+
+.figureImage {
+
+}
+
+.priceLabel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.nameLabel {
+    text-align: center;
+}
