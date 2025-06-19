@@ -3,7 +3,7 @@ import {
   AppHeader,
   BurgerConstructor,
   BurgerIngredients,
-  Modal,
+  IngredientDetails,
   ModalOverlay,
 } from './components';
 import './assets/styles/index.css';
@@ -45,21 +45,27 @@ function App() {
     setActiveIngredientId('');
   }
 
+  const getModalName = () => {
+    if (activeIngredientId) return activeItem?.name
+    return '';
+  }
+
   return (
     <div className="App">
       <AppHeader/>
       <div className="app-grid">
         <BurgerIngredients
-          data={data} displayActiveIngredient={displayActiveIngredient}
+          data={data}
+          displayActiveIngredient={displayActiveIngredient}
         />
         <BurgerConstructor selection={selection} />
       </div>
       {
-        activeIngredientId ? <ModalOverlay>
-            <Modal
-              closeModal={closeModal}
-              {...activeItem}
-            />
+        activeIngredientId ? <ModalOverlay
+          name={getModalName()}
+          closeModal={closeModal}
+        >
+            <IngredientDetails {...activeItem} />
           </ModalOverlay> : null
       }
     </div>
