@@ -1,9 +1,11 @@
+import PropTypes from 'prop-types';
+import { IngredientListProps } from '../../types';
 import { IngredientCard } from '../IngredientCard/IngredientCard';
 import styles from './ingredient-preview.module.css';
 
 export function IngredientPreview(props) {
 
-	const itemCards = props.items.map(ingredientItem => <IngredientCard
+	const itemCards = props.items.map((ingredientItem, i) => <IngredientCard
 	    key={ingredientItem._id}
 		{...ingredientItem}
 		onClick={() => props.onIngredientClick(ingredientItem._id)}
@@ -17,9 +19,15 @@ export function IngredientPreview(props) {
 			>
 				{props.ingredientLabel}
 			</h3>
-			<div class={styles.previews}>
+			<div className={styles.previews}>
 				{itemCards}
 			</div>
 		</div>
 	)
+}
+
+IngredientPreview.propTypes = {
+	ingredientType: PropTypes.string,
+	ingredientLabel: PropTypes.string,
+	items: IngredientListProps,
 }

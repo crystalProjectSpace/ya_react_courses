@@ -1,18 +1,21 @@
 .wrap {
+    --list-vertical-gap: 16px;
     padding-top: var(--nav-tab-h);
     height: calc(100vh - var(--header-h) - var(--options-h));
     width: min-content;
 }
 
 .list {
-    height: calc(100% - var(--options-h));
+    height: calc(100% - var(--options-h) - calc(2 * var(--list-vertical-gap)));
+    width: calc(100% + 24px);
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-cl) transparent;
+    margin: var(--list-vertical-gap) 0;
 }
 
 .list > *:not(:last-child) {
-    margin-bottom: 16px;
+    margin-bottom: var(--list-vertical-gap);
 }
 
 .listOptions {

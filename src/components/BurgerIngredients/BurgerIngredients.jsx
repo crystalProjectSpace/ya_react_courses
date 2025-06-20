@@ -1,8 +1,10 @@
 import {useState } from 'react';
+import { IngredientListProps, ComponentPropsCallback } from '../../types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientPreview } from '../IngredientPreview/IngredientPreview';
 import { INGREDIENT_TYPE, MENU_TYPES } from '../../constants';
 import styles from './burger-ingredients.module.css'
+import './burger-ingredients-global.css'; // ближайший аналог не-scoped стилей из vue, не sfc, но лучшего способа пока не видно
 
 export function BurgerIngredients(props) {
 	const [currentTab, setCurrentTab] = useState(MENU_TYPES[0].val);
@@ -28,7 +30,7 @@ export function BurgerIngredients(props) {
 				onClick={() => setCurrentTab(val)}
 			>
 				<a
-					className={styles.tabAnchor}
+					className="tabAnchor"
 					href={`#category_${val}`}
 				>
 					{label}
@@ -58,4 +60,9 @@ export function BurgerIngredients(props) {
 			{ ingredientsMap }
 		</div>
 	</section>)
+}
+
+BurgerIngredients.propTypes = {
+	data: IngredientListProps,
+	displayActiveIngredient: ComponentPropsCallback
 }

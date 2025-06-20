@@ -1,10 +1,14 @@
 import {
 	Button,
 	ConstructorElement,
-	CurrencyIcon
+	CurrencyIcon,
+	DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IngredientListProps } from '../../types';
 import { INGREDIENT_TYPE } from '../../constants'
 import styles from './burger-constructor.module.css';
+import './burger-constructor-global.css';
+
 
 export function BurgerConstructor(props) {
 	const bun = props.selection.find(item => item.type === INGREDIENT_TYPE.BUN);
@@ -14,31 +18,38 @@ export function BurgerConstructor(props) {
 	const ingredientsReady = !!bun && fillings.length > 0;
 
 	return (<section className={styles.wrap}>
-		{ingredientsReady && <div className={styles.list}>
+		{ingredientsReady && <>
 			<ConstructorElement
-				text={bun.name}
+				text={`${bun.name} (Верх)`}
 				thumbnail={bun.image_mobile}
 				price={bun.price}
+				isLocked={true}
 				type="top"
 			/>
-			{
-				fillings.map(item => {
-					const {name, image_mobile, price, _id } = item;
-					return <ConstructorElement
-						key={_id}
-						text={name}
-						thumbnail={image_mobile}
-						price={price}
-					/>
-				})
-			}
+			<div className={styles.list}>
+				{
+					fillings.map((item, i) => {
+						const {name, image_mobile, price, _id } = item;
+						return (<div className="listItemWrap">
+							<DragIcon type="primary"/>
+							<ConstructorElement
+								key={`${_id}_${i}`}
+								text={name}
+								thumbnail={image_mobile}
+								price={price}
+							/>
+						</div>)
+					})
+				}
+			</div>
 			<ConstructorElement
-				text={bun.name}
+				text={`${bun.name}(низ)`}
 				thumbnail={bun.image_mobile}
 				price={bun.price}
+				isLocked={true}
 				type="bottom"
 			/>
-		</div>}
+		</>}
 		<div className={styles.listOptions}>
 			<span className={styles.priceTotal}>
 				<CurrencyIcon />
@@ -52,4 +63,8 @@ export function BurgerConstructor(props) {
 			</Button>
 		</div>
 	</section>)
+}
+
+BurgerConstructor.propTypes = {
+	selection: IngredientListProps
 }

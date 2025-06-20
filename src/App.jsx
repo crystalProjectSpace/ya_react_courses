@@ -11,9 +11,7 @@ import { API_URL } from './constants';
 import { setupMocks } from './utils/data';
 
 function App() {
-  //const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState([]);
-  const [loadState, setLoadState] = useState(false);
   const [selection, setSelection] = useState([]);
   const [activeIngredientId, setActiveIngredientId] = useState('');
 
@@ -25,10 +23,10 @@ function App() {
         const raw = await fetch(path, { method: 'GET'});
         const loadedContent = await raw.json();
         const { success, data } = loadedContent;
+        if (!success) throw new Error('data acquisition error', {cause: 'API_FAIL'})
         setData(data);
         const mocks = setupMocks(data);
         setSelection(mocks);
-        setLoadState(success);
       } catch(e) {
         console.error(e)
       }
@@ -51,7 +49,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <main className="App">
       <AppHeader/>
       <div className="app-grid">
         <BurgerIngredients
@@ -68,7 +66,7 @@ function App() {
             <IngredientDetails {...activeItem} />
           </ModalOverlay> : null
       }
-    </div>
+    </main>
   );
 }
 

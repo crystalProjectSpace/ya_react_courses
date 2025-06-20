@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import detailStyles from './ingredient-details.module.css'
 
 export function IngredientDetails (props) {
@@ -28,4 +29,13 @@ export function IngredientDetails (props) {
             </tbody>
         </table>
     </>)
+}
+
+IngredientDetails.propTypes = {
+    image_large: PropTypes.string,
+    name: PropTypes.string,
+    calories: PropTypes.number,
+    proteins: PropTypes.number,
+    fat: PropTypes.number,
+    carbohydrates: PropTypes.number,
 }
