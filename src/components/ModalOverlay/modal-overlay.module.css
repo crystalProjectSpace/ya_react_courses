@@ -10,21 +10,3 @@
     align-items: center;
     justify-content: center;
 }
-
-.wrap {
-    border-radius: 24px;
-    background-color: var(--modal-bg);
-    padding: 40px 40px 60px;
-    width: 640px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-}
-
-.сlose {
-    display: block;
-    background-color: transparent;
-    cursor: pointer;
-}

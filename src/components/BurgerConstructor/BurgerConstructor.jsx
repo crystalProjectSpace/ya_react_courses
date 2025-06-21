@@ -30,10 +30,9 @@ export function BurgerConstructor(props) {
 				{
 					fillings.map((item, i) => {
 						const {name, image_mobile, price, _id } = item;
-						return (<div className="listItemWrap">
+						return (<div className="listItemWrap" key={`${_id}_${i}`}>
 							<DragIcon type="primary"/>
-							<ConstructorElement
-								key={`${_id}_${i}`}
+							<ConstructorElement								
 								text={name}
 								thumbnail={image_mobile}
 								price={price}

@@ -4,7 +4,6 @@ import {
   BurgerConstructor,
   BurgerIngredients,
   IngredientDetails,
-  ModalOverlay,
 } from './components';
 import './assets/styles/index.css';
 import { API_URL } from './constants';
@@ -43,11 +42,6 @@ function App() {
     setActiveIngredientId('');
   }
 
-  const getModalName = () => {
-    if (activeIngredientId) return activeItem?.name
-    return '';
-  }
-
   return (
     <main className="App">
       <AppHeader/>
@@ -59,12 +53,10 @@ function App() {
         <BurgerConstructor selection={selection} />
       </div>
       {
-        activeIngredientId ? <ModalOverlay
-          name={getModalName()}
+        activeIngredientId ? <IngredientDetails
+          ingredient={activeItem}
           closeModal={closeModal}
-        >
-            <IngredientDetails {...activeItem} />
-          </ModalOverlay> : null
+        /> : null
       }
     </main>
   );
