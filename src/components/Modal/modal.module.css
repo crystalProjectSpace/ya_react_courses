@@ -1,17 +1,22 @@
 .wrap {
+    --padding-x: 40px;
+    --padding-y: 40px;
+
+    position: relative;
     border-radius: 24px;
     background-color: var(--modal-bg);
-    padding: 40px 40px 60px;
+    padding: var(--padding-y) var(--padding-x) 60px;
     width: 640px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
 }
 
 .сlose {
     display: block;
     background-color: transparent;
     cursor: pointer;
+}
+
+.closeWrap {
+    position: absolute;
+    right: var(--padding-x);
+    top: var(--padding-y)
 }

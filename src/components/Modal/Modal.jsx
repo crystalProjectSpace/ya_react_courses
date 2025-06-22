@@ -31,8 +31,7 @@ export function Modal(props) {
     }, []);
 
     return (<div className={modal.wrap} ref={modalBox}>
-        <header className={modal.header}>
-            { props.name && <h3 className={modal.headerTitle}>{props.name}</h3> }
+        <div className={modal.closeWrap}>
             <button
                 type="button"
                 className={modal.сlose}
@@ -40,7 +39,7 @@ export function Modal(props) {
             >
                 <CloseIcon type="primary" />
            </button>
-        </header>
+        </div>
         <section className={modal.content}>
             { props.children}
         </section>
@@ -48,7 +47,6 @@ export function Modal(props) {
 }
 
 Modal.propTypes = {
-    name: PropTypes.string,
     closeModal: PropTypes.func,
     children: PropTypes.element,
 }

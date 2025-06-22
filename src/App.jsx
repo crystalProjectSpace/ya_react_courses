@@ -4,6 +4,8 @@ import {
   BurgerConstructor,
   BurgerIngredients,
   IngredientDetails,
+  Modal,
+  ModalOverlay,
 } from './components';
 import './assets/styles/index.css';
 import { API_URL } from './constants';
@@ -42,6 +44,8 @@ function App() {
     setActiveIngredientId('');
   }
 
+  const showModal = !!activeIngredientId // возможно,что по мере разрастания количества модалок, здесь появится более сложное выражние
+
   return (
     <main className="App">
       <AppHeader/>
@@ -53,10 +57,11 @@ function App() {
         <BurgerConstructor selection={selection} />
       </div>
       {
-        activeIngredientId ? <IngredientDetails
-          ingredient={activeItem}
-          closeModal={closeModal}
-        /> : null
+        showModal ? <ModalOverlay closeModal={closeModal}>
+          <Modal closeModal={closeModal}>
+            <IngredientDetails ingredient={activeItem} />
+          </Modal>
+        </ModalOverlay> : null
       }
     </main>
   );
