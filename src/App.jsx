@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   AppHeader,
   BurgerConstructor,
@@ -14,14 +14,11 @@ import { getItems } from './services';
 import { CLEAR_SELECTION } from './services/actions';
 
 function App() {
-  const [selection] = useState([]);
-  
   const dispatch = useDispatch();
 
   useEffect(() => { dispatch(getItems(API_URL)) }, [])  
   
   const showActiveIngredient = useSelector(state => !!state.currentSelection.selectedId)
-  
 
   function clearCurrentSelection() {
     dispatch({ type: `currentSelection/${CLEAR_SELECTION}` })
@@ -31,8 +28,8 @@ function App() {
     <main className="App">
       <AppHeader/>
       <div className="app-grid">
-        <BurgerIngredients/>
-        <BurgerConstructor selection={selection} />
+        <BurgerIngredients />
+        <BurgerConstructor />
       </div>
       {
         showActiveIngredient ? <ModalOverlay closeModal={clearCurrentSelection}>

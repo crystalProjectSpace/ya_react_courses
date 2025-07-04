@@ -7,6 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import {
   availableItemsSlice,
   currentSelectionSlice,
+  currentItemsSlice,
 } from './services';
 
 
@@ -14,6 +15,7 @@ const store = configureStore({
   reducer: {
     availableItems: availableItemsSlice.reducer,
     currentSelection: currentSelectionSlice.reducer,
+    currentItems: currentItemsSlice.reducer,
   },
 })
 
