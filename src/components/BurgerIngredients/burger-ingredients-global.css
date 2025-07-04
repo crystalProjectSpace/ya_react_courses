@@ -1,0 +1,16 @@
+.tabAnchor {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.tabAnchor:link,
+.tabAnchor:visited {
+    color: #8585ad;
+}
+
+.tab_type_current .tabAnchor,
+.tabAnchor:hover,
+.tabAnchor:active,
+.tabAnchor:focus {
+    color: #fff;
+}

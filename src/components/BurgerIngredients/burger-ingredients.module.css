@@ -1,0 +1,17 @@
+.wrap {
+    padding: 32px;
+    width: min-content;
+    height: calc(100vh - var(--header-h) - var(--options-h));
+}
+
+.menu {
+    display: flex;
+    align-items: flex-start;
+}
+
+.grid {
+    height: calc(100% - 72px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-cl) transparent;
+}

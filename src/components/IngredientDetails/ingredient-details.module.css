@@ -1,0 +1,26 @@
+.image {
+    display: block;
+    height: 100;
+    object-fit: contain;
+    margin: auto;
+}
+
+.info {
+    width: 100%;
+}
+
+.info tr,
+.info td,
+.info th {
+    border-collapse: collapse;
+}
+
+.info th {
+    padding-bottom: 16px;
+}
+
+.info th, .info td {
+    font-weight: medium;
+    color: #8585ad;
+    text-align: center;
+}

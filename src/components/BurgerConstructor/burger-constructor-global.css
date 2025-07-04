@@ -1,0 +1,16 @@
+.listItemWrap {
+    position: relative;
+    padding-left: 24px;
+}
+
+.listItemWrap > svg {
+    position: absolute;
+    right: calc(100% - 24px);
+    top: calc(50% - 12px);
+    cursor: pointer;
+}
+
+.constructor-element.constructor-element_pos_top,
+.constructor-element.constructor-element_pos_bottom {
+    transform: translateX(24px);
+}

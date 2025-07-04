@@ -1,0 +1,12 @@
+.collection {
+    padding-bottom: 40px;
+}
+
+.collectionHeader {
+    padding-top: 40px;
+}
+
+.previews {
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,33 @@
+.wrap {
+    --list-vertical-gap: 16px;
+    padding-top: var(--nav-tab-h);
+    height: calc(100vh - var(--header-h) - var(--options-h));
+    width: min-content;
+}
+
+.list {
+    height: calc(100% - var(--options-h) - calc(2 * var(--list-vertical-gap)));
+    width: calc(100% + 24px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-cl) transparent;
+    margin: var(--list-vertical-gap) 0;
+}
+
+.list > *:not(:last-child) {
+    margin-bottom: var(--list-vertical-gap);
+}
+
+.listOptions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 40px;
+    padding: 40px 16px;
+}
+
+.priceTotal {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+}
