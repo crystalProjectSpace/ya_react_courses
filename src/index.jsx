@@ -4,12 +4,16 @@ import './assets/styles/index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { availableItemsSlice } from './services';
+import {
+  availableItemsSlice,
+  currentSelectionSlice,
+} from './services';
 
 
 const store = configureStore({
   reducer: {
-    availableItems: availableItemsSlice.reducer
+    availableItems: availableItemsSlice.reducer,
+    currentSelection: currentSelectionSlice.reducer,
   },
 })
 

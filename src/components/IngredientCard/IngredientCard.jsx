@@ -2,9 +2,17 @@ import PropTypes from 'prop-types'
 import { ComponentPropsCallback } from '../../types'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import card from './ingredient-card.module.css'
-
+import { useDispatch } from 'react-redux'
+import { SET_SELECTION } from '../../services/actions'
 export function IngredientCard(props) {
-    return (<div className={card.wrap} onClick={props.onClick}>
+    const dispatch = useDispatch()
+
+    
+    function selectIngredient () {
+        dispatch({ type: `currentSelection/${SET_SELECTION}`, id: props._id })
+    }
+
+    return (<div className={card.wrap} onClick={selectIngredient}>
         <figure className={card.figure}>
             <img
                 className={card.figureImage}
@@ -26,5 +34,6 @@ IngredientCard.propTypes = {
     onClick: ComponentPropsCallback,
     image: PropTypes.string,
     name: PropTypes.string,
-    price: PropTypes.number
+    price: PropTypes.number,
+    _id: PropTypes.string
 }

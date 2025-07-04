@@ -8,7 +8,6 @@ export function IngredientPreview(props) {
 	const itemCards = props.items.map((ingredientItem, i) => <IngredientCard
 	    key={ingredientItem._id}
 		{...ingredientItem}
-		onClick={() => props.onIngredientClick(ingredientItem._id)}
 	/>);
 
 	return (

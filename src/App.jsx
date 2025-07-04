@@ -11,42 +11,33 @@ import './assets/styles/index.css';
 import { API_URL } from './constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from './services';
+import { CLEAR_SELECTION } from './services/actions';
 
 function App() {
   const [selection] = useState([]);
-  const [activeIngredientId, setActiveIngredientId] = useState('');
   
   const dispatch = useDispatch();
+
+  useEffect(() => { dispatch(getItems(API_URL)) }, [])  
   
-  const data = useSelector(state => state.availableItems.items)
-  const activeItem = activeIngredientId ? data.find(({ _id }) => _id === activeIngredientId) : {}
-  useEffect(() => { dispatch(getItems(API_URL)) }, [])
+  const showActiveIngredient = useSelector(state => !!state.currentSelection.selectedId)
+  
 
-
-  function displayActiveIngredient(ingredientId) {
-    setActiveIngredientId(ingredientId);
+  function clearCurrentSelection() {
+    dispatch({ type: `currentSelection/${CLEAR_SELECTION}` })
   }
-
-  function closeModal() {
-    setActiveIngredientId('');
-  }
-
-  const showModal = !!activeIngredientId // возможно,что по мере разрастания количества модалок, здесь появится более сложное выражние
 
   return (
     <main className="App">
       <AppHeader/>
       <div className="app-grid">
-        <BurgerIngredients
-          data={data}
-          displayActiveIngredient={displayActiveIngredient}
-        />
+        <BurgerIngredients/>
         <BurgerConstructor selection={selection} />
       </div>
       {
-        showModal ? <ModalOverlay closeModal={closeModal}>
-          <Modal closeModal={closeModal}>
-            <IngredientDetails ingredient={activeItem} />
+        showActiveIngredient ? <ModalOverlay closeModal={clearCurrentSelection}>
+          <Modal closeModal={clearCurrentSelection}>
+            <IngredientDetails />
           </Modal>
         </ModalOverlay> : null
       }
