@@ -9,31 +9,18 @@ import {
 } from './components';
 import './assets/styles/index.css';
 import { API_URL } from './constants';
-import { setupMocks } from './utils/data';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItems } from './services';
 
 function App() {
-  const [data, setData] = useState([]);
-  const [selection, setSelection] = useState([]);
+  const [selection] = useState([]);
   const [activeIngredientId, setActiveIngredientId] = useState('');
-
+  
+  const dispatch = useDispatch();
+  
+  const data = useSelector(state => state.availableItems.items)
   const activeItem = activeIngredientId ? data.find(({ _id }) => _id === activeIngredientId) : {}
-
-  useEffect(() => {
-    const getData = async function(path) {
-      try {
-        const raw = await fetch(path, { method: 'GET'});
-        const loadedContent = await raw.json();
-        const { success, data } = loadedContent;
-        if (!success) throw new Error('data acquisition error', {cause: 'API_FAIL'})
-        setData(data);
-        const mocks = setupMocks(data);
-        setSelection(mocks);
-      } catch(e) {
-        console.error(e)
-      }
-    }
-    getData(API_URL);
-  }, [])
+  useEffect(() => { dispatch(getItems(API_URL)) }, [])
 
 
   function displayActiveIngredient(ingredientId) {
