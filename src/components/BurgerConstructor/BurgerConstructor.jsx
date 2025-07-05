@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd'
 import {
 	Button,
 	ConstructorElement,
@@ -7,24 +9,33 @@ import {
 import { INGREDIENT_TYPE } from '../../constants'
 import styles from './burger-constructor.module.css';
 import './burger-constructor-global.css';
-import { useSelector } from 'react-redux';
+import { ADD_ITEM, SET_BUN } from '../../services/actions';
 
 
 export function BurgerConstructor() {
+	const dispatch = useDispatch()
+
+	const [, dropRef] = useDrop({
+		accept: 'ingredient',
+		drop(item) {
+			const { id, type } = item
+			const nextAction = type === INGREDIENT_TYPE.BUN ? `currentItems/${SET_BUN}` : `currentItems/${ADD_ITEM}`
+			console.log(id, type)
+			dispatch({ type: nextAction, id })
+		}
+	})
+
 	const { bun, fillings, totalPrice } = useSelector(state => {
-		const {currentItems} = state.currentItems
-		const {items} = state.availableItems
-		let bun = null
+		const { currentBun, currentItems } = state.currentItems
+		const { items } = state.availableItems
+		const bun = items.find(item => item._id === currentBun)
+
 		const fillings = []
-		let totalPrice = 0
+		let totalPrice = bun?.price || 0
 		currentItems.forEach(({id, qty}) => {
 			const item = items.find(item => item._id === id)
 			if (!item) return
-			if(item.type === INGREDIENT_TYPE.BUN) {
-				bun = item
-			} else {
-				fillings.push(item)
-			}
+			fillings.push(item)
 			totalPrice += qty * item.price
 		});
 
@@ -38,7 +49,7 @@ export function BurgerConstructor() {
 
 	const ingredientsReady = !!bun && fillings.length > 0;
 
-	return (<section className={styles.wrap}>
+	return (<section className={styles.wrap} ref={dropRef}>
 		{ingredientsReady && <>
 			<ConstructorElement
 				text={`${bun.name} (Верх)`}

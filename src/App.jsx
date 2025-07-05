@@ -12,6 +12,8 @@ import { API_URL } from './constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from './services';
 import { CLEAR_SELECTION } from './services/actions';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
   const dispatch = useDispatch();
@@ -28,8 +30,10 @@ function App() {
     <main className="App">
       <AppHeader/>
       <div className="app-grid">
-        <BurgerIngredients />
-        <BurgerConstructor />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </div>
       {
         showActiveIngredient ? <ModalOverlay closeModal={clearCurrentSelection}>

@@ -10,6 +10,10 @@
     cursor: pointer;
 }
 
+.constructor-element {
+    max-height: 104px;
+}
+
 .constructor-element.constructor-element_pos_top,
 .constructor-element.constructor-element_pos_bottom {
     transform: translateX(24px);

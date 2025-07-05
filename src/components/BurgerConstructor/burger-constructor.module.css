@@ -1,12 +1,15 @@
 .wrap {
     --list-vertical-gap: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding-top: var(--nav-tab-h);
     height: calc(100vh - var(--header-h) - var(--options-h));
     width: min-content;
 }
 
 .list {
-    height: calc(100% - var(--options-h) - calc(2 * var(--list-vertical-gap)));
+    max-height: calc(100% - var(--options-h) - calc(2 * var(--list-vertical-gap)));
     width: calc(100% + 24px);
     overflow-y: auto;
     scrollbar-width: thin;
@@ -19,6 +22,8 @@
 }
 
 .listOptions {
+    flex-grow: 1;
+    flex-basis: 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
