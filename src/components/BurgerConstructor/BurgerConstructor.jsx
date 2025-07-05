@@ -7,9 +7,10 @@ import {
 	DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CHECKOUT_URL, INGREDIENT_TYPE } from '../../constants'
+import { ADD_ITEM, SET_BUN } from '../../services/actions';
+import { checkoutRequest } from '../../services/reducers/checkout.reducer'
 import styles from './burger-constructor.module.css';
 import './burger-constructor-global.css';
-import { ADD_ITEM, SET_BUN } from '../../services/actions';
 
 
 export function BurgerConstructor() {
@@ -50,18 +51,11 @@ export function BurgerConstructor() {
 
 	})
 
-	async function checkout() {
-		try {
-			const body =  JSON.stringify({ ingredients: itemIds })
-			const headers = { 'Content-Type': 'application/json'}
-			const data = await fetch(CHECKOUT_URL, { method: 'POST', headers, body })
-			const { order, success } = data
-			if (order) console.log(order)
-			if (!success) return { error: 'API_FAIL'}
-		} catch (e) {
-			console.error(e)
-			return { error: e }
-		}
+	function checkout() {
+		dispatch(checkoutRequest({
+			path: CHECKOUT_URL,
+			ingredients: itemIds,
+		}))
 	}
 
 	const ingredientsReady = !!bun && fillings.length > 0;

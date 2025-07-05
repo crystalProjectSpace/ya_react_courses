@@ -4,3 +4,4 @@ export * from './BurgerIngredients/BurgerIngredients';
 export * from './IngredientDetails/IngredientDetails';
 export * from './ModalOverlay/ModalOverlay';
 export * from './Modal/Modal';
+export * from './OrderCheckout/OrderCheckout';

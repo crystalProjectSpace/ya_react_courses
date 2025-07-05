@@ -10,3 +10,17 @@ export async function getData(path) {
       return { error: e }
    }
 }
+
+export async function makeCheckoutRequest({ingredients, path}) {
+   try {
+      const body =  JSON.stringify({ ingredients })
+      const headers = { 'Content-Type': 'application/json'}
+      const data = await fetch(path, { method: 'POST', headers, body })
+      const { order, success } = await data.json();
+      if (order) return { orderId: order.number }
+      if (!success) return { error: 'API_FAIL'}
+   } catch (e) {
+      console.error(e)
+      return { error: e }
+   }
+}

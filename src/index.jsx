@@ -8,6 +8,7 @@ import {
   availableItemsSlice,
   currentSelectionSlice,
   currentItemsSlice,
+  checkoutSlice,
 } from './services';
 
 
@@ -16,6 +17,7 @@ const store = configureStore({
     availableItems: availableItemsSlice.reducer,
     currentSelection: currentSelectionSlice.reducer,
     currentItems: currentItemsSlice.reducer,
+    checkout: checkoutSlice.reducer,
   },
 })
 
