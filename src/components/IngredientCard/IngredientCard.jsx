@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useDrag } from 'react-dnd'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import card from './ingredient-card.module.css'
 
 import { SET_SELECTION } from '../../services/actions'
+import { INGREDIENT_TYPE } from '../../constants'
 export function IngredientCard(props) {
     const dispatch = useDispatch()
 
@@ -15,6 +16,12 @@ export function IngredientCard(props) {
             type: props.type,
         }
 	})
+
+    const count = useSelector(state => {
+        return props.type === INGREDIENT_TYPE.BUN
+            ? (state.currentItems.currentBun === props._id ? 1 : 0)
+            : state.currentItems.currentItems.filter(i => i.itemId === props._id).length
+    })
     
     function selectIngredient () {
         dispatch({ type: `currentSelection/${SET_SELECTION}`, id: props._id })
@@ -36,6 +43,9 @@ export function IngredientCard(props) {
         <span className={card.nameLabel}>
             {props.name}
         </span>
+        {
+            count > 0 ? (<span className={card.count}>{ count }</span>) : null
+        }
     </div>)
 }
 

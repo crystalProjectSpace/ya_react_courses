@@ -17,19 +17,22 @@ export const currentItemsSlice = createSlice({
         [SET_BUN]: (state, action) => ({ ...state, currentBun: action.id }),
         [REMOVE_BUN]: (state) => ({ ...state, currentBun: '' }),
         [ADD_ITEM]: (state, action) => {
-            const { id } = action
-            state.currentItems.push(id)
+            const { id, provisionalId } = action
+            state.currentItems.push({
+                itemId: id,
+                id: provisionalId
+            })
         },
         [REMOVE_ITEM]: (state, action) => {
-            const { index } = action
-            state.currentItems.splice(index, 1)
+            const { id } = action
+            state.currentItems = state.currentItems.filter(i => i.id !== id)
         },
         [SWAP_ITEMS]: (state, action) => {
             const { indexNew, indexOld } = action
             if (indexNew === indexOld) return
             const newItemList = state.currentItems.slice()
-            newItemList[indexNew] = state.currentItems[indexOld]
-            newItemList[indexOld] = state.currentItems[indexNew]
+            newItemList[indexNew] = {...state.currentItems[indexOld]}
+            newItemList[indexOld] = {...state.currentItems[indexNew]}
             return { ...state, currentItems: newItemList }
         }
     }
