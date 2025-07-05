@@ -1,6 +1,7 @@
 import { useDrag, useDrop } from 'react-dnd'
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux';
+import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { SWAP_ITEMS } from '../../services/actions';
 import ingredientWrap from './active-ingredient-wrap.module.css';
 
@@ -26,4 +27,9 @@ export function ActiveIngredientWrap(props) {
         </span>        
         { props.children}
     </div>)
+}
+
+ActiveIngredientWrap.propTypes = {
+    index: PropTypes.number,
+    children: PropTypes.element
 }

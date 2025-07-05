@@ -1,6 +1,5 @@
 import {useState } from 'react';
 import { useSelector } from 'react-redux';
-import { IngredientListProps, ComponentPropsCallback } from '../../types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientPreview } from '../IngredientPreview/IngredientPreview';
 import { INGREDIENT_TYPE, MENU_TYPES } from '../../constants';
@@ -63,9 +62,4 @@ export function BurgerIngredients() {
 			{ ingredientsMap }
 		</div>
 	</section>)
-}
-
-BurgerIngredients.propTypes = {
-	data: IngredientListProps,
-	displayActiveIngredient: ComponentPropsCallback
 }

@@ -9,15 +9,4 @@ export const IngredientCardProps = PropTypes.shape({
     image_mobile: PropTypes.string,
 });
 
-export const IngredientBreakdown = PropTypes.shape({
-    name: PropTypes.string,
-    image_large: PropTypes.string,
-    calories: PropTypes.number,
-    proteins: PropTypes.number,
-    fat: PropTypes.number,
-    carbohydrates: PropTypes.number
-})
-
 export const IngredientListProps = PropTypes.arrayOf(IngredientCardProps)
-
-export const ComponentPropsCallback = PropTypes.func

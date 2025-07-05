@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { useDrag } from 'react-dnd'
-import { ComponentPropsCallback } from '../../types'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import card from './ingredient-card.module.css'
 
@@ -41,7 +40,6 @@ export function IngredientCard(props) {
 }
 
 IngredientCard.propTypes = {
-    onClick: ComponentPropsCallback,
     image: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.number,
