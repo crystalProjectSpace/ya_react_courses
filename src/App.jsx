@@ -18,7 +18,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(() => { dispatch(getItems(API_URL)) }, [])  
+  useEffect(() => { dispatch(getItems(API_URL)) }, [])
   
   const showActiveIngredient = useSelector(state => !!state.currentSelection.selectedId)
 

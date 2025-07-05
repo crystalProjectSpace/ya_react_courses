@@ -6,7 +6,7 @@ import {
 	CurrencyIcon,
 	DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { INGREDIENT_TYPE } from '../../constants'
+import { CHECKOUT_URL, INGREDIENT_TYPE } from '../../constants'
 import styles from './burger-constructor.module.css';
 import './burger-constructor-global.css';
 import { ADD_ITEM, SET_BUN } from '../../services/actions';
@@ -25,27 +25,44 @@ export function BurgerConstructor() {
 		}
 	})
 
-	const { bun, fillings, totalPrice } = useSelector(state => {
+	const { bun, fillings, totalPrice, itemIds } = useSelector(state => {
 		const { currentBun, currentItems } = state.currentItems
 		const { items } = state.availableItems
 		const bun = items.find(item => item._id === currentBun)
-
+		const itemIds = []
 		const fillings = []
 		let totalPrice = bun?.price || 0
+		if (bun) itemIds.push(currentBun)
 		currentItems.forEach(({id, qty}) => {
 			const item = items.find(item => item._id === id)
 			if (!item) return
 			fillings.push(item)
+			itemIds.push(id)
 			totalPrice += qty * item.price
 		});
 
 		return {
 			bun,
 			fillings,
-			totalPrice
+			totalPrice,
+			itemIds
 		}
 
 	})
+
+	async function checkout() {
+		try {
+			const body =  JSON.stringify({ ingredients: itemIds })
+			const headers = { 'Content-Type': 'application/json'}
+			const data = await fetch(CHECKOUT_URL, { method: 'POST', headers, body })
+			const { order, success } = data
+			if (order) console.log(order)
+			if (!success) return { error: 'API_FAIL'}
+		} catch (e) {
+			console.error(e)
+			return { error: e }
+		}
+	}
 
 	const ingredientsReady = !!bun && fillings.length > 0;
 
@@ -89,6 +106,7 @@ export function BurgerConstructor() {
 			<Button
 				htmlType="submit"
 				type="primary"
+				onClick={checkout}
 			>
 				Оформить заказ
 			</Button>

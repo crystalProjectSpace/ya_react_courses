@@ -18,7 +18,6 @@ export const currentItemsSlice = createSlice({
         [ADD_ITEM]: (state, action) => {
             const { id } = action
             const currentIndex = state.currentItems.findIndex(i => i.id === id)
-            console.log('1')
             if (currentIndex === -1) {
                 state.currentItems.push({ id, qty: 1 })
             } else {
