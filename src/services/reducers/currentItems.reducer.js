@@ -4,6 +4,7 @@ import {
     REMOVE_ITEM,
     SET_BUN,
     REMOVE_BUN,
+    SWAP_ITEMS,
  } from '../actions'
 
 export const currentItemsSlice = createSlice({
@@ -17,24 +18,19 @@ export const currentItemsSlice = createSlice({
         [REMOVE_BUN]: (state) => ({ ...state, currentBun: '' }),
         [ADD_ITEM]: (state, action) => {
             const { id } = action
-            const currentIndex = state.currentItems.findIndex(i => i.id === id)
-            if (currentIndex === -1) {
-                state.currentItems.push({ id, qty: 1 })
-            } else {
-                const {qty, id: itemId} = state.currentItems[currentIndex]
-                state.currentItems.splice(currentIndex, 1, { id: itemId, qty: qty + 1 })
-            }
+            state.currentItems.push(id)
         },
         [REMOVE_ITEM]: (state, action) => {
-            const { id } = action
-            const currentIndex = state.currentItems.findIndex(i => i.id === id)
-            if (currentIndex === -1) return
-            const { id: itemId, qty } = state.currentItems[currentIndex]
-            if ( qty > 1) {
-                state.currentItems.splice(currentIndex, 1, { id:itemId, qty: qty - 1 })
-            } else {
-                state.currentItems.splice(currentIndex, 1)
-            }
+            const { index } = action
+            state.currentItems.splice(index, 1)
+        },
+        [SWAP_ITEMS]: (state, action) => {
+            const { indexNew, indexOld } = action
+            if (indexNew === indexOld) return
+            const newItemList = state.currentItems.slice()
+            newItemList[indexNew] = state.currentItems[indexOld]
+            newItemList[indexOld] = state.currentItems[indexNew]
+            return { ...state, currentItems: newItemList }
         }
     }
 })

@@ -4,8 +4,8 @@ import {
 	Button,
 	ConstructorElement,
 	CurrencyIcon,
-	DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ActiveIngredientWrap } from '../index';
 import { CHECKOUT_URL, INGREDIENT_TYPE } from '../../constants'
 import { ADD_ITEM, SET_BUN } from '../../services/actions';
 import { checkoutRequest } from '../../services/reducers/checkout.reducer'
@@ -21,7 +21,6 @@ export function BurgerConstructor() {
 		drop(item) {
 			const { id, type } = item
 			const nextAction = type === INGREDIENT_TYPE.BUN ? `currentItems/${SET_BUN}` : `currentItems/${ADD_ITEM}`
-			console.log(id, type)
 			dispatch({ type: nextAction, id })
 		}
 	})
@@ -34,12 +33,12 @@ export function BurgerConstructor() {
 		const fillings = []
 		let totalPrice = bun?.price || 0
 		if (bun) itemIds.push(currentBun)
-		currentItems.forEach(({id, qty}) => {
+		currentItems.forEach(id => {
 			const item = items.find(item => item._id === id)
 			if (!item) return
 			fillings.push(item)
 			itemIds.push(id)
-			totalPrice += qty * item.price
+			totalPrice += item.price
 		});
 
 		return {
@@ -48,14 +47,10 @@ export function BurgerConstructor() {
 			totalPrice,
 			itemIds
 		}
-
 	})
 
 	function checkout() {
-		dispatch(checkoutRequest({
-			path: CHECKOUT_URL,
-			ingredients: itemIds,
-		}))
+		dispatch(checkoutRequest({ path: CHECKOUT_URL, ingredients: itemIds }))
 	}
 
 	const ingredientsReady = !!bun && fillings.length > 0;
@@ -73,14 +68,13 @@ export function BurgerConstructor() {
 				{
 					fillings.map((item, i) => {
 						const {name, image_mobile, price, _id } = item;
-						return (<div className="listItemWrap" key={`${_id}_${i}`}>
-							<DragIcon type="primary"/>
+						return (<ActiveIngredientWrap index={i} key={`${_id}_${i}`}>
 							<ConstructorElement								
 								text={name}
 								thumbnail={image_mobile}
 								price={price}
 							/>
-						</div>)
+						</ActiveIngredientWrap>)
 					})
 				}
 			</div>
