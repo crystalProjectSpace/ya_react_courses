@@ -3,14 +3,7 @@
     flex-direction: column;
     row-gap: 16px;
     width: 50%;
-}
-
-.figure {
-
-}
-
-.figureImage {
-
+    position: relative;
 }
 
 .priceLabel {
@@ -22,4 +15,18 @@
 
 .nameLabel {
     text-align: center;
+}
+
+.count {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(199, 128, 47);
+    border-radius: 9999px;
+    color: #fff;
 }

@@ -1,5 +1,7 @@
 export const API_URL = 'https://norma.nomoreparties.space/api/ingredients'
 
+export const CHECKOUT_URL = 'https://norma.nomoreparties.space/api/orders'
+
 export const INGREDIENT_TYPE = {
     BUN: 'bun',
     SAUCE: 'sauce',

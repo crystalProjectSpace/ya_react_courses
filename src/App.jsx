@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   AppHeader,
   BurgerConstructor,
@@ -6,60 +6,51 @@ import {
   IngredientDetails,
   Modal,
   ModalOverlay,
+  OrderCheckout,
 } from './components';
 import './assets/styles/index.css';
 import { API_URL } from './constants';
-import { setupMocks } from './utils/data';
+import { useDispatch, useSelector } from 'react-redux';
+import { getItems } from './services';
+import { CHECKOUT_CLEAR, CLEAR_SELECTION } from './services/actions';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
-  const [data, setData] = useState([]);
-  const [selection, setSelection] = useState([]);
-  const [activeIngredientId, setActiveIngredientId] = useState('');
+  const dispatch = useDispatch();
 
-  const activeItem = activeIngredientId ? data.find(({ _id }) => _id === activeIngredientId) : {}
+  useEffect(() => { dispatch(getItems(API_URL)) }, [])
+  
+  const showActiveIngredient = useSelector(state => !!state.currentSelection.selectedId)
+  const orderId = useSelector(state => state.checkout.orderId)
 
-  useEffect(() => {
-    const getData = async function(path) {
-      try {
-        const raw = await fetch(path, { method: 'GET'});
-        const loadedContent = await raw.json();
-        const { success, data } = loadedContent;
-        if (!success) throw new Error('data acquisition error', {cause: 'API_FAIL'})
-        setData(data);
-        const mocks = setupMocks(data);
-        setSelection(mocks);
-      } catch(e) {
-        console.error(e)
-      }
-    }
-    getData(API_URL);
-  }, [])
-
-
-  function displayActiveIngredient(ingredientId) {
-    setActiveIngredientId(ingredientId);
+  function clearCurrentSelection() {
+    dispatch({ type: `currentSelection/${CLEAR_SELECTION}` })
   }
 
-  function closeModal() {
-    setActiveIngredientId('');
+  function clearCheckout() {
+    dispatch({ type: `checkout/${CHECKOUT_CLEAR}` })
   }
-
-  const showModal = !!activeIngredientId // возможно,что по мере разрастания количества модалок, здесь появится более сложное выражние
 
   return (
     <main className="App">
       <AppHeader/>
       <div className="app-grid">
-        <BurgerIngredients
-          data={data}
-          displayActiveIngredient={displayActiveIngredient}
-        />
-        <BurgerConstructor selection={selection} />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </div>
       {
-        showModal ? <ModalOverlay closeModal={closeModal}>
-          <Modal closeModal={closeModal}>
-            <IngredientDetails ingredient={activeItem} />
+        showActiveIngredient ? <ModalOverlay closeModal={clearCurrentSelection}>
+          <Modal closeModal={clearCurrentSelection}>
+            <IngredientDetails />
+          </Modal>
+        </ModalOverlay> : null
+      }
+      { !!orderId ? <ModalOverlay closeModal={clearCheckout}>
+          <Modal closeModal={clearCheckout}>
+            <OrderCheckout />
           </Modal>
         </ModalOverlay> : null
       }

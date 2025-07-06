@@ -1,0 +1,11 @@
+.listItem {
+    position: relative;
+    padding-left: 24px;
+}
+
+.listItemHandle {
+    position: absolute;
+    right: calc(100% - 24px);
+    top: calc(50% - 12px);
+    cursor: pointer;
+}

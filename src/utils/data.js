@@ -1,36 +1,38 @@
-import {INGREDIENT_TYPE} from '../constants'
-
-function getRndIndex(count) {
-   return Math.round(Math.random() * (count - 1))
+async function request(url, payload) {
+   const raw = await fetch(url, payload)
+   const { ok } = raw;
+   if (!ok) throw new Error('API_FAIL')
+   const parsedData = await raw.json()
+   return parsedData
 }
 
-export function setupMocks(data) {
-   const buns = []
-   const main = []
-   const sauce = []
-   const result = []
-
-   data.forEach(item => {
-      switch(item.type) {
-         case INGREDIENT_TYPE.BUN:
-            buns.push(item); break;
-         case INGREDIENT_TYPE.MAIN:
-            main.push(item); break;
-         case INGREDIENT_TYPE.SAUCE:
-            sauce.push(item); break;
-         default: return;
-      }
-   });
-
-   const bunCount = buns.length
-   const mainCount = buns.length
-   const sauceCount = buns.length
-   result.push(buns[getRndIndex(bunCount)])
-   for(let i = 0; i < 3; i++) {
-      const mainIndex = getRndIndex(mainCount)
-      const sauceIndex = getRndIndex(sauceCount)
-      result.push(main[mainIndex], sauce[sauceIndex])
+export async function getData(path) {
+   try {
+      const { success, data } = await request(path, { method: 'GET'});
+      if (!success) throw new Error('API_FAIL')
+      return { data }
+   } catch(e) {
+      console.error(e)
+      return { error: e }
    }
+}
 
-   return result
+export async function makeCheckoutRequest({ingredients, path}) {
+   try {
+      const body =  JSON.stringify({ ingredients })
+      const headers = { 'Content-Type': 'application/json'}
+      const { order, success } = await request(path, { method: 'POST', headers, body })
+      if (!success) throw new Error('API_FAIL')
+      if (order) return { orderId: order.number }      
+   } catch (e) {
+      console.error(e)
+      return { error: e }
+   }
+}
+
+export function getProvisionalId() {
+   const seed = Math.trunc(Math.random() * 1E6)
+   const alpha = seed % 113
+   const betha = seed % 241
+   return (alpha * 100 + betha ^ alpha).toString(16)
 }

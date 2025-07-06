@@ -1,13 +1,5 @@
-.listItemWrap {
-    position: relative;
-    padding-left: 24px;
-}
-
-.listItemWrap > svg {
-    position: absolute;
-    right: calc(100% - 24px);
-    top: calc(50% - 12px);
-    cursor: pointer;
+.constructor-element {
+    max-height: 104px;
 }
 
 .constructor-element.constructor-element_pos_top,

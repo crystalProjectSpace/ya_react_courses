@@ -1,53 +1,104 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from 'react-dnd'
 import {
 	Button,
 	ConstructorElement,
 	CurrencyIcon,
-	DragIcon
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientListProps } from '../../types';
-import { INGREDIENT_TYPE } from '../../constants'
+import { ActiveIngredientWrap } from '../index';
+import { CHECKOUT_URL, INGREDIENT_TYPE } from '../../constants'
+import { ADD_ITEM, REMOVE_ITEM, SET_BUN } from '../../services/actions';
+import { checkoutRequest } from '../../services/reducers/checkout.reducer'
 import styles from './burger-constructor.module.css';
 import './burger-constructor-global.css';
+import { getProvisionalId } from '../../utils/data';
 
 
-export function BurgerConstructor(props) {
-	const bun = props.selection.find(item => item.type === INGREDIENT_TYPE.BUN);
-	const fillings = props.selection.filter(item => item.type !== INGREDIENT_TYPE.BUN);
-	const totalPrice = props.selection.reduce((total, item) => total + item.price, 0);
+export function BurgerConstructor() {
+	const dispatch = useDispatch()
 
-	const ingredientsReady = !!bun && fillings.length > 0;
+	const [, dropRef] = useDrop({
+		accept: 'ingredient',
+		drop(item) {
+			const { id, type } = item
+			if (type === INGREDIENT_TYPE.BUN) {
+				dispatch({ type: `currentItems/${SET_BUN}`, id })
+			} else {
+				const provisionalId = getProvisionalId()
+				dispatch({ type: `currentItems/${ADD_ITEM}`, id, provisionalId })
+			}
+		}
+	})
 
-	return (<section className={styles.wrap}>
+	const { bun, fillings, totalPrice, itemIds } = useSelector(state => {
+		const { currentBun, currentItems } = state.currentItems
+		const { items } = state.availableItems
+		const bun = items.find(item => item._id === currentBun)
+		const itemIds = []
+		const fillings = []
+		let totalPrice = bun?.price || 0
+		if (bun) itemIds.push(currentBun)
+		currentItems.forEach(({ itemId, id: provisionalId }) => {
+			const item = items.find(item => item._id === itemId)
+			if (!item) return
+			fillings.push({...item, provisionalId })
+			itemIds.push(itemId)
+			totalPrice += item.price
+		});
+
+		return {
+			bun,
+			fillings,
+			totalPrice,
+			itemIds
+		}
+	})
+
+	function checkout() {
+		dispatch(checkoutRequest({ path: CHECKOUT_URL, ingredients: itemIds }))
+	}
+
+	function deleteIngredient(id){
+		dispatch({ type: `currentItems/${REMOVE_ITEM}`, id })
+	}
+
+	const ingredientsReady = bun || fillings.length > 0;
+
+	return (<section className={styles.wrap} ref={dropRef}>
 		{ingredientsReady && <>
-			<ConstructorElement
-				text={`${bun.name} (Верх)`}
-				thumbnail={bun.image_mobile}
-				price={bun.price}
-				isLocked={true}
-				type="top"
-			/>
+			{
+				!!bun ? <ConstructorElement
+					text={`${bun.name} (Верх)`}
+					thumbnail={bun.image_mobile}
+					price={bun.price}
+					isLocked={true}
+					type="top"
+				/> : null
+			}
 			<div className={styles.list}>
 				{
 					fillings.map((item, i) => {
-						const {name, image_mobile, price, _id } = item;
-						return (<div className="listItemWrap" key={`${_id}_${i}`}>
-							<DragIcon type="primary"/>
+						const {name, image_mobile, price, provisionalId } = item;
+						return (<ActiveIngredientWrap index={i} key={provisionalId}>
 							<ConstructorElement								
 								text={name}
 								thumbnail={image_mobile}
 								price={price}
+								handleClose={() => { deleteIngredient(provisionalId)}}
 							/>
-						</div>)
+						</ActiveIngredientWrap>)
 					})
 				}
 			</div>
-			<ConstructorElement
-				text={`${bun.name}(низ)`}
-				thumbnail={bun.image_mobile}
-				price={bun.price}
-				isLocked={true}
-				type="bottom"
-			/>
+			{
+				!!bun ? <ConstructorElement
+					text={`${bun.name}(низ)`}
+					thumbnail={bun.image_mobile}
+					price={bun.price}
+					isLocked={true}
+					type="bottom"
+				/> : null
+			}
 		</>}
 		<div className={styles.listOptions}>
 			<span className={styles.priceTotal}>
@@ -57,13 +108,10 @@ export function BurgerConstructor(props) {
 			<Button
 				htmlType="submit"
 				type="primary"
+				onClick={checkout}
 			>
 				Оформить заказ
 			</Button>
 		</div>
 	</section>)
-}
-
-BurgerConstructor.propTypes = {
-	selection: IngredientListProps
 }

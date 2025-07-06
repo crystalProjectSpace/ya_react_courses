@@ -1,8 +1,8 @@
 
 import detailStyles from './ingredient-details.module.css'
-import { IngredientBreakdown } from '../../types'
+import { useSelector } from 'react-redux'
 
-export function IngredientDetails (props) {
+export function IngredientDetails () {
     const {
         name,
         image_large,
@@ -10,7 +10,11 @@ export function IngredientDetails (props) {
         proteins,
         fat,
         carbohydrates
-    } = props.ingredient;
+    } = useSelector(state => {
+        const {selectedId} = state.currentSelection
+        const {items} = state.availableItems
+        return items.find(item => item._id === selectedId) || {}
+    })
 
     return  (<>
         <header className={detailStyles.header}>
@@ -43,5 +47,3 @@ export function IngredientDetails (props) {
         </table>
     </>)
 }
-
-IngredientDetails.propTypes = { ingredient: IngredientBreakdown }
