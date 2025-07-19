@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router'
 import { useDrag } from 'react-dnd'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import card from './ingredient-card.module.css'
@@ -40,9 +41,11 @@ export function IngredientCard(props) {
             <CurrencyIcon type="primary" />
             <span>{props.price}</span>
         </span>
-        <span className={card.nameLabel}>
-            {props.name}
-        </span>
+        <Link to={`/ingredients/${props._id}`}>
+            <span className={card.nameLabel}>
+                {props.name}
+            </span>
+        </Link>
         {
             count > 0 ? (<span className={card.count}>{ count }</span>) : null
         }

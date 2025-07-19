@@ -1,4 +1,4 @@
-async function request(url, payload) {
+export async function request(url, payload) {
    const raw = await fetch(url, payload)
    const { ok } = raw;
    if (!ok) throw new Error('API_FAIL')
