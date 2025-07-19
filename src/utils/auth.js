@@ -5,7 +5,7 @@ import {
     REFRESH_TOKEN_URL,
 } from '../constants';
 
-import { request } from '../data'
+import { request } from './data'
 
 export async function authorize(authForm) {
     try {

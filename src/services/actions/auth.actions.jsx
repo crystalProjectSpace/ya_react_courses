@@ -1,0 +1,4 @@
+export const AUTH_SET_TOKEN = 'AUTH_SET_TOKEN'
+export const AUTH_SET_REFRESH = 'AUTH_SET_REFRESH'
+export const AUTH_SET_USER = 'AUTH_SET_USER'
+export const AUTH_LOGOUT = 'AUTH_LOGOUT'
