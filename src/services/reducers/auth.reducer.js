@@ -45,18 +45,18 @@ export const registerUser = (regData) => async (dispatch) => {
     const response = await register(regData)
     if (response.error) return
     const { user, accessToken, refreshToken } = response;
-    dispatch(`authorization/${AUTH_SET_TOKEN}`, accessToken)
-    dispatch(`authorization/${AUTH_SET_REFRESH}`, refreshToken)
-    dispatch(`authorization/${AUTH_SET_USER}`, user)
+    dispatch({ type: `authorization/${AUTH_SET_TOKEN}`, accessToken })
+    dispatch({ type: `authorization/${AUTH_SET_REFRESH}`, refreshToken })
+    dispatch({ type: `authorization/${AUTH_SET_USER}`, user })
 }
 
 export const loginUser = (loginData) => async (dispatch) => {
     const response = await authorize(loginData)
     if (response.error) return
     const { user, accessToken, refreshToken } = response;
-    dispatch(`authorization/${AUTH_SET_TOKEN}`, accessToken)
-    dispatch(`authorization/${AUTH_SET_REFRESH}`, refreshToken)
-    dispatch(`authorization/${AUTH_SET_USER}`, user)
+    dispatch({ type: `authorization/${AUTH_SET_TOKEN}`, accessToken })
+    dispatch({ type: `authorization/${AUTH_SET_REFRESH}`, refreshToken })
+    dispatch({ type: `authorization/${AUTH_SET_USER}`, user })
 }
 
 export const refreshUser = () => async (dispatch, getState) => {
@@ -65,15 +65,15 @@ export const refreshUser = () => async (dispatch, getState) => {
     const response = await refresh(refreshToken);
     if (response.error) return
     const { accessToken, refreshToken: newRefreshToken } = response;
-    dispatch(`authorization/${AUTH_SET_TOKEN}`, accessToken);
-    dispatch(`authorization/${AUTH_SET_REFRESH}`, newRefreshToken);
+    dispatch({ type: `authorization/${AUTH_SET_TOKEN}`, accessToken });
+    dispatch({ type: `authorization/${AUTH_SET_REFRESH}`, newRefreshToken });
 }
 
 export const logoutUser = () => async (dispatch, getState) => {
     const state = getState();
     const { accessToken } = state;
     await logout(accessToken);
-    dispatch(`authorization/${AUTH_LOGOUT}`)
+    dispatch({ type: `authorization/${AUTH_LOGOUT}` })
 }
 
 export const restoreUser = (email) => async (dispatch) => {

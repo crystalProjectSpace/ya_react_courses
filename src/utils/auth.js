@@ -4,6 +4,10 @@ import {
     LOGOUT_URL,
     REFRESH_TOKEN_URL,
 } from '../constants';
+import {
+    setCookieItem,
+    clearCookieItem,
+} from './cookie-utils';
 
 import { request } from './data'
 
@@ -24,6 +28,8 @@ export async function authorize(authForm) {
         
         if (!success) return { error: 'auth failed' }
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
+        setCookieItem('access', accessToken);
+        setCookieItem('refresh', refreshToken);
         return { user, accessToken, refreshToken}
     } catch (e) {
         return { error: e }
@@ -47,6 +53,8 @@ export async function register(regForm) {
         
         if (!success) return { error: 'auth failed' }
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
+        setCookieItem('access', accessToken);
+        setCookieItem('refresh', refreshToken);
         return { user, accessToken, refreshToken}
     } catch (e) {
         return { error: e }
@@ -61,6 +69,8 @@ export async function logout(token) {
             body: JSON.stringify({ token }),
         }
         const result = await request(LOGOUT_URL, payload)
+        clearCookieItem('access');
+        clearCookieItem('refresh');
         return { logout: result.success }
     } catch (e) {
         return { error: e }
@@ -82,6 +92,8 @@ export async function refresh(token) {
         } = result;
         if (!success) return { error: 'refresh failed'}
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
+        clearCookieItem('access');
+        clearCookieItem('refresh');
         return { accessToken, refreshToken }
     } catch (e) {
         return { error: e }

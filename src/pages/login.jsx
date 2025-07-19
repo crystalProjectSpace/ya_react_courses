@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { loginUser } from '../services/reducers/auth.reducer';
 
 function LoginPage () {
@@ -9,7 +9,7 @@ function LoginPage () {
     const [pass, setPass] = useState('')
     const dispatch = useDispatch()
 
-    const isValid = useMemo(() => !!email && !pass
+    const isValid = useMemo(() => !!email && !!pass
     , [email, pass])
 
     function requestUserLog(){
@@ -21,41 +21,47 @@ function LoginPage () {
         dispatch(loginUser(payload))
     }
 
-    return (<section class="page-wrap">
-        <h3 className="">Вход</h3>
-        <form className="">
-            <div className="">
-                <Input
-                    type="email"
+    return (<section className="form-wrap">
+        <h3 className="form-title">Вход</h3>
+        <form className="form">
+            <div className="form-row">
+                <EmailInput
+                    value={email}
                     placeholder="E-mail"
-                    onChange={setEmail}
+                    onChange={evt => setEmail(evt.target.value)}
                 />
             </div>
-            <div className="">
-                <Input
-                    type="password"
+            <div className="form-row">
+                <PasswordInput
+                    value={pass}
                     placeholder="Пароль"
-                    onChange={setPass}
+                    onChange={evt => setPass(evt.target.value)}
                 />
-            </div>
-            <div className="">
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    onClick={requestUserLog}
-                >
-                    Войти
-                </Button>
-            </div>
-            <div className="">
-                <span>Вы - новый пользователь?</span>
-                <Link to="./register">Зарегистрироваться</Link>
-            </div>
-            <div className="">
-                <span>Забыли пароль?</span>
-                <Link to="./restore">Войти</Link>
             </div>
         </form>
+        <div className="form-buttons">
+            <Button
+                htmlType="button"
+                type="primary"
+                onClick={requestUserLog}
+            >
+                Войти
+            </Button>
+        </div>
+        <div className="form-links">
+            <span className="form-link-wrap">
+                <span className="text text_type_main-default text_color_inactive">
+                    Вы - новый пользователь?
+                </span>
+                <Link to="./register">Зарегистрироваться</Link>
+            </span>
+            <span className="form-link-wrap">
+                <span className="text text_type_main-default text_color_inactive">
+                    Забыли пароль?
+                </span>
+                <Link to="./restore">Войти</Link>
+            </span>
+        </div>
     </section>)
 }
 

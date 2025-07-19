@@ -1,7 +1,12 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { useDispatch/*, useSelector*/ } from "react-redux";
-import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+    Input,
+    EmailInput,
+    PasswordInput,
+    Button
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import { registerUser } from '../services/reducers/auth.reducer'
 
 
@@ -13,10 +18,11 @@ function RegisterPage () {
 
     const dispatch = useDispatch()
 
-    const isValid = useMemo(() => !!email && !!login && !pass
+    const isValid = useMemo(() => !!email && !!login && !!pass
     , [email, login, pass])
 
     function requestUserReg() {
+
         if (!isValid) return;
         const payload = {
             email,
@@ -26,44 +32,49 @@ function RegisterPage () {
         dispatch(registerUser(payload))
     }
 
-    return (<section className="">
-        <h3 className="">Регистрация </h3>
-        <form className="">
-            <div className="">
+    return (<section className="form-wrap">
+        <h3 className="form-title">Регистрация </h3>
+        <form className="form">
+            <div className="form-row">
                 <Input
                     type="text"
+                    value={login}
                     placeholder="Имя"
-                    onChange={setLogin}
+                    onChange={evt => setLogin(evt.target.value)}
                 />
             </div>
-            <div className="">
-                <Input
-                    type="email"
+            <div className="form-row">
+                <EmailInput
+                    value={email}
                     placeholder="E-mail"
-                    onChange={setEmail}
+                    onChange={evt => setEmail(evt.target.value)}
                 />
             </div>
-            <div className="">
-                <Input
-                    type="password"
+            <div className="form-row">
+                <PasswordInput
+                    value={pass}
                     placeholder="Пароль"
-                    onChange={setPass}
+                    onChange={evt => setPass(evt.target.value)}
                 />
-            </div>
-            <div className="">
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    onClick={requestUserReg}
-                >
-                    Зарегистрироваться
-                </Button>
-            </div>
-            <div className="">
-                <span>Уже зарегистрированы?</span>
-                <Link to="./login">Войти</Link>
             </div>
         </form>
+        <div className="form-buttons">
+            <Button
+                htmlType="button"
+                type="primary"
+                onClick={requestUserReg}
+            >
+                Зарегистрироваться
+            </Button>
+        </div>
+        <div className="form-links">
+            <span className="form-link-wrap">
+                <span className="text text_type_main-default text_color_inactive">
+                    Уже зарегистрированы?
+                </span>
+                <Link to="./login" className="form-link">Войти</Link>
+            </span>
+        </div>
     </section>)
 }
 
