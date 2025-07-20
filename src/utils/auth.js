@@ -23,7 +23,6 @@ export async function authorize(authForm) {
         const result = await request(AUTH_URL, payload);
         const {
             success,
-            user,
             accessToken: rawAccessToken,
             refreshToken
         } = result;
@@ -32,7 +31,7 @@ export async function authorize(authForm) {
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
         setCookieItem('access', accessToken);
         setCookieItem('refresh', refreshToken);
-        return { user, accessToken, refreshToken}
+        return { success: true }
     } catch (e) {
         return { error: e }
     }
@@ -57,14 +56,15 @@ export async function register(regForm) {
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
         setCookieItem('access', accessToken);
         setCookieItem('refresh', refreshToken);
-        return { user, accessToken, refreshToken}
+        return { user }
     } catch (e) {
         return { error: e }
     }
 }
 
-export async function logout(token) {
+export async function logout() {
     try {
+        const token = getCookieItem('access')
         const payload = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -79,8 +79,9 @@ export async function logout(token) {
     }
 }
 
-export async function refresh(token) {
+export async function refresh() {
     try {
+        const token = getCookieItem('refresh')
         const payload = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -94,27 +95,33 @@ export async function refresh(token) {
         } = result;
         if (!success) return { error: 'refresh failed'}
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
-        setCookieItem('access');
-        setCookieItem('refresh');
-        return { accessToken, refreshToken }
+        setCookieItem('access', accessToken);
+        setCookieItem('refresh', refreshToken);
+        return { success: true }
     } catch (e) {
         return { error: e }
     }
 }
 
 export async function fetchProfile() {
-    try {
-        const payload = {
+    const setPayload = () => {
+        const token = getCookieItem('access');
+        return {
             method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${getCookieItem('access')}`
-            }
+            headers: { 'Authorization': `Bearer ${token}` }
         }
-        const result = await request(PROFILE_URL, payload)
-        if (result.success) return { user: result.user, expired: false }
-        return { expired: true }
+    }
+
+    try {
+        const result = await request(PROFILE_URL, setPayload())
+        if (result.success) return { user: result.user, success: true }
+        const refreshResult = await refresh();
+        if (refreshResult.success) {
+            const result = await request(PROFILE_URL, setPayload())
+            if (!result.error) return { user: result.user, success: true }
+        }
     } catch (e) {
         console.error(e);
-        return { error: e}
+        return { error: e }
     }
 }

@@ -1,22 +1,17 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router";
-import { useDispatch/*, useSelector*/ } from "react-redux";
 import {
     Input,
     EmailInput,
     PasswordInput,
     Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { registerUser } from '../services/reducers/auth.reducer'
-
+import { register } from "../utils/auth";
 
 function RegisterPage () {
     const [email, setEmail] = useState('')
     const [login, setLogin] = useState('')
     const [pass, setPass] = useState('')
-    //const userLogin = useSelector(state => state.authorization.user.name)
-
-    const dispatch = useDispatch()
 
     const isValid = useMemo(() => !!email && !!login && !!pass
     , [email, login, pass])
@@ -29,7 +24,7 @@ function RegisterPage () {
             password: pass,
             name: login
         }
-        dispatch(registerUser(payload))
+        register(payload)
     }
 
     return (<section className="form-wrap">

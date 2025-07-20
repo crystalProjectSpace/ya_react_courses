@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import header from './app-header.module.css'
 import {
 	Button,
@@ -23,7 +24,9 @@ export function AppHeader() {
 		<div className={header.profileWrap}>
 			<Button htmlType="button" type="secondary" size="medium">
 				<ProfileIcon type="secondary"/>
-				<span className={header.buttonLabel}>Личный кабинет</span>
+				<Link to="/profile">
+					<span className={header.buttonLabel}>Личный кабинет</span>
+				</Link>
 			</Button>
 		</div>
 	</header>)

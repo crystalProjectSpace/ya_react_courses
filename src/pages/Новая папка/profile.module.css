@@ -1,0 +1,18 @@
+.profileWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: auto;
+    width: fit-content;
+    min-width: 640px;
+    row-gap: 24px;
+}
+
+.profileRow {
+    display: flex;
+    column-gap: 16px;
+}
+
+.profileAttention {
+    
+}

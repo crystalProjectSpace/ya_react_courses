@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { useDispatch } from 'react-redux';
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { restoreUser  } from '../services/reducers/auth.reducer';
 
 function PasswordPage () {
     const [email, setEmail] = useState('')
-    const dispatch = useDispatch();
 
     function requestUserRestore(){
-        if(!email) return;
-        dispatch(restoreUser(email))
+        console.log(email)
     }
 
     return (<section class="form-wrap">
