@@ -40,3 +40,12 @@
     column-gap: 8px;
     align-items: center;
 }
+
+._button {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+._button:hover {
+    color: #fff;
+}

@@ -1,9 +1,27 @@
 .profileWrap {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.profile {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    row-gap: 16px;
 }
 
 .profileRow {
+    display: flex;
+    column-gap: 16px;
+    align-items: center;
+}
 
+.profileItem {
+    display: inline-block;
+    width: 50%;
+    min-width: 50%;
 }
 
 .profileAttention {

@@ -1,12 +1,23 @@
-import { useState } from 'react';
-import { Link } from 'react-router';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { fetchProfile } from '../utils/auth';
 
 function PasswordPage () {
     const [email, setEmail] = useState('')
+    const navigate = useNavigate();
 
-    function requestUserRestore(){
-        console.log(email)
+    useEffect(() => {
+        const checkAuth = async () => {
+            const response = await fetchProfile()
+            if (response.success) navigate('/')
+        }
+
+        checkAuth();
+    }, [navigate])
+
+    async function acquireCode() {
+
     }
 
     return (<section class="form-wrap">
@@ -15,6 +26,7 @@ function PasswordPage () {
             <div className="form-row">
                 <Input
                     type="email"
+                    value={email}
                     placeholder="Укажите E-mail"
                     onChange={evt => setEmail(evt.target.value)}
                 />
@@ -24,7 +36,7 @@ function PasswordPage () {
             <Button
                 htmlType="button"
                 type="primary"
-                onClick={requestUserRestore}
+                onClick={acquireCode}
             >
                 Восстановить
             </Button>

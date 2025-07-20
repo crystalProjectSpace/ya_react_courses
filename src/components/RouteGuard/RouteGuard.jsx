@@ -3,6 +3,7 @@ import { Navigate } from "react-router";
 import { fetchProfile } from "../../utils/auth";
 
 export function RouteGuard(props) {
+    const { element, allowAuthorized } = props;
     const [loadComplete, setLoadcomplete] = useState(false)
     const [isAuthorized, setIsAuthorized] = useState(false)
 
@@ -17,7 +18,13 @@ export function RouteGuard(props) {
 
     if (!loadComplete) return null
 
+    if (allowAuthorized) {
+        return isAuthorized
+            ? element
+            : <Navigate to='/login' replace/>
+    }
+
     return isAuthorized
-        ? props.element
-        : <Navigate to='/login' replace/>
+        ? <Navigate to='/' replace/>
+        : element
 }
