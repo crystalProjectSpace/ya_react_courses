@@ -14,6 +14,10 @@ export const PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user' // 
 
 export const UPD_PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user' // эндпоинт обновления данных о пользователе.
 
+export const PASS_RESET_URL = 'https://norma.nomoreparties.space/api/password-reset/' // получение кода на сброс пароля
+
+export const PASS_CHANGE_URL = 'https://norma.nomoreparties.space/api/password-reset/reset'
+
 export const INGREDIENT_TYPE = {
     BUN: 'bun',
     SAUCE: 'sauce',

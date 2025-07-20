@@ -7,24 +7,22 @@ export function RouteGuard(props) {
     const [loadComplete, setLoadcomplete] = useState(false)
     const [isAuthorized, setIsAuthorized] = useState(false)
 
-    useEffect(() => {
-        const loadUser = async () => {
-            const response = await fetchProfile();
-            setLoadcomplete(true)
-            if (response.user) setIsAuthorized(true)
-        }
-        loadUser()
-    }, [])
+    const loadUser = async () => {
+        if (isAuthorized) return
+        const response = await fetchProfile();
+        setLoadcomplete(true)
+        if (response.user) setIsAuthorized(true)
+    }
+
+    useEffect(() => { loadUser() }, [])
 
     if (!loadComplete) return null
 
-    if (allowAuthorized) {
-        return isAuthorized
-            ? element
-            : <Navigate to='/login' replace/>
-    }
+    if (allowAuthorized) return isAuthorized
+        ? element
+        : <Navigate to='/login' replace />;
 
     return isAuthorized
         ? <Navigate to='/' replace/>
-        : element
+        : element;
 }

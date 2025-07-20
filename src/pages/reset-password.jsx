@@ -1,25 +1,20 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useState } from 'react';
+import { Link } from 'react-router';
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { fetchProfile } from '../utils/auth';
+import { changePassword } from '../utils/auth';
 
-function PasswordPage () {
+
+function ResetPasswordPage () {
     const [code, setCode] = useState('')
     const [pass, setPass] = useState('')
 
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            const response = await fetchProfile()
-            if (response.success) navigate('/')
-        }
-    
-        checkAuth();
-    }, [navigate])
-
     async function resetPass() {
-        
+        if(!code || !pass) return
+        const formData = { token: code, password: pass }
+        const response = await changePassword(formData);
+        const { success , error } = response
+        if (success) console.log( 'pass changed')
+        if (error) console.log('pass change failed')
     }
     
     return (<section class="form-wrap">
@@ -61,4 +56,4 @@ function PasswordPage () {
     </section>)
 }
 
-export default PasswordPage;
+export default ResetPasswordPage;

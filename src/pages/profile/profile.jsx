@@ -20,7 +20,7 @@ function ProfilePage () {
             if (response.user) setUser(response.user)
         }
         loadUser()
-    }, [user])
+    }, [])
 
     async function logoutUser() {
         await logout()
@@ -33,7 +33,7 @@ function ProfilePage () {
                 <span className={style.profileItem}>Профиль</span>
                 <Input
                     type="text"
-                    value={user.name}
+                    defaultValue={user.name}
                     placeholder="Имя"
                     icon="EditIcon"
                 />
@@ -44,13 +44,13 @@ function ProfilePage () {
                 </Link>                
                 <EmailInput
                     type="text"
-                    value={user.email}
+                    defaultValue={user.email}
                     icon="EditIcon"
                 />
             </div>
             <div className={style.profileRow}>
                 <span
-                    class={`${style.profileItem} _button`}
+                    className={`${style.profileItem} _button`}
                     role="button"
                     onClick={logoutUser}
                 >
@@ -58,7 +58,7 @@ function ProfilePage () {
                 </span>
                 <PasswordInput
                     type="text"
-                    value={password}
+                    defaultValue={password}
                 />
             </div>
             <div className={style.profileAttention}>

@@ -1,23 +1,15 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
-import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { fetchProfile } from '../utils/auth';
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router'
+import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components"
+import { getResetCode } from '../utils/auth'
 
-function PasswordPage () {
+function ForgotPasswordPage () {
     const [email, setEmail] = useState('')
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            const response = await fetchProfile()
-            if (response.success) navigate('/')
-        }
-
-        checkAuth();
-    }, [navigate])
-
     async function acquireCode() {
-
+        const response = await getResetCode(email)
+        if (response.success) navigate('/reset-password')
     }
 
     return (<section class="form-wrap">
@@ -52,4 +44,4 @@ function PasswordPage () {
     </section>)
 }
 
-export default PasswordPage;
+export default ForgotPasswordPage;

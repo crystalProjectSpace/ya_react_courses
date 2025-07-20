@@ -4,6 +4,8 @@ import {
     LOGOUT_URL,
     REFRESH_TOKEN_URL,
     PROFILE_URL,
+    PASS_RESET_URL,
+    PASS_CHANGE_URL,
 } from '../constants';
 import {
     setCookieItem,
@@ -64,7 +66,7 @@ export async function register(regForm) {
 
 export async function logout() {
     try {
-        const token = getCookieItem('access')
+        const token = getCookieItem('refresh')
         const payload = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -108,7 +110,10 @@ export async function fetchProfile() {
         const token = getCookieItem('access');
         return {
             method: 'GET',
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
         }
     }
 
@@ -123,5 +128,39 @@ export async function fetchProfile() {
     } catch (e) {
         console.error(e);
         return { error: e }
+    }
+}
+
+export async function getResetCode(email) {
+    try {
+        const payload = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        }
+        const response = await request(PASS_RESET_URL, payload);
+        if (response.success) return { success: true }
+        return { error: 'reset failed' }
+    } catch (e) {
+        console.error(e)
+        return { error: e}
+    }
+}
+
+export async function changePassword(formData) {
+    try {
+        const payload = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        }
+
+        const response = await request(PASS_CHANGE_URL, payload)
+        const { success } = response
+        if (success) return { success }
+        return { error: 'pass change failed' }
+    } catch (e) {
+        console.error(e)
+        return { error: e}
     }
 }
