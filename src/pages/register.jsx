@@ -67,7 +67,7 @@ function RegisterPage () {
                 <span className="text text_type_main-default text_color_inactive">
                     Уже зарегистрированы?
                 </span>
-                <Link to="./login" className="form-link">Войти</Link>
+                <Link to="/login" className="form-link">Войти</Link>
             </span>
         </div>
     </section>)

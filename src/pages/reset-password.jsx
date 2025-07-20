@@ -50,7 +50,7 @@ function ResetPasswordPage () {
                 <span className="text text_type_main-default text_color_inactive">
                     Вспомнили пароль?
                 </span>
-                <Link to="./login">Войти</Link>
+                <Link to="/login">Войти</Link>
             </span>
         </div>
     </section>)

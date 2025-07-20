@@ -108,6 +108,7 @@ export async function refresh() {
 export async function fetchProfile() {
     const setPayload = () => {
         const token = getCookieItem('access');
+        console.log('token', token)
         return {
             method: 'GET',
             headers: {

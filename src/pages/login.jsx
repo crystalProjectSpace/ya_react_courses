@@ -1,7 +1,7 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { authorize, fetchProfile } from '../utils/auth';
+import { authorize } from '../utils/auth';
 
 function LoginPage () {
     const [email, setEmail] = useState('')
@@ -19,17 +19,8 @@ function LoginPage () {
             password: pass,
         }
         const response = await authorize(payload)
-        if (response.success) navigate('/')
+        if (response.success) setTimeout(() => { navigate('/', { replace: true })}, 250)
     }
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            const response = await fetchProfile()
-            if (response.success) navigate('/')
-        }
-
-        checkAuth();
-    }, [navigate])
 
     return (<section className="form-wrap">
         <h3 className="form-title">Вход</h3>
@@ -63,13 +54,13 @@ function LoginPage () {
                 <span className="text text_type_main-default text_color_inactive">
                     Вы - новый пользователь?
                 </span>
-                <Link to="./register">Зарегистрироваться</Link>
+                <Link to="/register">Зарегистрироваться</Link>
             </span>
             <span className="form-link-wrap">
                 <span className="text text_type_main-default text_color_inactive">
                     Забыли пароль?
                 </span>
-                <Link to="./restore">Войти</Link>
+                <Link to="/forgot-password">Войти</Link>
             </span>
         </div>
     </section>)

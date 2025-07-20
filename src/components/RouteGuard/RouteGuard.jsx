@@ -4,23 +4,24 @@ import { fetchProfile } from "../../utils/auth";
 
 export function RouteGuard(props) {
     const { element, allowAuthorized } = props;
-    const [loadComplete, setLoadcomplete] = useState(false)
+    const [loadComplete, setLoadComplete] = useState(false)
     const [isAuthorized, setIsAuthorized] = useState(false)
 
     const loadUser = async () => {
         if (isAuthorized) return
         const response = await fetchProfile();
-        setLoadcomplete(true)
-        if (response.user) setIsAuthorized(true)
+        setLoadComplete(true)
+
+        if (response.success) setIsAuthorized(true)
     }
 
-    useEffect(() => { loadUser() }, [])
+    loadUser()
 
-    if (!loadComplete) return null
+    if (!loadComplete)  return null
 
-    if (allowAuthorized) return isAuthorized
+    if (allowAuthorized !== false) return isAuthorized
         ? element
-        : <Navigate to='/login' replace />;
+        : <Navigate to='/login' replace />
 
     return isAuthorized
         ? <Navigate to='/' replace/>

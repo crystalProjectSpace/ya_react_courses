@@ -39,8 +39,11 @@ function ProfilePage () {
                 />
             </div>
             <div className={style.profileRow}>
-                <Link to="/profile/orders">
-                    <span className={style.profileItem}>История заказов</span>
+                <Link
+                    to="/profile/orders"
+                    className={style.profileItem}
+                >
+                    <span >История заказов</span>
                 </Link>                
                 <EmailInput
                     type="text"

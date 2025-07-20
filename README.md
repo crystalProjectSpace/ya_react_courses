@@ -74,3 +74,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 login: test_user
 email: test_ya_coursers@yandex.ru
 pass: t35t_u53r_r34dy
+
+login: test_account_2
+email: sevmailbox@yandex.ru
+pass: TestPassAccount22
