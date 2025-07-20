@@ -1,11 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { 
-    AUTH_SET_TOKEN,
-    AUTH_SET_REFRESH,
     AUTH_SET_USER,
     AUTH_LOGOUT,
 } from '../actions'
-import { authorize, register, refresh, logout } from '../../utils/auth';
+import { authorize, register, refresh, logout, fetchProfile } from '../../utils/auth';
+import { getCookieItem } from '../../utils/cookie-utils';
 
 export const authorizationSlice = createSlice({
     name: 'authorization',
@@ -18,14 +17,6 @@ export const authorizationSlice = createSlice({
         },        
     },
     reducers: {
-        [AUTH_SET_TOKEN]: (state, action) => ({
-            ...state,
-            accessToken: action.accessToken,
-        }),
-        [AUTH_SET_REFRESH]: (state, action) => ({
-            ...state,
-            refreshToken: action.refreshToken,
-        }),
         [AUTH_SET_USER]: (state, action) => ({
             ...state,
             user: action.user
@@ -44,36 +35,36 @@ export const authorizationSlice = createSlice({
 export const registerUser = (regData) => async (dispatch) => {
     const response = await register(regData)
     if (response.error) return
-    const { user, accessToken, refreshToken } = response;
-    dispatch({ type: `authorization/${AUTH_SET_TOKEN}`, accessToken })
-    dispatch({ type: `authorization/${AUTH_SET_REFRESH}`, refreshToken })
+    const { user } = response;
     dispatch({ type: `authorization/${AUTH_SET_USER}`, user })
 }
 
 export const loginUser = (loginData) => async (dispatch) => {
     const response = await authorize(loginData)
     if (response.error) return
-    const { user, accessToken, refreshToken } = response;
-    dispatch({ type: `authorization/${AUTH_SET_TOKEN}`, accessToken })
-    dispatch({ type: `authorization/${AUTH_SET_REFRESH}`, refreshToken })
+    const { user } = response;
     dispatch({ type: `authorization/${AUTH_SET_USER}`, user })
 }
 
-export const refreshUser = () => async (dispatch, getState) => {
-    const state = getState();
-    const { refreshToken } = state;
-    const response = await refresh(refreshToken);
-    if (response.error) return
-    const { accessToken, refreshToken: newRefreshToken } = response;
-    dispatch({ type: `authorization/${AUTH_SET_TOKEN}`, accessToken });
-    dispatch({ type: `authorization/${AUTH_SET_REFRESH}`, newRefreshToken });
-}
-
-export const logoutUser = () => async (dispatch, getState) => {
-    const state = getState();
-    const { accessToken } = state;
+export const logoutUser = () => async (dispatch) => {
+    const accessToken = getCookieItem('access')
     await logout(accessToken);
     dispatch({ type: `authorization/${AUTH_LOGOUT}` })
+}
+
+export const getUserProfile = () => async (dispatch) => {
+    const refreshToken = getCookieItem('refresh')
+    const response = await fetchProfile()
+    if (response.error || response.expired) {
+        const refreshResponse = await refresh(refreshToken);
+        if (refreshResponse.error) return
+        const response = await fetchProfile()
+        const { user } = response
+        dispatch({ type: `authorization/${AUTH_SET_USER}`, user })
+    } else {
+        const { user } = response
+        dispatch({ type: `authorization/${AUTH_SET_USER}`, user })
+    }
 }
 
 export const restoreUser = (email) => async (dispatch) => {

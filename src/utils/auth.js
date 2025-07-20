@@ -3,10 +3,12 @@ import {
     REG_URL,
     LOGOUT_URL,
     REFRESH_TOKEN_URL,
+    PROFILE_URL,
 } from '../constants';
 import {
     setCookieItem,
     clearCookieItem,
+    getCookieItem,
 } from './cookie-utils';
 
 import { request } from './data'
@@ -92,10 +94,27 @@ export async function refresh(token) {
         } = result;
         if (!success) return { error: 'refresh failed'}
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
-        clearCookieItem('access');
-        clearCookieItem('refresh');
+        setCookieItem('access');
+        setCookieItem('refresh');
         return { accessToken, refreshToken }
     } catch (e) {
         return { error: e }
+    }
+}
+
+export async function fetchProfile() {
+    try {
+        const payload = {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${getCookieItem('access')}`
+            }
+        }
+        const result = await request(PROFILE_URL, payload)
+        if (result.success) return { user: result.user, expired: false }
+        return { expired: true }
+    } catch (e) {
+        console.error(e);
+        return { error: e}
     }
 }

@@ -10,6 +10,10 @@ export const LOGOUT_URL = 'https://norma.nomoreparties.space/api/auth/logout' //
 
 export const REFRESH_TOKEN_URL = 'https://norma.nomoreparties.space/api/auth/token' // эндпоинт обновления токена. 
 
+export const PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user' // эндпоинт получения данных о пользователе.
+
+export const UPD_PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user' // эндпоинт обновления данных о пользователе.
+
 export const INGREDIENT_TYPE = {
     BUN: 'bun',
     SAUCE: 'sauce',

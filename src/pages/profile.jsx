@@ -1,5 +1,16 @@
+import { useEffect } from "react"
+import { useDispatch, useSelector} from 'react-redux'
+import { getUserProfile } from "../services/reducers/auth.reducer"
+
 function ProfilePage () {
-    return (<section class="page-wrap"></section>)
+    const dispatch = useDispatch()
+
+    const user = useSelector(state => state.authorization.user)
+
+    useEffect(() => {
+        dispatch(getUserProfile())
+    }, []);
+    return (<section class="page-wrap">{ JSON.stringify(user)}</section>)
 }
 
 export default ProfilePage;
