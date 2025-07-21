@@ -13,40 +13,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/login"
-          element={<RouteGuard element={<LoginPage/>} allowAuthorized={false}/>}
-        />
+        <Route path="/login" element={<LoginPage/>} />
+        <Route path="/register" element={<RegisterPage/>} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
+        <Route path="/reset-password" element={<ResetPasswordPage/>} />
 
-        <Route
-          path="/register"
-          element={<RegisterPage/>}
-        />
-
-        <Route
-          path="/forgot-password"
-          element={<RouteGuard element={<ForgotPasswordPage/>} allowAuthorized={false}/>}
-        />
-
-        <Route
-          path="/reset-password"
-          element={<RouteGuard element={<ResetPasswordPage/>} allowAuthorized={false}/>}
-        />
-
-        <Route
-          path="/"
-          element={<RouteGuard element={<RootPage/>} allowAuthorized={true}/>}
-        />
-
-        <Route
-          path="/profile"
-          element={<RouteGuard element={<ProfilePage/>} allowAuthorized={true}/>}
-        />
-
-        <Route
-          path="/ingredients/:id"
-          element={<RouteGuard element={<IngredientPage/>} allowAuthorized={true}/>}
-        />
+        <Route path="/" element={<RouteGuard element={<RootPage/>}/>} />
+        <Route path="/profile" element={<RouteGuard element={<ProfilePage/>}/>} />
+        <Route path="/ingredients/:id" element={<RouteGuard element={<IngredientPage/>}/>} />
       </Routes>
     </Router>
   );

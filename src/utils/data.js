@@ -19,8 +19,12 @@ export async function getData(path) {
 
 export async function makeCheckoutRequest({ingredients, path}) {
    try {
-      const body =  JSON.stringify({ ingredients })
-      const headers = { 'Content-Type': 'application/json'}
+      const body = JSON.stringify({ ingredients })
+      const token = window.sessionStorage.getItem('access') 
+      const headers = {
+         'Content-Type': 'application/json',
+         'Authorization': `Bearer ${token}`
+      }
       const requestData = {
          method: 'POST',
          headers,

@@ -7,12 +7,6 @@ import {
     PASS_RESET_URL,
     PASS_CHANGE_URL,
 } from '../constants';
-import {
-    setCookieItem,
-    clearCookieItem,
-    getCookieItem,
-} from './cookie-utils';
-
 import { request } from './data'
 
 export async function authorize(authForm) {
@@ -32,8 +26,8 @@ export async function authorize(authForm) {
         
         if (!success) return { error: 'auth failed' }
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
-        setCookieItem('access', accessToken);
-        setCookieItem('refresh', refreshToken);
+        window.sessionStorage.setItem('access', accessToken)
+        window.sessionStorage.setItem('refresh', refreshToken)
         return { success: true, user }
     } catch (e) {
         return { error: e }
@@ -57,8 +51,8 @@ export async function register(regForm) {
         
         if (!success) return { error: 'auth failed' }
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
-        setCookieItem('access', accessToken);
-        setCookieItem('refresh', refreshToken);
+        window.sessionStorage.setItem('access', accessToken)
+        window.sessionStorage.setItem('refresh', refreshToken)
         return { user }
     } catch (e) {
         return { error: e }
@@ -67,15 +61,15 @@ export async function register(regForm) {
 
 export async function logout() {
     try {
-        const token = getCookieItem('refresh')
+        const token = window.sessionStorage.getItem('refresh')
         const payload = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token }),
         }
         const result = await request(LOGOUT_URL, payload)
-        clearCookieItem('access');
-        clearCookieItem('refresh');
+        window.sessionStorage.removeItem('access')
+        window.sessionStorage.removeItem('refresh')
         return { logout: result.success }
     } catch (e) {
         return { error: e }
@@ -84,7 +78,7 @@ export async function logout() {
 
 export async function refresh() {
     try {
-        const token = getCookieItem('refresh')
+        const token = window.sessionStorage.getItem('refresh')
         const payload = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -98,8 +92,8 @@ export async function refresh() {
         } = result;
         if (!success) return { error: 'refresh failed'}
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
-        setCookieItem('access', accessToken);
-        setCookieItem('refresh', refreshToken);
+        window.sessionStorage.setItem('access', accessToken)
+        window.sessionStorage.setItem('refresh', refreshToken)
         return { success: true }
     } catch (e) {
         return { error: e }
@@ -108,8 +102,7 @@ export async function refresh() {
 
 export async function fetchProfile() {
     const setPayload = () => {
-        const token = getCookieItem('access');
-        console.log('token', token)
+        const token = window.sessionStorage.getItem('access')
         return {
             method: 'GET',
             headers: {

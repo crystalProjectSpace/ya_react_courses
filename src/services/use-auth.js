@@ -7,7 +7,7 @@ export function useAuth() {
     const [user, setUser] = useState(null)
 
     async function signIn(formData) {
-        const { success, user:userData } = await authorize(formData)
+        const { success, user: userData } = await authorize(formData)
         if (success) setUser(userData)
     }
 
