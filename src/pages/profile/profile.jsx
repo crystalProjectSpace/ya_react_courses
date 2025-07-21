@@ -1,29 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     Input,
     EmailInput,
     PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router";
-import { fetchProfile, logout } from "../../utils/auth";
+import { useAuthContext } from "../../services/use-auth";
 import style from './profile.module.css';
 import { useNavigate } from "react-router";
 
 function ProfilePage () {
-    const [user, setUser] = useState({ name: '', email: ''})
+    const { user, signOut } = useAuthContext()
     const [password, setPassword] = useState('')
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const loadUser = async () => {
-            const response = await fetchProfile()
-            if (response.user) setUser(response.user)
-        }
-        loadUser()
-    }, [])
-
     async function logoutUser() {
-        await logout()
+        await signOut()
         navigate('/login')
     }
 
@@ -33,7 +25,7 @@ function ProfilePage () {
                 <span className={style.profileItem}>Профиль</span>
                 <Input
                     type="text"
-                    defaultValue={user.name}
+                    defaultValue={user?.name}
                     placeholder="Имя"
                     icon="EditIcon"
                 />
@@ -47,7 +39,7 @@ function ProfilePage () {
                 </Link>                
                 <EmailInput
                     type="text"
-                    defaultValue={user.email}
+                    defaultValue={user?.email}
                     icon="EditIcon"
                 />
             </div>
@@ -62,6 +54,7 @@ function ProfilePage () {
                 <PasswordInput
                     type="text"
                     defaultValue={password}
+                    onChange={setPassword}
                 />
             </div>
             <div className={style.profileAttention}>

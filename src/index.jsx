@@ -10,6 +10,7 @@ import {
   currentItemsSlice,
   checkoutSlice,
 } from './services';
+import { ProvideAuth } from './services/use-auth';
 
 
 const store = configureStore({
@@ -23,9 +24,11 @@ const store = configureStore({
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>    
-  </React.StrictMode>
+  <ProvideAuth>
+    <React.StrictMode>
+      <Provider store={store}>
+        <App />
+      </Provider>    
+    </React.StrictMode>
+  </ProvideAuth>
 );

@@ -1,28 +1,23 @@
 import { useMemo, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link, Navigate } from 'react-router';
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { authorize } from '../utils/auth';
+import { useAuthContext } from '../services/use-auth';
 
 function LoginPage () {
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
-    const navigate = useNavigate()
 
     const isValid = useMemo(() => !!email && !!pass
     , [email, pass])
 
+    const { user, signIn } = useAuthContext()
 
-    async function requestUserLog(){
+    function requestUserLog(){
         if (!isValid) return;
-        const payload = {
-            email,
-            password: pass,
-        }
-        const response = await authorize(payload)
-        if (response.success) setTimeout(() => { navigate('/', { replace: true })}, 250)
+        signIn({ email, password: pass })
     }
 
-    return (<section className="form-wrap">
+    return user ? (<Navigate to="/" replace/>) : (<section className="form-wrap">
         <h3 className="form-title">Вход</h3>
         <form className="form">
             <div className="form-row">

@@ -26,14 +26,15 @@ export async function authorize(authForm) {
         const {
             success,
             accessToken: rawAccessToken,
-            refreshToken
+            refreshToken,
+            user
         } = result;
         
         if (!success) return { error: 'auth failed' }
         const accessToken = rawAccessToken.replace(/^Bearer\s*/, '');
         setCookieItem('access', accessToken);
         setCookieItem('refresh', refreshToken);
-        return { success: true }
+        return { success: true, user }
     } catch (e) {
         return { error: e }
     }
