@@ -10,9 +10,9 @@ export const LOGOUT_URL = 'https://norma.nomoreparties.space/api/auth/logout' //
 
 export const REFRESH_TOKEN_URL = 'https://norma.nomoreparties.space/api/auth/token' // эндпоинт обновления токена. 
 
-export const PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user' // эндпоинт получения данных о пользователе.
+export const PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user' // GET эндпоинт получения данных о пользователе.
 
-export const UPD_PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user' // эндпоинт обновления данных о пользователе.
+export const UPD_PROFILE_URL = 'https://norma.nomoreparties.space/api/auth/user' // PATCH эндпоинт обновления данных о пользователе.
 
 export const PASS_RESET_URL = 'https://norma.nomoreparties.space/api/password-reset/' // получение кода на сброс пароля
 

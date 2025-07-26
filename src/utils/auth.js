@@ -6,6 +6,7 @@ import {
     PROFILE_URL,
     PASS_RESET_URL,
     PASS_CHANGE_URL,
+    UPD_PROFILE_URL,
 } from '../constants';
 import { request } from './data'
 
@@ -157,5 +158,24 @@ export async function changePassword(formData) {
     } catch (e) {
         console.error(e)
         return { error: e}
+    }
+}
+
+export async function editUser(formData) {
+    try {
+        const payload = {
+            method: 'PATCH',
+            header: {
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${window.sessionStorage.getItem('access')}`
+            },
+            body: JSON.stringify(formData)
+        }
+
+        const result = await request(UPD_PROFILE_URL, payload)
+        const { success, user } = result;
+        return success ? { user } : { error: 'user profile update failed' }
+    } catch (e) {
+        return { error: e }
     }
 }

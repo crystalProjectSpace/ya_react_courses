@@ -18,9 +18,18 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
         <Route path="/reset-password" element={<ResetPasswordPage/>} />
 
-        <Route path="/" element={<RouteGuard element={<RootPage/>}/>} />
-        <Route path="/profile" element={<RouteGuard element={<ProfilePage/>}/>} />
-        <Route path="/ingredients/:id" element={<RouteGuard element={<IngredientPage/>}/>} />
+        <Route
+          path="/"
+          element={<RouteGuard element={<RootPage/>}/>}
+        />
+        <Route
+          path="/profile"
+          element={<RouteGuard element={<ProfilePage/>}/>}
+        />
+        <Route
+          path="/ingredients/:id"
+          element={<RouteGuard element={<IngredientPage/>}/>}
+        />
       </Routes>
     </Router>
   );
