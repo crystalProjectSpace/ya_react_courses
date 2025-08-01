@@ -12,14 +12,19 @@ import '../assets/styles/index.css';
 import { API_URL } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../services';
-import { CHECKOUT_CLEAR, CLEAR_SELECTION } from '../services/actions';
+import { CHECKOUT_CLEAR, CLEAR_SELECTION, SET_SELECTION } from '../services/actions';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useParams } from 'react-router';
 
 function RootPage() {
   const dispatch = useDispatch();
+  const { id: ingredientId } = useParams()
 
-  useEffect(() => { dispatch(getItems(API_URL)) }, [])
+  useEffect(() => {
+    dispatch(getItems(API_URL))
+    if (ingredientId) dispatch({ type: `currentSelection/${SET_SELECTION}`, id: ingredientId })
+  }, [])
   
   const showActiveIngredient = useSelector(state => !!state.currentSelection.selectedId)
   const orderId = useSelector(state => state.checkout.orderId)
