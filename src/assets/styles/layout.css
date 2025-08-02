@@ -42,9 +42,16 @@ body{
     justify-content: center;
 }
 
-
 .page-content {
     position: relative;
+}
+
+.page-header {
+    margin-bottom: 32px;
+}
+
+.page-content._error {
+    max-width: 50%;
 }
 
 ._page-icon-close {

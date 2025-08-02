@@ -5,6 +5,7 @@ import RegisterPage from './pages/register'
 import ResetPasswordPage from './pages/reset-password'
 import ForgotPasswordPage from './pages/forgot-password'
 import ProfilePage from './pages/profile/profile'
+import { ErrorPage } from "./pages/error"
 import { IngredientSinglePage } from "./pages/ingredient-single"
 import { RouteGuard } from "./components/RouteGuard/RouteGuard"
 
@@ -36,6 +37,8 @@ function App() {
             }/>
           }
         />
+
+        <Route path="*" element={<ErrorPage/>} />
       </Routes>
   );
 }
