@@ -1,9 +1,14 @@
-import PropTypes from 'prop-types';
-import { IngredientListProps } from '../../types';
+import { TIngredientItem, TIngredientType } from '../../types';
 import { IngredientCard } from '../IngredientCard/IngredientCard';
 import styles from './ingredient-preview.module.css';
 
-export function IngredientPreview(props) {
+interface IIngredientPreview {
+	ingredientType: TIngredientType
+	ingredientLabel: string
+	items: ReadonlyArray<TIngredientItem>	
+}
+
+export function IngredientPreview(props: IIngredientPreview) {
 
 	const itemCards = props.items.map((ingredientItem, i) => <IngredientCard
 	    key={ingredientItem._id}
@@ -23,10 +28,4 @@ export function IngredientPreview(props) {
 			</div>
 		</div>
 	)
-}
-
-IngredientPreview.propTypes = {
-	ingredientType: PropTypes.string,
-	ingredientLabel: PropTypes.string,
-	items: IngredientListProps,
 }
