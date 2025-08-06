@@ -25,7 +25,8 @@ function ProfilePage () {
                 <span className={style.profileItem}>Профиль</span>
                 <Input
                     type="text"
-                    defaultValue={user?.name}
+                    value={user?.name}
+                    readOnly={true}
                     placeholder="Имя"
                     icon="EditIcon"
                 />
@@ -39,7 +40,8 @@ function ProfilePage () {
                 </Link>                
                 <EmailInput
                     type="text"
-                    defaultValue={user?.email}
+                    value={user?.email}
+                    readOnly={true}
                     icon="EditIcon"
                 />
             </div>
@@ -53,7 +55,7 @@ function ProfilePage () {
                 </span>
                 <PasswordInput
                     type="text"
-                    defaultValue={password}
+                    value={password}
                     onChange={setPassword}
                 />
             </div>
