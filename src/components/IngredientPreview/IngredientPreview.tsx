@@ -1,9 +1,10 @@
-import { TIngredientItem, TIngredientType } from '../../types';
+import { INGREDIENT_TYPE } from '../../constants';
+import { TIngredientItem } from '../../types';
 import { IngredientCard } from '../IngredientCard/IngredientCard';
 import styles from './ingredient-preview.module.css';
 
 interface IIngredientPreview {
-	ingredientType: TIngredientType
+	ingredientType: INGREDIENT_TYPE
 	ingredientLabel: string
 	items: ReadonlyArray<TIngredientItem>	
 }

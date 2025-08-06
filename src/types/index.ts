@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { INGREDIENT_TYPE } from '../constants';
+import { ReactNode } from 'react';
 
 export const IngredientCardProps = PropTypes.shape({
     type: PropTypes.string,
@@ -10,8 +12,6 @@ export const IngredientCardProps = PropTypes.shape({
 });
 
 export const IngredientListProps = PropTypes.arrayOf(IngredientCardProps)
-
-export type TIngredientType = 'BUN' | 'SAUCE' | 'MAIN'
 
 export type TUser = {
     name: string
@@ -32,7 +32,7 @@ export type TIngredientItem = {
     proteins: number
     fat: number
     carbohydrates: number
-    type: TIngredientType
+    type: INGREDIENT_TYPE
     price: number
 }
 
@@ -78,4 +78,9 @@ export type TFetchUserResult = {
     success?: boolean,
     user?: TUser
     error?: string
+}
+
+export interface IModalProps {
+    children: ReactNode | Array<ReactNode>
+    closeModal: () => void
 }
