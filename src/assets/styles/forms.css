@@ -24,7 +24,9 @@
 }
 
 .form-buttons {
+    display: flex;
     margin-bottom: 48px;
+    justify-content: center;
 }
 
 .form-links {

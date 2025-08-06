@@ -16,8 +16,8 @@ function RegisterPage () {
     const isValid = useMemo(() => !!email && !!login && !!pass
     , [email, login, pass])
 
-    function requestUserReg() {
-
+    function requestUserReg(evt) {
+        evt.preventDefault()
         if (!isValid) return;
         const payload = {
             email,
@@ -29,7 +29,10 @@ function RegisterPage () {
 
     return (<section className="form-wrap">
         <h3 className="form-title">Регистрация </h3>
-        <form className="form">
+        <form
+            className="form"
+            onSubmit={requestUserReg}
+        >
             <div className="form-row">
                 <Input
                     type="text"
@@ -52,16 +55,16 @@ function RegisterPage () {
                     onChange={evt => setPass(evt.target.value)}
                 />
             </div>
+            <div className="form-buttons">
+                <Button
+                    htmlType="submit"
+                    type="primary"
+                >
+                    Зарегистрироваться
+                </Button>
+            </div>
         </form>
-        <div className="form-buttons">
-            <Button
-                htmlType="button"
-                type="primary"
-                onClick={requestUserReg}
-            >
-                Зарегистрироваться
-            </Button>
-        </div>
+
         <div className="form-links">
             <span className="form-link-wrap">
                 <span className="text text_type_main-default text_color_inactive">

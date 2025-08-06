@@ -8,7 +8,8 @@ function ResetPasswordPage () {
     const [code, setCode] = useState('')
     const [pass, setPass] = useState('')
 
-    async function resetPass() {
+    async function resetPass(evt) {
+        evt.preventDefault()
         if(!code || !pass) return
         const formData = { token: code, password: pass }
         const response = await changePassword(formData);
@@ -19,7 +20,10 @@ function ResetPasswordPage () {
     
     return (<section class="form-wrap">
         <h3 className="form-title">Восстановление пароля</h3>
-        <form className="form">
+        <form
+            className="form"
+            onSubmit={resetPass}
+        >
             <div className="form-row">
                 <PasswordInput
                     placeholder="Введите свой новый пароль"
@@ -35,16 +39,16 @@ function ResetPasswordPage () {
                     onChange={evt => setCode(evt.target.value)}
                 />
             </div>
+            <div className="form-buttons">
+                <Button
+                    htmlType="submit"
+                    type="primary"
+                >
+                    Сохранить
+                </Button>
+            </div>
         </form>
-        <div className="form-row">
-            <Button
-                htmlType="button"
-                type="primary"
-                onClick={resetPass}
-            >
-                Сохранить
-            </Button>
-        </div>
+
         <div className="form-links">
             <span className="form-link-wrap">
                 <span className="text text_type_main-default text_color_inactive">

@@ -20,11 +20,8 @@ function App() {
         <Route path="/register" element={<RegisterPage/>} />
         <Route path="/forgot-password" element={<ForgotPasswordPage/>} />
         <Route path="/reset-password" element={<ResetPasswordPage/>} />
+        <Route path="/" element={<RootPage/>} />
 
-        <Route
-          path="/"
-          element={<RouteGuard element={<RootPage/>}/>}
-        />
         <Route
           path="/profile"
           element={<RouteGuard element={<ProfilePage/>}/>}
