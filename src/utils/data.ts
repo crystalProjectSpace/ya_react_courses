@@ -1,4 +1,10 @@
-export async function request(url, payload) {
+import type {
+   TCheckoutPayload,
+   THTTPmethod,
+   TRequestPayload,
+} from "../types";
+
+export async function request(url: string, payload: TRequestPayload) {
    const raw = await fetch(url, payload)
    const { ok } = raw;
    if (!ok) throw new Error('API_FAIL')
@@ -6,7 +12,7 @@ export async function request(url, payload) {
    return parsedData
 }
 
-export async function getData(path) {
+export async function getData(path: string) {
    try {
       const { success, data } = await request(path, { method: 'GET' });
       if (!success) throw new Error('API_FAIL')
@@ -17,7 +23,7 @@ export async function getData(path) {
    }
 }
 
-export async function makeCheckoutRequest({ingredients, path}) {
+export async function makeCheckoutRequest({ ingredients, path }: TCheckoutPayload) {
    try {
       const body = JSON.stringify({ ingredients })
       const token = window.sessionStorage.getItem('access') 
@@ -26,7 +32,7 @@ export async function makeCheckoutRequest({ingredients, path}) {
          'Authorization': `Bearer ${token}`
       }
       const requestData = {
-         method: 'POST',
+         method: 'POST' as THTTPmethod,
          headers,
          body,
       }

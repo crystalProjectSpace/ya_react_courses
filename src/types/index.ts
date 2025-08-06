@@ -1,4 +1,4 @@
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 
 export const IngredientCardProps = PropTypes.shape({
     type: PropTypes.string,
@@ -47,4 +47,35 @@ export interface IIngredientState {
     availableItems: {
         items: ReadonlyArray<TIngredientItem>
     }
+}
+
+export type THTTPmethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE'
+
+export type TCheckoutPayload = {
+    ingredients: ReadonlyArray<string>
+    path: string
+}
+
+export type TRequestPayload = {
+    method: THTTPmethod
+    headers?: Record<string, string>
+    body?: string
+}
+
+export type TAuthPayload = {
+    email: string
+    password: string
+}
+
+export type TRegPayload = TAuthPayload & { name?: string }
+
+export type TChangePassPayload = {
+    token: string
+    password: string
+}
+
+export type TFetchUserResult = {
+    success?: boolean,
+    user?: TUser
+    error?: string
 }
