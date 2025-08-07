@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useState } from "react";
+import { ReactElement, type ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router";
 import { useLocation } from "react-router";
 import { useAuthContext } from "../../services/use-auth";
@@ -19,7 +19,7 @@ type TUser = {
     email: string
 } | null
 
-export function RouteGuard(props: IRouteGuard) {
+export function RouteGuard(props: IRouteGuard): ReactElement | null {
     const { element, isAnonymous } = props;
     const [loadComplete, setLoadComplete] = useState(false)
     const { user, signed, getUser } = useAuthContext()  as unknown as TAuthContext
@@ -38,5 +38,5 @@ export function RouteGuard(props: IRouteGuard) {
 
     if (isAnonymous && user && signed) return <Navigate to={fromLocation}/>
     if (!isAnonymous && (!user || !signed)) return <Navigate to='/login' replace />
-    return element
+    return element as ReactElement
 }
