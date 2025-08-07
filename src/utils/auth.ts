@@ -8,12 +8,20 @@ import {
     PASS_CHANGE_URL,
     UPD_PROFILE_URL,
 } from '../constants';
+import {
+    TAuthPayload,
+    TChangePassPayload,
+    THTTPmethod,
+    TRegPayload,
+    TRequestPayload,
+    TFetchUserResult,
+} from '../types';
 import { request } from './data'
 
-export async function authorize(authForm) {
+export async function authorize(authForm: TAuthPayload) {
     try {
         const payload = {
-            method: 'POST',
+            method: 'POST' as THTTPmethod,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(authForm)
         }
@@ -35,10 +43,10 @@ export async function authorize(authForm) {
     }
 }
 
-export async function register(regForm) {
+export async function register(regForm: TRegPayload) {
     try {
         const payload = {
-            method: 'POST',
+            method: 'POST' as THTTPmethod,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(regForm)
         }
@@ -64,7 +72,7 @@ export async function logout() {
     try {
         const token = window.sessionStorage.getItem('refresh')
         const payload = {
-            method: 'POST',
+            method: 'POST' as THTTPmethod,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token }),
         }
@@ -81,7 +89,7 @@ export async function refresh() {
     try {
         const token = window.sessionStorage.getItem('refresh')
         const payload = {
-            method: 'POST',
+            method: 'POST' as THTTPmethod,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token }),
         }
@@ -101,8 +109,8 @@ export async function refresh() {
     }
 }
 
-export async function fetchProfile() {
-    const setPayload = () => {
+export async function fetchProfile(): Promise<TFetchUserResult | undefined> {
+    const setPayload: () => TRequestPayload = () => {
         const token = window.sessionStorage.getItem('access')
         return {
             method: 'GET',
@@ -123,14 +131,14 @@ export async function fetchProfile() {
         }
     } catch (e) {
         console.error(e);
-        return { error: e }
+        return { error: e as string }
     }
 }
 
-export async function getResetCode(email) {
+export async function getResetCode(email: string) {
     try {
         const payload = {
-            method: 'POST',
+            method: 'POST' as THTTPmethod,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email })
         }
@@ -143,10 +151,10 @@ export async function getResetCode(email) {
     }
 }
 
-export async function changePassword(formData) {
+export async function changePassword(formData: TChangePassPayload) {
     try {
         const payload = {
-            method: 'POST',
+            method: 'POST' as THTTPmethod,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
         }
@@ -161,10 +169,10 @@ export async function changePassword(formData) {
     }
 }
 
-export async function editUser(formData) {
+export async function editUser(formData: Record<string, string>) {
     try {
         const payload = {
-            method: 'PATCH',
+            method: 'PATCH' as THTTPmethod,
             header: {
                 'Content-type': 'application/json',
                 'Authorization': `Bearer ${window.sessionStorage.getItem('access')}`

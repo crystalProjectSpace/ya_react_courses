@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router'
 import { useDrag } from 'react-dnd'
@@ -7,7 +6,9 @@ import card from './ingredient-card.module.css'
 
 import { SET_SELECTION } from '../../services/actions'
 import { INGREDIENT_TYPE } from '../../constants'
-export function IngredientCard(props) {
+import type { TIngredientItem, IIngredientState } from '../../types'
+
+export function IngredientCard(props: TIngredientItem) {
     const dispatch = useDispatch()
 
     const[, dragRef] = useDrag({
@@ -18,7 +19,7 @@ export function IngredientCard(props) {
         }
 	})
 
-    const count = useSelector(state => {
+    const count = useSelector((state: IIngredientState) => {
         return props.type === INGREDIENT_TYPE.BUN
             ? (state.currentItems.currentBun === props._id ? 1 : 0)
             : state.currentItems.currentItems.filter(i => i.itemId === props._id).length
@@ -55,12 +56,4 @@ export function IngredientCard(props) {
             count > 0 ? (<span className={card.count}>{ count }</span>) : null
         }
     </Link>)
-}
-
-IngredientCard.propTypes = {
-    image: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    _id: PropTypes.string,
-    type: PropTypes.string
 }

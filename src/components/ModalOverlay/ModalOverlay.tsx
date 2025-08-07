@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 import modal from './modal-overlay.module.css';
+import { type IModalProps } from '../../types';
 
-export function ModalOverlay(props) {
-    function closeOnEscape(evt) {
+export function ModalOverlay(props: IModalProps) {
+    function closeOnEscape(evt: KeyboardEvent) {
         const { key } = evt;
         if (key.toLowerCase() === 'escape') props.closeModal()
     }
@@ -21,10 +21,5 @@ export function ModalOverlay(props) {
     return createPortal(<div className={modal.lightbox}>
         {props.children}
     </div>,
-    document.getElementById('modals'))
-}
-
-ModalOverlay.propTypes = {
-    closeModal: PropTypes.func,
-    children: PropTypes.element,
+    document.getElementById('modals') as HTMLElement)
 }

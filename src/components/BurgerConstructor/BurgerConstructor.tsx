@@ -15,16 +15,18 @@ import { useAuthContext } from '../../services/use-auth';
 
 import styles from './burger-constructor.module.css';
 import './burger-constructor-global.css';
+import { IIngredientState, TIngredientItem, TAuthContext } from '../../types';
 
+type TExpandedIngredient = TIngredientItem & { provisionalId: string }
 
 export function BurgerConstructor() {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const { signed } = useAuthContext()
+	const { signed } = useAuthContext() as TAuthContext
 
 	const [, dropRef] = useDrop({
 		accept: 'ingredient',
-		drop(item) {
+		drop(item: { id: string, type: INGREDIENT_TYPE}) {
 			const { id, type } = item
 			if (type === INGREDIENT_TYPE.BUN) {
 				dispatch({ type: `currentItems/${SET_BUN}`, id })
@@ -35,14 +37,14 @@ export function BurgerConstructor() {
 		}
 	})
 
-	const { bun, fillings, totalPrice, itemIds } = useSelector(state => {
+	const { bun, fillings, totalPrice, itemIds } = useSelector((state: IIngredientState) => {
 		const { currentBun, currentItems } = state.currentItems
 		const { items } = state.availableItems
 		const bun = items.find(item => item._id === currentBun)
-		const itemIds = []
-		const fillings = []
+		const itemIds: Array<string> = []
+		const fillings: Array<TExpandedIngredient> = []
 		let totalPrice = bun?.price || 0
-		if (bun) itemIds.push(currentBun)
+		if (bun) itemIds.push(currentBun as string)
 		currentItems.forEach(({ itemId, id: provisionalId }) => {
 			const item = items.find(item => item._id === itemId)
 			if (!item) return
@@ -61,11 +63,11 @@ export function BurgerConstructor() {
 
 	function checkout() {
 		signed
-			? dispatch(checkoutRequest({ path: CHECKOUT_URL, ingredients: itemIds }))
+			? dispatch((checkoutRequest({ path: CHECKOUT_URL, ingredients: itemIds }) as any))
 			: navigate('/login')
 	}
 
-	function deleteIngredient(id){
+	function deleteIngredient(id: string){
 		dispatch({ type: `currentItems/${REMOVE_ITEM}`, id })
 	}
 
@@ -109,7 +111,7 @@ export function BurgerConstructor() {
 		</>}
 		<div className={styles.listOptions}>
 			<span className={styles.priceTotal}>
-				<CurrencyIcon />
+				<CurrencyIcon type="primary" />
 				<span>{totalPrice}</span>
 			</span>
 			<Button

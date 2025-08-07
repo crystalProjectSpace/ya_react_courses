@@ -18,10 +18,10 @@ export const PASS_RESET_URL = 'https://norma.nomoreparties.space/api/password-re
 
 export const PASS_CHANGE_URL = 'https://norma.nomoreparties.space/api/password-reset/reset'
 
-export const INGREDIENT_TYPE = {
-    BUN: 'bun',
-    SAUCE: 'sauce',
-    MAIN: 'main',
+export enum INGREDIENT_TYPE {
+    BUN = 'bun',
+    SAUCE = 'sauce',
+    MAIN = 'main'
 }
 
 export const MENU_TYPES = [
