@@ -1,9 +1,15 @@
 .wrap {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     row-gap: 16px;
     width: 50%;
     position: relative;
+}
+
+.figure {
+    display: flex;
+    justify-content: center;
 }
 
 .priceLabel {

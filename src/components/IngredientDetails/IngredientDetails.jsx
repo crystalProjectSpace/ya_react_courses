@@ -18,7 +18,9 @@ export function IngredientDetails () {
 
     return  (<>
         <header className={detailStyles.header}>
-            <h3 className={detailStyles.headerTitle}>{name}</h3>
+            <h3 className={`${detailStyles.headerTitle} text text_type_main-medium`}>
+                {name}
+            </h3>
         </header>
         <figure className={detailStyles.figure}>
             <img
@@ -27,7 +29,7 @@ export function IngredientDetails () {
                 alt={name}
             />
         </figure>
-        <table className={detailStyles.info}>
+        <table className={`${detailStyles.info} text text_type_main-small text_color_inactive`}>
             <thead>
                 <tr>
                     <th>Калории, г</th>

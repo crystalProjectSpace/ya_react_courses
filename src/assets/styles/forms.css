@@ -1,0 +1,53 @@
+.form-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    height: 100vh;
+}
+
+.form-title {
+    margin-bottom: 24px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: 12px;
+    margin-bottom: 24px;
+}
+
+.form-row {
+
+}
+
+.form-buttons {
+    display: flex;
+    margin-bottom: 48px;
+    justify-content: center;
+}
+
+.form-links {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    align-items: center;
+}
+
+.form-link-wrap {
+    display: flex;
+    justify-content: center;
+    column-gap: 8px;
+    align-items: center;
+}
+
+._button {
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+._button:hover {
+    color: #fff;
+}

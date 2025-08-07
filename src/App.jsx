@@ -1,60 +1,50 @@
-import { useEffect } from 'react';
-import {
-  AppHeader,
-  BurgerConstructor,
-  BurgerIngredients,
-  IngredientDetails,
-  Modal,
-  ModalOverlay,
-  OrderCheckout,
-} from './components';
-import './assets/styles/index.css';
-import { API_URL } from './constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from './services';
-import { CHECKOUT_CLEAR, CLEAR_SELECTION } from './services/actions';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Routes, Route, useLocation } from "react-router"
+import RootPage from "./pages/root"
+import LoginPage from './pages/login'
+import RegisterPage from './pages/register'
+import ResetPasswordPage from './pages/reset-password'
+import ForgotPasswordPage from './pages/forgot-password'
+import ProfilePage from './pages/profile/profile'
+import { ErrorPage } from "./pages/error"
+import { IngredientSinglePage } from "./pages/ingredient-single"
+import { RouteGuard } from "./components/RouteGuard/RouteGuard"
+
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => { dispatch(getItems(API_URL)) }, [])
-  
-  const showActiveIngredient = useSelector(state => !!state.currentSelection.selectedId)
-  const orderId = useSelector(state => state.checkout.orderId)
-
-  function clearCurrentSelection() {
-    dispatch({ type: `currentSelection/${CLEAR_SELECTION}` })
-  }
-
-  function clearCheckout() {
-    dispatch({ type: `checkout/${CHECKOUT_CLEAR}` })
-  }
+  const location = useLocation()
+  const isRoot = location.state?.isRoot
 
   return (
-    <main className="App">
-      <AppHeader/>
-      <div className="app-grid">
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </div>
-      {
-        showActiveIngredient ? <ModalOverlay closeModal={clearCurrentSelection}>
-          <Modal closeModal={clearCurrentSelection}>
-            <IngredientDetails />
-          </Modal>
-        </ModalOverlay> : null
-      }
-      { !!orderId ? <ModalOverlay closeModal={clearCheckout}>
-          <Modal closeModal={clearCheckout}>
-            <OrderCheckout />
-          </Modal>
-        </ModalOverlay> : null
-      }
-    </main>
+      <Routes>
+        <Route path="/login" element={
+          <RouteGuard element={<LoginPage/>} isAnonymous={true} />
+        } />
+        <Route path="/register" element={
+          <RouteGuard element={<RegisterPage/>} isAnonymous={true} />
+        } />
+        <Route path="/forgot-password" element={
+          <RouteGuard element={<ForgotPasswordPage/>} isAnonymous={true} />
+        } />
+        <Route path="/reset-password" element={
+          <RouteGuard element={<ResetPasswordPage/>} isAnonymous={true} />          
+        } />
+        <Route path="/" element={<RootPage/>} />
+
+        <Route
+          path="/profile"
+          element={<RouteGuard element={<ProfilePage/>}/>}
+        />
+        <Route
+          path="/ingredients/:id"
+          element={
+            <RouteGuard element={
+              isRoot ? <RootPage/> : <IngredientSinglePage/>
+            }/>
+          }
+        />
+
+        <Route path="*" element={<ErrorPage/>} />
+      </Routes>
   );
 }
 

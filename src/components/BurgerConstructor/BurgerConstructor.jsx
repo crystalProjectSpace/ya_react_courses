@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd'
+import { useNavigate } from 'react-router';
 import {
 	Button,
 	ConstructorElement,
@@ -9,13 +10,17 @@ import { ActiveIngredientWrap } from '../index';
 import { CHECKOUT_URL, INGREDIENT_TYPE } from '../../constants'
 import { ADD_ITEM, REMOVE_ITEM, SET_BUN } from '../../services/actions';
 import { checkoutRequest } from '../../services/reducers/checkout.reducer'
+import { getProvisionalId } from '../../utils/data';
+import { useAuthContext } from '../../services/use-auth';
+
 import styles from './burger-constructor.module.css';
 import './burger-constructor-global.css';
-import { getProvisionalId } from '../../utils/data';
 
 
 export function BurgerConstructor() {
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const { signed } = useAuthContext()
 
 	const [, dropRef] = useDrop({
 		accept: 'ingredient',
@@ -55,7 +60,9 @@ export function BurgerConstructor() {
 	})
 
 	function checkout() {
-		dispatch(checkoutRequest({ path: CHECKOUT_URL, ingredients: itemIds }))
+		signed
+			? dispatch(checkoutRequest({ path: CHECKOUT_URL, ingredients: itemIds }))
+			: navigate('/login')
 	}
 
 	function deleteIngredient(id){

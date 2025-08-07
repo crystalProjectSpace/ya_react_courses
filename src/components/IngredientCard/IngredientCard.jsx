@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router'
 import { useDrag } from 'react-dnd'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import card from './ingredient-card.module.css'
@@ -27,7 +28,12 @@ export function IngredientCard(props) {
         dispatch({ type: `currentSelection/${SET_SELECTION}`, id: props._id })
     }
 
-    return (<div className={card.wrap} ref={dragRef}>
+    return (<Link
+        to={`/ingredients/${props._id}`}
+        state={{isRoot: true }}
+        className={card.wrap}
+        ref={dragRef}        
+    >
         <figure className={card.figure}>
             <img
                 className={card.figureImage}
@@ -38,15 +44,17 @@ export function IngredientCard(props) {
         </figure>
         <span className={card.priceLabel}>
             <CurrencyIcon type="primary" />
-            <span>{props.price}</span>
-        </span>
-        <span className={card.nameLabel}>
+            <span className="text text_type_main-small">
+                {props.price}
+            </span>
+        </span>        
+        <span className={`${card.nameLabel} text text_type_main-default text_color_inactive`}>
             {props.name}
         </span>
         {
             count > 0 ? (<span className={card.count}>{ count }</span>) : null
         }
-    </div>)
+    </Link>)
 }
 
 IngredientCard.propTypes = {

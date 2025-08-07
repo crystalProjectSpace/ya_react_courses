@@ -1,4 +1,4 @@
-async function request(url, payload) {
+export async function request(url, payload) {
    const raw = await fetch(url, payload)
    const { ok } = raw;
    if (!ok) throw new Error('API_FAIL')
@@ -8,7 +8,7 @@ async function request(url, payload) {
 
 export async function getData(path) {
    try {
-      const { success, data } = await request(path, { method: 'GET'});
+      const { success, data } = await request(path, { method: 'GET' });
       if (!success) throw new Error('API_FAIL')
       return { data }
    } catch(e) {
@@ -19,9 +19,18 @@ export async function getData(path) {
 
 export async function makeCheckoutRequest({ingredients, path}) {
    try {
-      const body =  JSON.stringify({ ingredients })
-      const headers = { 'Content-Type': 'application/json'}
-      const { order, success } = await request(path, { method: 'POST', headers, body })
+      const body = JSON.stringify({ ingredients })
+      const token = window.sessionStorage.getItem('access') 
+      const headers = {
+         'Content-Type': 'application/json',
+         'Authorization': `Bearer ${token}`
+      }
+      const requestData = {
+         method: 'POST',
+         headers,
+         body,
+      }
+      const { order, success } = await request(path, requestData)
       if (!success) throw new Error('API_FAIL')
       if (order) return { orderId: order.number }      
    } catch (e) {
