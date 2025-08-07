@@ -1,10 +1,10 @@
-import { type ReactElement, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router";
 import { useLocation } from "react-router";
 import { useAuthContext } from "../../services/use-auth";
 
 interface IRouteGuard {
-    element: ReactElement | HTMLElement
+    element: ReactNode
     isAnonymous?: boolean
 }
 

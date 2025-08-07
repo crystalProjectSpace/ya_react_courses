@@ -3,15 +3,19 @@ import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientPreview } from '../IngredientPreview/IngredientPreview';
 import { INGREDIENT_TYPE, MENU_TYPES } from '../../constants';
+import type { IIngredientState, TIngredientItem } from '../../types';
+
 import styles from './burger-ingredients.module.css'
 import './burger-ingredients-global.css'; // ближайший аналог не-scoped стилей из vue, не sfc, но лучшего способа пока не видно
 
+type TIngredientEntries = Record<INGREDIENT_TYPE, Array<TIngredientItem>>
+
 export function BurgerIngredients() {
 	const [currentTab, setCurrentTab] = useState(MENU_TYPES[0].val);
-	const ingredients = useSelector(state => {
+	const ingredients = useSelector((state:IIngredientState) => {
 		const {items} = state.availableItems;
 
-		return Object.entries(items.reduce((res, item) => {
+		return Object.entries(items.reduce((res: TIngredientEntries, item) => {
 			const { type } = item
 			res[type].push(item)
 			return res
@@ -19,7 +23,7 @@ export function BurgerIngredients() {
 			[INGREDIENT_TYPE.BUN]: [],
 			[INGREDIENT_TYPE.SAUCE]: [],
 			[INGREDIENT_TYPE.MAIN]: [],
-		}))
+		})) as Array<[INGREDIENT_TYPE, Array<TIngredientItem>]>
 	});
 
 	const menuTabs = MENU_TYPES.map(({ val, label }) => {
@@ -44,7 +48,7 @@ export function BurgerIngredients() {
 
 	const ingredientsMap = ingredients.map(category => {
 		const [key, items] = category;
-		const ingredientLabel = MENU_TYPES.find(mType => mType.val === key)?.label;
+		const ingredientLabel = MENU_TYPES.find(mType => mType.val === key)?.label as string;
 
 		return <IngredientPreview
 			key={key}

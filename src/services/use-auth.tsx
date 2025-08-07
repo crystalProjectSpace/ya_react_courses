@@ -1,16 +1,8 @@
 import { useState, useContext, createContext, type ReactNode } from 'react'
 import { authorize, logout, fetchProfile } from '../utils/auth'
-import { TAuthPayload, TFetchUserResult, TUser } from '../types'
+import type { TAuthPayload, TAuthContext, TFetchUserResult, TUser } from '../types'
 
-type TAuthContext = {
-    user: TUser
-    signed: boolean
-    signIn: (formData: TAuthPayload) => Promise<void>
-    signOut: () => Promise<void>
-    getUser: () => Promise<void>
-} | undefined
-
-const AuthContext = createContext<TAuthContext>(undefined)
+const AuthContext = createContext<TAuthContext | undefined>(undefined)
 
 export function useAuth() {
     const [user, setUser] = useState<TUser>(null)

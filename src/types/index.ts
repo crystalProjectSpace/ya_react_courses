@@ -1,17 +1,5 @@
-import PropTypes from 'prop-types';
 import { INGREDIENT_TYPE } from '../constants';
 import { ReactNode } from 'react';
-
-export const IngredientCardProps = PropTypes.shape({
-    type: PropTypes.string,
-    price: PropTypes.number,
-    name: PropTypes.string,
-    _id: PropTypes.string,
-    image: PropTypes.string,
-    image_mobile: PropTypes.string,
-});
-
-export const IngredientListProps = PropTypes.arrayOf(IngredientCardProps)
 
 export type TUser = {
     name: string
@@ -28,6 +16,7 @@ export type TIngredientItem = {
     name: string
     image: string
     image_large: string
+    image_mobile: string
     calories: number
     proteins: number
     fat: number
@@ -46,6 +35,9 @@ export interface IIngredientState {
     }
     availableItems: {
         items: ReadonlyArray<TIngredientItem>
+    }
+    checkout: {
+        orderId: string
     }
 }
 
@@ -83,4 +75,12 @@ export type TFetchUserResult = {
 export interface IModalProps {
     children: ReactNode | Array<ReactNode>
     closeModal: () => void
+}
+
+export type TAuthContext = {
+    user: TUser
+    signed: boolean
+    signIn: (formData: TAuthPayload) => Promise<void>
+    signOut: () => Promise<void>
+    getUser: () => Promise<void>
 }
