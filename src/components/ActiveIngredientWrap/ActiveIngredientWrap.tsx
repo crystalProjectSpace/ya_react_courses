@@ -1,11 +1,16 @@
 import { useDrag, useDrop } from 'react-dnd'
-import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { SWAP_ITEMS } from '../../services/actions';
 import ingredientWrap from './active-ingredient-wrap.module.css';
+import { ReactNode } from 'react';
 
-export function ActiveIngredientWrap(props) {
+interface IActiveIngredientProps {
+    children: ReactNode | Array<ReactNode>
+    index: number
+}
+
+export function ActiveIngredientWrap(props: IActiveIngredientProps) {
     const dispatch = useDispatch()
 
     const [, dragRef] = useDrag({
@@ -15,7 +20,7 @@ export function ActiveIngredientWrap(props) {
 
     const [, dropIngredientRef] = useDrop({
 		accept: 'active-ingredient',
-		drop(item) {
+		drop(item: { index: number}) {
 			const { index: indexNew } = item
 			dispatch({ type:`currentItems/${SWAP_ITEMS}`, indexNew, indexOld: props.index })
 		}
@@ -27,9 +32,4 @@ export function ActiveIngredientWrap(props) {
         </span>        
         { props.children}
     </div>)
-}
-
-ActiveIngredientWrap.propTypes = {
-    index: PropTypes.number,
-    children: PropTypes.element
 }

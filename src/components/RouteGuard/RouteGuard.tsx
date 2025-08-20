@@ -1,12 +1,28 @@
-import { useEffect, useState } from "react";
+import { ReactElement, type ReactNode, useEffect, useState } from "react";
 import { Navigate } from "react-router";
 import { useLocation } from "react-router";
 import { useAuthContext } from "../../services/use-auth";
 
-export function RouteGuard(props) {
+interface IRouteGuard {
+    element: ReactNode
+    isAnonymous?: boolean
+}
+
+type TAuthContext = {
+    user: TUser
+    signed?: boolean
+    getUser: () => Promise<unknown>  
+}
+
+type TUser = {
+    name: string
+    email: string
+} | null
+
+export function RouteGuard(props: IRouteGuard): ReactElement | null {
     const { element, isAnonymous } = props;
     const [loadComplete, setLoadComplete] = useState(false)
-    const { user, signed, getUser } = useAuthContext()
+    const { user, signed, getUser } = useAuthContext()  as unknown as TAuthContext
     const location = useLocation()
 
     const loadUser = async () => {
@@ -22,5 +38,5 @@ export function RouteGuard(props) {
 
     if (isAnonymous && user && signed) return <Navigate to={fromLocation}/>
     if (!isAnonymous && (!user || !signed)) return <Navigate to='/login' replace />
-    return element
+    return element as ReactElement
 }

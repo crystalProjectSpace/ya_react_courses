@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { type IModalProps } from '../../types';
 import modal from './modal.module.css';
 
-export function Modal(props) {
-    const modalBox = useRef();
+export function Modal(props: IModalProps) {
+    const modalBox = useRef<HTMLDivElement | null>(null);
 
 
-    function closeOnClickOutside(evt) {
+    function closeOnClickOutside(evt: PointerEvent) {
         const modalBoundBox = modalBox.current
         if (!modalBoundBox) return;
         const { top, left, bottom, right } = modalBoundBox.getBoundingClientRect()
@@ -44,9 +44,4 @@ export function Modal(props) {
             { props.children}
         </section>
     </div>)
-}
-
-Modal.propTypes = {
-    closeModal: PropTypes.func,
-    children: PropTypes.element,
 }
