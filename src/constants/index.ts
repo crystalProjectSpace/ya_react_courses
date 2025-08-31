@@ -18,6 +18,8 @@ export const PASS_RESET_URL = 'https://norma.nomoreparties.space/api/password-re
 
 export const PASS_CHANGE_URL = 'https://norma.nomoreparties.space/api/password-reset/reset'
 
+export const ORDERS_SOCKET_WSS = 'wss://norma.nomoreparties.space/orders/all' // сокет для получения заказов
+
 export enum INGREDIENT_TYPE {
     BUN = 'bun',
     SAUCE = 'sauce',

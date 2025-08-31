@@ -84,3 +84,25 @@ export type TAuthContext = {
     signOut: () => Promise<void>
     getUser: () => Promise<void>
 }
+
+export enum OrderStatus {
+    CREATED = 'created',
+    PENDING = 'pending',
+    DONE = 'done'
+}
+
+export type TOrderEntity = {
+    ingredients: Array<string>
+    _id: string
+    status: OrderStatus
+    number: number
+    createdAt: string
+    updatedAt: string
+}
+
+export type TOrderResponse = {
+    success: boolean
+    orders: Array<TOrderEntity>
+    total: number
+    totalToday: number
+}
