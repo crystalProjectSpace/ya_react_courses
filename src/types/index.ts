@@ -1,3 +1,4 @@
+import { CANCELLED } from 'dns';
 import { INGREDIENT_TYPE } from '../constants';
 import { ReactNode } from 'react';
 
@@ -88,7 +89,8 @@ export type TAuthContext = {
 export enum OrderStatus {
     CREATED = 'created',
     PENDING = 'pending',
-    DONE = 'done'
+    DONE = 'done',
+    CANCELLED = 'cancelled'
 }
 
 export type TOrderEntity = {
@@ -98,6 +100,7 @@ export type TOrderEntity = {
     number: number
     createdAt: string
     updatedAt: string
+    name: string
 }
 
 export type TOrderResponse = {
