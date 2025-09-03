@@ -1,11 +1,9 @@
 import { useMemo } from "react"
 import { useSelector } from "react-redux"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-
-import {OrderIngredientMore, OrderIngredientCard} from '../OrderIngredients'
-
+import {OrderIngredientMore, OrderIngredientPreview } from '../OrderIngredients'
 import { OrderStatus, type TOrderEntity, type IIngredientState } from "../../types"
-import styles from './order-card-module.css'
+import styles from './order-card.module.css'
 
 
 export function OrderCard(order: TOrderEntity) {
@@ -41,24 +39,29 @@ export function OrderCard(order: TOrderEntity) {
         return result
     }, [order.ingredients])
 
+    const orderCreationDate = useMemo(() => new Date(order.createdAt).toISOString(), [order.createdAt])
+
     return <div className={styles.wrap}>
         <header className={styles.header}>
             <div className={styles.meta}>
-                <span className={styles.number}></span>
-                <span className={styles.datetime}></span>
+                <span className={`text text_type_digits-default ${styles.number}`}>
+                    #{order.number}
+                </span>
+                <span className={`text text_type_main-small text_color_inactive${styles.datetime}`}>
+                    { orderCreationDate }
+                </span>
             </div>
-            <h4 className={ styles.title }>{ order.name }</h4>
+            <h4 className={`text text_type_main-medium ${styles.title}`}>
+                { order.name }
+            </h4>
             <div className={ orderStatusClass }>{ orderStatus }</div>
         </header>
         <div className={ styles.cardMain}>
             <div className={styles.ingredientList}>
-                {order.ingredients.slice(0, 5).map}
-                {
-                   order.ingredients.length > 5 ? <OrderIngredientMore/> : null
-                }
+                { orderIngredientIcons }
             </div>
             <div className={styles.priceWrap}>
-                <CurrencyIcon/>
+                <CurrencyIcon type="primary" />
                 <span>{ totalPrice }</span>
             </div>
         </div>

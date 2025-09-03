@@ -1,0 +1,43 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 24px;
+    background-color: var(--card-bg);
+    row-gap: 8px;
+}
+
+.header {
+
+}
+            
+.meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.number {
+
+}
+
+.datetime {
+
+}
+
+.name {
+
+}
+
+
+.cardMain {
+
+}
+
+.ingredientList {
+
+}
+
+.priceWrap {
+
+}
