@@ -1,0 +1,15 @@
+._created {
+    color: rgb(48, 146, 47);
+}
+
+._pending {
+    color: rgb(121, 212, 209);
+}
+
+._done {
+    color: rgb(174, 174, 177);
+}
+
+._cancelled {
+    color: rgb(146, 48, 47);
+}

@@ -31,11 +31,15 @@
 
 
 .cardMain {
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .ingredientList {
-
+    display: flex;
+    align-items: flex-start;
+    position: relative;
 }
 
 .priceWrap {
