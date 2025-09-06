@@ -4,7 +4,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { OrderIngredientSummary } from '../OrderIngredients'
 import { STATUS_LABELS } from "../../constants"
 import { type TOrderEntity, type IIngredientState } from "../../types"
-import styles from './order-card.module.css'
+import styles from './order-full-info.module.css'
 
 type TIngredientInfo = {
     name: string
@@ -13,7 +13,7 @@ type TIngredientInfo = {
     price: number
 }
 
-export function OrderCard(order: TOrderEntity) {
+export function OrderFullInfo(order: TOrderEntity) {
 
     const orderStatusClass = useMemo(() => `_${order.status}`, [order.status])
 
@@ -58,7 +58,7 @@ export function OrderCard(order: TOrderEntity) {
 
     const orderIngredientsList = useMemo(() => {
         const ingredientList = Object.values(ingredientData)
-        return ingredientList.map(item => <OrderIngredientSummary {...item}/>)
+        return ingredientList.map((item, i) => <OrderIngredientSummary key={`${item.name}_${i}`} {...item}/>)
     }, [order.ingredients])
 
     const orderCreationDate = useMemo(() => new Date(order.createdAt).toISOString(), [order.createdAt])

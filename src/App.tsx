@@ -9,7 +9,7 @@ import { ErrorPage } from "./pages/error"
 import { IngredientSinglePage } from "./pages/ingredient-single"
 import { RouteGuard } from "./components/RouteGuard/RouteGuard"
 import { FeedList } from "./pages/feed-list/feed-list"
-
+import { FeedItem } from './pages/feed-item/feed-item'
 
 function App() {
   const location = useLocation()
@@ -37,6 +37,8 @@ function App() {
         />
 
         <Route path="/feed" element={<FeedList/>} />
+
+        <Route path="/feed/:number" element={<FeedItem/>} />
 
         <Route
           path="/ingredients/:id"

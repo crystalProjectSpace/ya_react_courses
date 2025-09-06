@@ -7,3 +7,5 @@ export * from './Modal/Modal'
 export * from './OrderCheckout/OrderCheckout'
 export * from './ActiveIngredientWrap/ActiveIngredientWrap'
 export * from  './OrderCard/OrderCard'
+export * from  './OrderFullInfo/OrderFullInfo'
+

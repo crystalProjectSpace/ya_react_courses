@@ -6,8 +6,9 @@ import { STATUS_LABELS } from "../../constants"
 import { type TOrderEntity, type IIngredientState } from "../../types"
 import styles from './order-card.module.css'
 
+type TOrderCardProps = TOrderEntity & { onClick?: (OID: number) => void }
 
-export function OrderCard(props: TOrderEntity) {
+export function OrderCard(props: TOrderCardProps) {
 
     const orderStatusClass = useMemo(() => `_${props.status}`, [props.status])
 
@@ -54,13 +55,13 @@ export function OrderCard(props: TOrderEntity) {
      */
     const orderCreationDate = useMemo(() => new Date(props.createdAt).toISOString(), [props.createdAt])
 
-    return <div className={styles.wrap}>
+    return <div className={styles.wrap} onClick={() => props.onClick?.(props.number)}>
         <header className={styles.header}>
             <div className={styles.meta}>
                 <span className={`text text_type_digits-default ${styles.number}`}>
                     #{props.number}
                 </span>
-                <span className={`text text_type_main-small text_color_inactive${styles.datetime}`}>
+                <span className={`text text_type_main-small text_color_inactive ${styles.datetime}`}>
                     { orderCreationDate }
                 </span>
             </div>
