@@ -1,52 +1,41 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import { WS_ACTION_TYPE } from '../actions/socketControl.actions';
 
-type TSocketAction = {
-    type: WS_ACTION_TYPE
-    payload: Record<string, unknown>
-}
-
-export function socketMiddleware(wsUrl: string) {
+export function socketMiddleware(wsUrl: string): Middleware {
     
     return function(store: MiddlewareAPI) {
-        let socket: WebSocket | null = (null)
+        let socket: WebSocket | null = null
 
         return (next: (action: Record<string, unknown>) => void) => (action: Record<string, unknown>) => {
-            const { dispatch, getState } = store
+            const { dispatch } = store
             const { type, payload } = action;
+            console.log(action.type)
+            switch (type) {
+                case WS_ACTION_TYPE.WS_CONNECT: {
+                    socket = new WebSocket(wsUrl);
+                        
+                    if (!socket) return
 
-            console.log('middleware_active', action)
+                    dispatch({ type: `socketControl/${type}`, payload})
 
-            if ( type === WS_ACTION_TYPE.WS_CONNECT) {
-                socket = new WebSocket(wsUrl);
-                    
-                if(!socket) return
+                    socket.onclose = () => {
+                        socket?.close();
+                        dispatch({ type: `socketControl/${WS_ACTION_TYPE.WS_CLOSE}`});
+                    }
 
-                dispatch({ type: WS_ACTION_TYPE.WS_CONNECT_SUCCESS, payload})
+                    socket.onerror = (evt) => {
+                        console.log(evt)
+                        dispatch({ type: `socketControl/${WS_ACTION_TYPE.WS_CONNECT_FAIL}`});
+                    }
 
-                socket.onclose = (evt) => {
-                    dispatch({ type: WS_ACTION_TYPE.WS_CLOSE, payload: evt});
+                    socket.onmessage = (evt) => {
+                        const { data } = evt;
+                        dispatch({ type: `socketControl/${WS_ACTION_TYPE.WS_MESSAGE}`, payload: data});
+                    }
+                    return                    
                 }
-
-                socket.onerror = (evt) => {
-                    dispatch({ type: WS_ACTION_TYPE.WS_CONNECT_FAIL, payload: evt});
-                }
-
-                socket.onmessage = (evt) => {
-                    const { data } = evt;
-                    dispatch({ type: WS_ACTION_TYPE.WS_MESSAGE, payload: data});
-                }
-
-                return
+                default: next(action);
             }
-            
-            if ( type === WS_ACTION_TYPE.WS_MESSAGE) {
-                const msg = JSON.stringify(payload)
-                socket?.send(msg)
-            } else {
-                next(action);
-            }
-            
         }
     }
 }

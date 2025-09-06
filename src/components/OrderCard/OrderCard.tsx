@@ -7,11 +7,11 @@ import { type TOrderEntity, type IIngredientState } from "../../types"
 import styles from './order-card.module.css'
 
 
-export function OrderCard(order: TOrderEntity) {
+export function OrderCard(props: TOrderEntity) {
 
-    const orderStatusClass = useMemo(() => `_${order.status}`, [order.status])
+    const orderStatusClass = useMemo(() => `_${props.status}`, [props.status])
 
-    const orderStatus = useMemo(() => STATUS_LABELS.get(order.status) || '', [order.status])
+    const orderStatus = useMemo(() => STATUS_LABELS.get(props.status) || '', [props.status])
     /**
      * @description получить ингредиент по его id
      */
@@ -24,10 +24,10 @@ export function OrderCard(order: TOrderEntity) {
      */
     const totalPrice = useSelector((state: IIngredientState) => {
 		const { items } = state.availableItems
-        const count = order.ingredients.length
+        const count = props.ingredients.length
         let result = 0
         for(let i = 0; i < count; i++) {
-            const itemId = order.ingredients[i]
+            const itemId = props.ingredients[i]
             result += (items.find(i => i._id === itemId)?.price || 0)
         }
 		return  result
@@ -43,29 +43,29 @@ export function OrderCard(order: TOrderEntity) {
             return <OrderIngredientPreview name={name} url={url} />
         }
         
-        const { ingredients } = order
+        const { ingredients } = props
         if (ingredients.length < 6) return ingredients.map(getIngredientIcon)
         const result = ingredients.slice(0, 5).map(getIngredientIcon)
         result.push(<OrderIngredientMore excess={ingredients.length - 5}/>)
         return result.filter(Boolean)
-    }, [order.ingredients])
+    }, [props.ingredients])
     /**
      * @description дата создания заказа
      */
-    const orderCreationDate = useMemo(() => new Date(order.createdAt).toISOString(), [order.createdAt])
+    const orderCreationDate = useMemo(() => new Date(props.createdAt).toISOString(), [props.createdAt])
 
     return <div className={styles.wrap}>
         <header className={styles.header}>
             <div className={styles.meta}>
                 <span className={`text text_type_digits-default ${styles.number}`}>
-                    #{order.number}
+                    #{props.number}
                 </span>
                 <span className={`text text_type_main-small text_color_inactive${styles.datetime}`}>
                     { orderCreationDate }
                 </span>
             </div>
             <h4 className={`text text_type_main-medium ${styles.title}`}>
-                { order.name }
+                { props.name }
             </h4>
             <div className={ orderStatusClass }>{ orderStatus }</div>
         </header>

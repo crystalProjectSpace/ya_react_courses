@@ -8,6 +8,7 @@ import ProfilePage from './pages/profile/profile'
 import { ErrorPage } from "./pages/error"
 import { IngredientSinglePage } from "./pages/ingredient-single"
 import { RouteGuard } from "./components/RouteGuard/RouteGuard"
+import { FeedList } from "./pages/feed-list"
 
 
 function App() {
@@ -34,6 +35,9 @@ function App() {
           path="/profile"
           element={<RouteGuard element={<ProfilePage/>}/>}
         />
+
+        <Route path="/feed" element={<FeedList/>} />
+
         <Route
           path="/ingredients/:id"
           element={

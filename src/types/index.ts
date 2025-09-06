@@ -1,4 +1,5 @@
 import { INGREDIENT_TYPE } from '../constants';
+import { TOrderEntity } from './orders.types';
 
 export * from './auth.types'
 export * from './utils.types'
@@ -36,6 +37,11 @@ export interface IIngredientState {
     }
     checkout: {
         orderId: string
+    },
+    socketControl: {
+        orders: ReadonlyArray<TOrderEntity>,
+        totalOrderCount: number,
+        todayOrderCount: number,
     }
 }
 
