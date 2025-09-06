@@ -36,16 +36,16 @@ export function OrderCard(props: TOrderEntity) {
      * @description блок с разметкой иконок превью компонентов
      */
     const orderIngredientIcons = useMemo(() => {
-        const getIngredientIcon = (id: string) => {
+        const getIngredientIcon = (id: string, index = 0) => {
             const ingredient = getIngredientById(id);
             if (!ingredient) return null
             const { image_mobile: url, name } = ingredient
-            return <OrderIngredientPreview name={name} url={url} />
+            return <OrderIngredientPreview key={id} name={name} url={url} index={index}/>
         }
         
         const { ingredients } = props
-        if (ingredients.length < 6) return ingredients.map(getIngredientIcon)
-        const result = ingredients.slice(0, 5).map(getIngredientIcon)
+        if (ingredients.length < 6) return ingredients.map((id, i) => getIngredientIcon(id, 6 - i))
+        const result = ingredients.slice(0, 5).map((id, i) => getIngredientIcon(id, 6 - i))
         result.push(<OrderIngredientMore excess={ingredients.length - 5}/>)
         return result.filter(Boolean)
     }, [props.ingredients])

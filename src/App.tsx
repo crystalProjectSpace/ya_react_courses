@@ -8,7 +8,7 @@ import ProfilePage from './pages/profile/profile'
 import { ErrorPage } from "./pages/error"
 import { IngredientSinglePage } from "./pages/ingredient-single"
 import { RouteGuard } from "./components/RouteGuard/RouteGuard"
-import { FeedList } from "./pages/feed-list"
+import { FeedList } from "./pages/feed-list/feed-list"
 
 
 function App() {

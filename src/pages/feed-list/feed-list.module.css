@@ -1,0 +1,29 @@
+.wrap {
+    --gap-x: 24px;
+    display: flex;
+    align-items: stretch;
+    column-gap: var(--gap-x);
+}
+
+.column{
+    width: calc(50% - calc(0.5 * var(--gap-x)));
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.stats {}
+
+.statItem {}
+
+.counter {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    margin-bottom: 24px;
+}

@@ -13,3 +13,7 @@
 ._cancelled {
     color: rgb(146, 48, 47);
 }
+
+._text-shadow-blue {
+    text-shadow: 0 0 12px rgb(68, 47, 185);
+}

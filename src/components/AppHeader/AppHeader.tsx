@@ -15,16 +15,18 @@ export function AppHeader() {
 				<BurgerIcon type="primary"/>
 				<span className={header.buttonLabel}>Конструктор</span>
 			</Button>
-			<Button htmlType="button" type="secondary" size="medium">
-				<ListIcon type="secondary"/>
-				<span className={header.buttonLabel}>Лента заказов</span>
+			<Button htmlType="button" type="secondary" size="medium" >
+				<Link to="/feed">
+					<ListIcon type="secondary"/>
+					<span className={header.buttonLabel}>Лента заказов</span>
+				</Link>
 			</Button>
 		</div>
 		<Logo />
 		<div className={header.profileWrap}>
 			<Button htmlType="button" type="secondary" size="medium">
-				<ProfileIcon type="secondary"/>
 				<Link to="/profile">
+					<ProfileIcon type="secondary"/>
 					<span className={header.buttonLabel}>Личный кабинет</span>
 				</Link>
 			</Button>

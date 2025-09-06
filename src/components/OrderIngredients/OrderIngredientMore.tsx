@@ -1,5 +1,7 @@
 export function OrderIngredientMore(props: { excess: number }) {
     return <figure className="ingredient-wrap">
-        <span className="ingredient-img">+&nbsp;{ props.excess }</span>
+        <span className="ingredient-picture _text-shadow-blue text text_type_digits-default">
+            +&nbsp;{ props.excess }
+        </span>
     </figure>
 }

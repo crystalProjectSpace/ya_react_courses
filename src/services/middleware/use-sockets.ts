@@ -6,10 +6,10 @@ export function socketMiddleware(wsUrl: string): Middleware {
     return function(store: MiddlewareAPI) {
         let socket: WebSocket | null = null
 
-        return (next: (action: Record<string, unknown>) => void) => (action: Record<string, unknown>) => {
+        return (next: (action: unknown) => void) => (action: unknown) => {
             const { dispatch } = store
-            const { type, payload } = action;
-            console.log(action.type)
+            const { type, payload } = action as Record<string, unknown>;
+
             switch (type) {
                 case WS_ACTION_TYPE.WS_CONNECT: {
                     socket = new WebSocket(wsUrl);
