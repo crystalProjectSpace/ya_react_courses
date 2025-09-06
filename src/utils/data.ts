@@ -3,7 +3,9 @@ import type {
    THTTPmethod,
    TRequestPayload,
 } from "../types";
-
+/**
+ * @description расширенный запрос с перехватов ошибок в ответе
+ */
 export async function request(url: string, payload: TRequestPayload) {
    const raw = await fetch(url, payload)
    const { ok } = raw;
@@ -11,7 +13,9 @@ export async function request(url: string, payload: TRequestPayload) {
    const parsedData = await raw.json()
    return parsedData
 }
-
+/**
+ * @description получение произвольных данных по гет-запросу
+ */
 export async function getData(path: string) {
    try {
       const { success, data } = await request(path, { method: 'GET' });
@@ -22,7 +26,9 @@ export async function getData(path: string) {
       return { error: e }
    }
 }
-
+/**
+ * @description запрос на формирование заказа
+ */
 export async function makeCheckoutRequest({ ingredients, path }: TCheckoutPayload) {
    try {
       const body = JSON.stringify({ ingredients })
@@ -44,7 +50,9 @@ export async function makeCheckoutRequest({ ingredients, path }: TCheckoutPayloa
       return { error: e }
    }
 }
-
+/**
+ * @description сгенерировать временный айди
+ */
 export function getProvisionalId() {
    const seed = Math.trunc(Math.random() * 1E6)
    const alpha = seed % 113

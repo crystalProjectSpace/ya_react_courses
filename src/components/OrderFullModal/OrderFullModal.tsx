@@ -2,7 +2,8 @@ import { useMemo } from "react"
 import { useSelector } from "react-redux"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { OrderIngredientSummary } from '../OrderIngredients'
-import { OrderStatus, type TOrderEntity, type IIngredientState } from "../../types"
+import { STATUS_LABELS } from "../../constants"
+import { type TOrderEntity, type IIngredientState } from "../../types"
 import styles from './order-card.module.css'
 
 type TIngredientInfo = {
@@ -16,14 +17,7 @@ export function OrderCard(order: TOrderEntity) {
 
     const orderStatusClass = useMemo(() => `_${order.status}`, [order.status])
 
-    const orderStatus = useMemo(() => {
-        switch(order.status) {
-            case OrderStatus.CREATED: return 'Создан';
-            case OrderStatus.PENDING: return 'Готовится';
-            case OrderStatus.CANCELLED: return 'Отменен';
-            case OrderStatus.DONE: return 'Выполнен';
-        }
-    }, [order.status])
+    const orderStatus = useMemo(() => STATUS_LABELS.get(order.status), [order.status])
 
     const getIngredientById = useSelector((state: IIngredientState) => {
         const { items } = state.availableItems

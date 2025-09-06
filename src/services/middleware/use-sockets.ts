@@ -11,7 +11,7 @@ export function socketMiddleware(wsUrl: string) {
     return function(store: MiddlewareAPI) {
         let socket: WebSocket | null = (null)
 
-        return (next: (action: TSocketAction) => void) => (action: TSocketAction) => {
+        return (next: (action: Record<string, unknown>) => void) => (action: Record<string, unknown>) => {
             const { dispatch, getState } = store
             const { type, payload } = action;
 

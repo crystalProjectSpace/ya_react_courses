@@ -22,7 +22,6 @@ function RootPage() {
   const { id: ingredientId } = useParams()
 
   useEffect(() => {
-    console.log('root effect launched!')
     dispatch(getItems(API_URL))
     if (ingredientId) dispatch({ type: `currentSelection/${SET_SELECTION}`, id: ingredientId })
   }, [])
