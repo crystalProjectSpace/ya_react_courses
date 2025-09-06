@@ -8,15 +8,13 @@ export function socketMiddleware(wsUrl: string): Middleware {
 
         return (next: (action: unknown) => void) => (action: unknown) => {
             const { dispatch } = store
-            const { type, payload } = action as Record<string, unknown>;
+            const { type } = action as Record<string, unknown>;
 
             switch (type) {
                 case WS_ACTION_TYPE.WS_CONNECT: {
                     socket = new WebSocket(wsUrl);
                         
                     if (!socket) return
-
-                    dispatch({ type: `socketControl/${type}`, payload})
 
                     socket.onclose = () => {
                         socket?.close();
