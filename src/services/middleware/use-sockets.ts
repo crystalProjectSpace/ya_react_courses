@@ -1,15 +1,21 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import { WS_ACTION_TYPE } from '../actions/socketControl.actions';
 
+type TSocketAction = {
+    type: WS_ACTION_TYPE
+    payload: Record<string, unknown>
+}
 
-export function useSocket(wsUrl: string) {
+export function socketMiddleware(wsUrl: string) {
     
     return function(store: MiddlewareAPI) {
         let socket: WebSocket | null = (null)
 
-        return (next: unknown) => (action: { type: WS_ACTION_TYPE, payload: Record<string, unknown>}) => {
+        return (next: (action: TSocketAction) => void) => (action: TSocketAction) => {
             const { dispatch, getState } = store
             const { type, payload } = action;
+
+            console.log('middleware_active', action)
 
             if ( type === WS_ACTION_TYPE.WS_CONNECT) {
                 socket = new WebSocket(wsUrl);
@@ -30,15 +36,17 @@ export function useSocket(wsUrl: string) {
                     const { data } = evt;
                     dispatch({ type: WS_ACTION_TYPE.WS_MESSAGE, payload: data});
                 }
+
+                return
             }
             
             if ( type === WS_ACTION_TYPE.WS_MESSAGE) {
                 const msg = JSON.stringify(payload)
                 socket?.send(msg)
+            } else {
+                next(action);
             }
-
-            next(action);
-
+            
         }
     }
 }

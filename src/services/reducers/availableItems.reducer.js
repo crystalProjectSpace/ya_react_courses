@@ -32,6 +32,8 @@ export const availableItemsSlice = createSlice({
 })
 
 export const  getItems = (path) => async (dispatch) => {
+    console.log('ready to get Items')
+
     dispatch({ type: `availableItems/${AVAIL_ITEMS_LOAD}`})
     const { data: items, error} = await getData(path)
     const dataAction = (items && !error)

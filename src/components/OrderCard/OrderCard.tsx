@@ -18,7 +18,16 @@ export function OrderCard(order: TOrderEntity) {
             case OrderStatus.DONE: return 'Выполнен';
         }
     }, [order.status])
-
+    /**
+     * @description получить ингредиент по его id
+     */
+    const getIngredientById = useSelector((state: IIngredientState) => {
+        const { items } = state.availableItems
+        return (id: string) => items.find(item => item._id === id)
+    })
+    /**
+     * @description суммарная стоимость заказа
+     */
     const totalPrice = useSelector((state: IIngredientState) => {
 		const { items } = state.availableItems
         const count = order.ingredients.length
@@ -29,16 +38,26 @@ export function OrderCard(order: TOrderEntity) {
         }
 		return  result
 	})
-
+    /**
+     * @description блок с разметкой иконок превью компонентов
+     */
     const orderIngredientIcons = useMemo(() => {
+        const getIngredientIcon = (id: string) => {
+            const ingredient = getIngredientById(id);
+            if (!ingredient) return null
+            const { image_mobile: url, name } = ingredient
+            return <OrderIngredientPreview name={name} url={url} />
+        }
+        
         const { ingredients } = order
-        if (ingredients.length < 6) return ingredients.map(itemId => <OrderIngredientPreview itemId={itemId}/>);
-        const result = ingredients.slice(0, 5).map(itemId => <OrderIngredientPreview itemId={itemId}/>);
-        const excess = ingredients.length - 5
-        result.push(<OrderIngredientMore excess={excess}/>)
-        return result
+        if (ingredients.length < 6) return ingredients.map(getIngredientIcon)
+        const result = ingredients.slice(0, 5).map(getIngredientIcon)
+        result.push(<OrderIngredientMore excess={ingredients.length - 5}/>)
+        return result.filter(Boolean)
     }, [order.ingredients])
-
+    /**
+     * @description дата создания заказа
+     */
     const orderCreationDate = useMemo(() => new Date(order.createdAt).toISOString(), [order.createdAt])
 
     return <div className={styles.wrap}>
