@@ -10,6 +10,7 @@ import { IngredientSinglePage } from "./pages/ingredient-single"
 import { RouteGuard } from "./components/RouteGuard/RouteGuard"
 import { FeedList } from "./pages/feed-list/feed-list"
 import { FeedItem } from './pages/feed-item/feed-item'
+import { Orders } from "./pages/orders/orders"
 
 function App() {
   const location = useLocation()
@@ -34,6 +35,11 @@ function App() {
         <Route
           path="/profile"
           element={<RouteGuard element={<ProfilePage/>}/>}
+        />
+
+        <Route
+          path="/profile/orders"
+          element={<RouteGuard element={<Orders/>}/>}
         />
 
         <Route path="/feed" element={<FeedList/>} />

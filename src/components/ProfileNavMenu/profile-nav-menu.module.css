@@ -1,0 +1,19 @@
+.navigation {
+    display: flex;
+    flex-direction: column;
+    row-gap: 36px;
+    max-width: var(--profile-sidebar-w);
+    min-width: var(--profile-sidebar-w);
+}
+
+.navItem {
+    list-style-type: none;
+}
+
+.profileItem {
+
+}
+
+.profileLink {
+
+}
