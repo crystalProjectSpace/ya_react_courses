@@ -1,7 +1,4 @@
 .container {
-    --header-h: 190px;
-    --container-w: 1024px;
-
     width: var(--container-w);
     max-width: var(--container-w);
     margin-left: auto;

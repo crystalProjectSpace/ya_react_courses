@@ -13,6 +13,6 @@ export function FeedItem() {
 
     return (<div>
         <AppHeader/>
-        { order? <OrderFullInfo {...order}/> : null }
+        { order? <OrderFullInfo {...order} /> : null }
     </div>)
 }

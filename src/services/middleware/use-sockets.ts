@@ -21,8 +21,7 @@ export function socketMiddleware(wsUrl: string): Middleware {
                         dispatch({ type: `socketControl/${WS_ACTION_TYPE.WS_CLOSE}`});
                     }
 
-                    socket.onerror = (evt) => {
-                        console.log(evt)
+                    socket.onerror = () => {
                         dispatch({ type: `socketControl/${WS_ACTION_TYPE.WS_CONNECT_FAIL}`});
                     }
 

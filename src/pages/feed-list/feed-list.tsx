@@ -1,23 +1,35 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { WS_ACTION_TYPE } from "../../services/actions";
-import { IIngredientState } from "../../types";
-import { AppHeader, OrderCard } from "../../components";
-import { getItems } from "../../services";
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { UnknownAction } from "redux"
+import { useNavigate, useParams } from "react-router"
+import { WS_ACTION_TYPE } from "../../services/actions"
+import { IIngredientState } from "../../types"
+import {
+    AppHeader,
+    ModalOverlay,
+    Modal,
+    OrderCard,
+    OrderFullInfo,
+} from "../../components"
+import { getItems } from "../../services"
 import style from './feed-list.module.css'
-import { API_URL } from "../../constants";
-import { UnknownAction } from "redux";
-import { useNavigate } from "react-router";
+import { API_URL } from "../../constants"
 
 export function FeedList() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const { number } = useParams()
 
     const {
         orders,
         totalOrderCount,
         todayOrderCount
     } = useSelector((state: IIngredientState) => state.socketControl)
+
+    const activeOrder = useSelector((state:IIngredientState) => {
+        if(!number) return null
+        return state.socketControl.orders.find(o => o.number === parseInt(number)) || null 
+    })
 
     const hasLoadedIngredients = useSelector((state: IIngredientState) => state.availableItems.items.length > 0)
     
@@ -30,7 +42,11 @@ export function FeedList() {
     }, [])
 
     function goToOrder(orderNumber: number) {
-        navigate(`/feed/${orderNumber}`)
+        navigate(`/feed/${orderNumber}`, { state: { isRoot: true }})
+    }
+
+    function goToOrderList() {
+        navigate('/feed')
     }
 
     return (
@@ -67,5 +83,11 @@ export function FeedList() {
                     </section>
                 </div>    
             </div>
+            { activeOrder ? <ModalOverlay closeModal={goToOrderList}>
+                <Modal closeModal={goToOrderList}>
+                    <OrderFullInfo {...activeOrder} isModal={ true } />
+                </Modal>
+            </ModalOverlay> : null
+            }
     </main>)
 }

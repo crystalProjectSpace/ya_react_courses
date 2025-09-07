@@ -1,22 +1,19 @@
-import { useMemo } from "react";
 import { OrderIngredientPreview } from "./OrderIngredientPreview";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export function OrderIngredientSummary(props: { name: string, url: string, count: number, price: number }) {
     const { name, url, count, price } = props
-
-    const totalPrice = useMemo(() => `${price} * ${count}`, [price, count])
     
     return <div className="summary-wrap">
-        <span>
+        <span className="summary-item">
             <OrderIngredientPreview url={url} name={name}/>
-            <span className="text text_type_main-small">
+            <span className="text text_type_main-default">
                 { name }
             </span>
         </span>
-        <span className="summary-price-wrap">
+        <span className="summary-item">
             <span className="text text_type_digits-default">
-                { totalPrice }
+                { price }&nbsp;x&nbsp;{ count }
             </span>
             <CurrencyIcon type="primary" />
         </span>

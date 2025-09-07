@@ -13,7 +13,7 @@ type TIngredientInfo = {
     price: number
 }
 
-export function OrderFullInfo(order: TOrderEntity) {
+export function OrderFullInfo(order: TOrderEntity & { isModal?: boolean} ) {
 
     const orderStatusClass = useMemo(() => `_${order.status}`, [order.status])
 
@@ -27,7 +27,7 @@ export function OrderFullInfo(order: TOrderEntity) {
     const ingredientData = useMemo(() => {
         const ingredientCount = order.ingredients.length
         const result: Record<string, TIngredientInfo> = {}
-        for(let i = 0; i < ingredientCount; i++) {
+        for (let i = 0; i < ingredientCount; i++) {
             const id = order.ingredients[i]
             if (result[id]) {
                 result[id].count += 1
@@ -63,28 +63,29 @@ export function OrderFullInfo(order: TOrderEntity) {
 
     const orderCreationDate = useMemo(() => new Date(order.createdAt).toISOString(), [order.createdAt])
 
-    return <div className={styles.wrap}>
+    return <div className={`${styles.wrap} ${order.isModal ? styles.wrapModal : ''}`}>
         <header className={styles.header}>
-            <div className={styles.meta}>
-                <span className={`text text_type_digits-default ${styles.number}`}>
-                    #{order.number}
-                </span>
-                <span className={`text text_type_main-small text_color_inactive${styles.datetime}`}>
-                    { orderCreationDate }
-                </span>
-            </div>
-            <h4 className={`text text_type_main-medium ${styles.title}`}>
-                { order.name }
+            <h4 className={`text text_type_digits-medium ${styles.number}`}>
+                #{order.number}
             </h4>
-            <div className={ orderStatusClass }>{ orderStatus }</div>
+            <h4>
+                <span className="text text_type_main-medium">{ order.name }</span>
+                <div className={ orderStatusClass }>{ orderStatus }</div>
+            </h4>
         </header>
-        <div className={ styles.cardFooter}>
-            <div className={styles.orderDatetime}>
+        <div className={ styles.cardBodyWrap}>
+            <div className={`text text_type_main-medium ${styles.title}`}>Состав:</div>
+            <div className={styles.orderContent}>
                 { orderIngredientsList }
             </div>
-            <div className={styles.priceWrap}>
-                <span>{ totalPrice }</span>
-                <CurrencyIcon type="primary" />
+            <div className={styles.cardFooter}>
+                <span className={`text text_type_main-small text_color_inactive ${styles.datetime}`}>
+                    { orderCreationDate }
+                </span>
+                <span className="summary-item">
+                    <span className="text text_type_digits-default">{ totalPrice }</span>
+                    <CurrencyIcon type="primary" />
+                </span>
             </div>
         </div>
     </div>

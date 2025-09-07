@@ -1,0 +1,54 @@
+.wrap {
+    width: var(--container-w);
+    max-width: var(--container-w);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 20px;
+    margin-top: 96px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wrapModal {
+    width: 100%;
+    height: 100%;
+}
+
+.header {
+    width: 100%;
+    margin-bottom: 64px;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+}
+
+.number {
+    width: fit-content;
+    margin: 0 auto 32px;
+}
+
+.title {
+    margin-bottom: 32px;
+}
+
+.cardBodyWrap {
+    width: 100%;
+}
+
+.orderContent {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    margin-bottom: 64px;
+    max-height: 50vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+}

@@ -3,11 +3,11 @@
 }
 
 ._pending {
-    color: rgb(121, 212, 209);
+    color: rgb(174, 174, 177);    
 }
 
 ._done {
-    color: rgb(174, 174, 177);
+    color: rgb(121, 212, 209);
 }
 
 ._cancelled {
@@ -16,4 +16,16 @@
 
 ._text-shadow-blue {
     text-shadow: 0 0 12px rgb(68, 47, 185);
+}
+
+.summary-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
 }

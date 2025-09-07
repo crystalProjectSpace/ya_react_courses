@@ -38,7 +38,7 @@ function App() {
 
         <Route path="/feed" element={<FeedList/>} />
 
-        <Route path="/feed/:number" element={<FeedItem/>} />
+        <Route path="/feed/:number" element= {isRoot ? <FeedList/> : <FeedItem/>} />
 
         <Route
           path="/ingredients/:id"
