@@ -1,3 +1,4 @@
+import { ORDER_BY_NUMBER_URL } from "../constants";
 import type {
    TCheckoutPayload,
    THTTPmethod,
@@ -16,11 +17,11 @@ export async function request(url: string, payload: TRequestPayload) {
 /**
  * @description получение произвольных данных по гет-запросу
  */
-export async function getData(path: string) {
+export async function getData(path: string, fieldName = 'data') {
    try {
-      const { success, data } = await request(path, { method: 'GET' });
-      if (!success) throw new Error('API_FAIL')
-      return { data }
+      const response = await request(path, { method: 'GET' });
+      if (!response?.success) throw new Error('API_FAIL')
+      return { data: response[fieldName] }
    } catch(e) {
       console.error(e)
       return { error: e }

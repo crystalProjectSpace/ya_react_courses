@@ -19,3 +19,7 @@ export const PASS_RESET_URL = 'https://norma.nomoreparties.space/api/password-re
 export const PASS_CHANGE_URL = 'https://norma.nomoreparties.space/api/password-reset/reset' // смена пароля
 
 export const ORDERS_SOCKET_WSS = 'wss://norma.nomoreparties.space/orders/all' // сокет для получения заказов
+
+export const ORDER_SINGLE_SOCKET_WSS = 'wss://norma.nomoreparties.space/orders' // сокет для получения заказов конкретного пользователя
+
+export const ORDER_BY_NUMBER_URL = 'https://norma.nomoreparties.space/api/orders/%number%' // GET получить заказ по номеру
