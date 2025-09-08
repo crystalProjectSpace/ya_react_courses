@@ -8,8 +8,8 @@ import {
   socketControl,
 } from './';
 
-export function storeIntegration(cfg: Record<string, string>) {
-    const socketHandler = socketMiddleware(cfg.wsUrl)
+export function storeIntegration() {
+    const socketHandler = socketMiddleware()
 
     const store = configureStore({
         reducer: {

@@ -13,7 +13,7 @@ import {
 } from "../../components"
 import { getItems } from "../../services"
 import style from './feed-list.module.css'
-import { API_URL } from "../../constants"
+import { API_URL, ORDERS_SOCKET_WSS } from "../../constants"
 
 export function FeedList() {
     const dispatch = useDispatch()
@@ -34,7 +34,7 @@ export function FeedList() {
     const hasLoadedIngredients = useSelector((state: IIngredientState) => state.availableItems.items.length > 0)
     
     useEffect(() => {
-        dispatch({ type: WS_ACTION_TYPE.WS_CONNECT })
+        dispatch({ type: WS_ACTION_TYPE.WS_CONNECT, payload: { url: ORDERS_SOCKET_WSS } })
         if (!hasLoadedIngredients) dispatch(getItems(API_URL) as unknown as UnknownAction)
         return () => {
             dispatch({ type: WS_ACTION_TYPE.WS_CLOSE })

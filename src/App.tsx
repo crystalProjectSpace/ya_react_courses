@@ -42,6 +42,11 @@ function App() {
           element={<RouteGuard element={<Orders/>}/>}
         />
 
+        <Route
+          path="/profile/orders/:number"
+          element={<RouteGuard element={ isRoot ? <Orders/> : <FeedItem/> }/>}
+        />        
+
         <Route path="/feed" element={<FeedList/>} />
 
         <Route path="/feed/:number" element= {isRoot ? <FeedList/> : <FeedItem/>} />
