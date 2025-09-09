@@ -8,7 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ActiveIngredientWrap } from '../index';
 import { CHECKOUT_URL, INGREDIENT_TYPE } from '../../constants'
-import { ADD_ITEM, REMOVE_ITEM, SET_BUN } from '../../services/actions';
+import { CURRENT_ITEMS } from '../../services/actions';
 import { checkoutRequest } from '../../services/reducers/checkout.reducer'
 import { getProvisionalId } from '../../utils/data';
 import { useAuthContext } from '../../services/use-auth';
@@ -29,10 +29,10 @@ export function BurgerConstructor() {
 		drop(item: { id: string, type: INGREDIENT_TYPE}) {
 			const { id, type } = item
 			if (type === INGREDIENT_TYPE.BUN) {
-				dispatch({ type: `currentItems/${SET_BUN}`, id })
+				dispatch({ type: `currentItems/${CURRENT_ITEMS.SET_BUN}`, payload: { id } })
 			} else {
 				const provisionalId = getProvisionalId()
-				dispatch({ type: `currentItems/${ADD_ITEM}`, id, provisionalId })
+				dispatch({ type: `currentItems/${CURRENT_ITEMS.ADD}`, payload: { id, provisionalId } })
 			}
 		}
 	})
@@ -68,7 +68,7 @@ export function BurgerConstructor() {
 	}
 
 	function deleteIngredient(id: string){
-		dispatch({ type: `currentItems/${REMOVE_ITEM}`, id })
+		dispatch({ type: `currentItems/${CURRENT_ITEMS.REMOVE}`, payload: { id } })
 	}
 
 	const ingredientsReady = bun || fillings.length > 0;

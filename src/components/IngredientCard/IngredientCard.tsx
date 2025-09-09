@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router'
 import { useDrag } from 'react-dnd'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import card from './ingredient-card.module.css'
-
-import { SET_SELECTION } from '../../services/actions'
+import { SELECTION } from '../../services/actions'
 import { INGREDIENT_TYPE } from '../../constants'
 import type { TIngredientItem, IIngredientState } from '../../types'
+
+import card from './ingredient-card.module.css'
 
 export function IngredientCard(props: TIngredientItem) {
     const dispatch = useDispatch()
@@ -26,7 +26,7 @@ export function IngredientCard(props: TIngredientItem) {
     })
     
     function selectIngredient () {
-        dispatch({ type: `currentSelection/${SET_SELECTION}`, id: props._id })
+        dispatch({ type: `currentSelection/${SELECTION.SET}`, payload: { id: props._id } })
     }
 
     return (<Link

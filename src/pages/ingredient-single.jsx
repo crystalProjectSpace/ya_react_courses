@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router";
-import { SET_SELECTION } from "../services/actions";
+import { SELECTION } from "../services/actions";
 import { IngredientDetails } from "../components/IngredientDetails/IngredientDetails";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { getItems } from "../services";
@@ -14,7 +14,7 @@ export function IngredientSinglePage () {
     const hasItems = useSelector(state => state.availableItems.items.length > 0)
 
     useEffect(()=> {
-        if (!activeIngredientId) dispatch({ type: `currentSelection/${SET_SELECTION}`, id: ingredientId })
+        if (!activeIngredientId) dispatch({ type: `currentSelection/${SELECTION.SET}`, payload: { id: ingredientId } })
         if (!hasItems) dispatch(getItems(API_URL))
     }, []);
 
