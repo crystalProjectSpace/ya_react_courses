@@ -1,2 +1,0 @@
-export const SET_SELECTION = 'SET_SELECTION'
-export const CLEAR_SELECTION = 'CLEAR_SELECTION'

@@ -1,8 +1,8 @@
-import { ORDER_BY_NUMBER_URL } from "../constants";
 import type {
    TCheckoutPayload,
    THTTPmethod,
    TRequestPayload,
+   TRequestError,
 } from "../types";
 /**
  * @description расширенный запрос с перехватов ошибок в ответе

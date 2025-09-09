@@ -1,0 +1,5 @@
+export enum AVAIL_ITEM_ACTIONS {
+    LOAD = 'AVAIL_ITEMS_LOAD',
+    FAIL = 'AVAIL_ITEMS_FAIL',
+    SET = 'AVAIL_ITEMS_SET',
+}

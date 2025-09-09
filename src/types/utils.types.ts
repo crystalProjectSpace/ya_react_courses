@@ -12,3 +12,7 @@ export interface IModalProps {
     children: ReactNode | Array<ReactNode>
     closeModal: () => void
 }
+
+export class TRequestError {
+    error: unknown
+}
