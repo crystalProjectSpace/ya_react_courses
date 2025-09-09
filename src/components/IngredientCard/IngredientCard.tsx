@@ -1,16 +1,15 @@
-import { useDispatch } from 'react-redux'
 import { Link } from 'react-router'
 import { useDrag } from 'react-dnd'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { SELECTION } from '../../services/actions'
-import { useAppSelector } from "../../services"
+import { useAppSelector, useAppDispatch, type TDispatchAction } from "../../services"
 import { INGREDIENT_TYPE } from '../../constants'
 import type { TIngredientItem, IIngredientState } from '../../types'
 
 import card from './ingredient-card.module.css'
 
 export function IngredientCard(props: TIngredientItem) {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch() as TDispatchAction
 
     const[, dragRef] = useDrag({
 		type: 'ingredient',

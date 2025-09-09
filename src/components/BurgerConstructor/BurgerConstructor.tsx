@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd'
 import { useNavigate } from 'react-router';
 import {
@@ -7,7 +6,7 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ActiveIngredientWrap } from '../index';
-import { useAppSelector } from "../../services"
+import { useAppSelector, useAppDispatch, type TDispatchAction } from "../../services"
 import { CHECKOUT_URL, INGREDIENT_TYPE } from '../../constants'
 import { CURRENT_ITEMS } from '../../services/actions';
 import { checkoutRequest } from '../../services/reducers/checkout.reducer'
@@ -21,7 +20,7 @@ import { IIngredientState, TIngredientItem, TAuthContext } from '../../types';
 type TExpandedIngredient = TIngredientItem & { provisionalId: string }
 
 export function BurgerConstructor() {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch() as TDispatchAction
 	const navigate = useNavigate()
 	const { signed } = useAuthContext() as TAuthContext
 

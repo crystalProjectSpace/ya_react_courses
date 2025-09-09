@@ -1,5 +1,5 @@
 import { useDrag, useDrop } from 'react-dnd'
-import { useDispatch } from 'react-redux';
+import { useAppDispatch, type TDispatchAction } from '../../services';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CURRENT_ITEMS } from '../../services/actions';
 import ingredientWrap from './active-ingredient-wrap.module.css';
@@ -11,7 +11,7 @@ interface IActiveIngredientProps {
 }
 
 export function ActiveIngredientWrap(props: IActiveIngredientProps) {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch() as TDispatchAction
 
     const [, dragRef] = useDrag({
 		type: 'active-ingredient',

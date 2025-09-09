@@ -1,8 +1,6 @@
 import { useEffect } from "react"
-import { UnknownAction } from "redux"
 import { Routes, Route, useLocation } from "react-router"
-import { useDispatch } from "react-redux"
-import { useAppSelector } from "./services"
+import {  useAppSelector, useAppDispatch, type TDispatchThunkAction } from "./services"
 import RootPage from "./pages/root"
 import LoginPage from './pages/login'
 import RegisterPage from './pages/register'
@@ -22,12 +20,12 @@ import { API_URL } from "./constants"
 function App() {
   const location = useLocation()
   const isRoot = location.state?.isRoot
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch() as TDispatchThunkAction
 
   const hasLoadedIngredients = useAppSelector((state: IIngredientState) => state.availableItems.items.length > 0)
 
   useEffect(() => {
-    if (!hasLoadedIngredients) dispatch(getItems(API_URL) as unknown as UnknownAction)
+    if (!hasLoadedIngredients) dispatch(getItems(API_URL))
   }, [])
 
   return (

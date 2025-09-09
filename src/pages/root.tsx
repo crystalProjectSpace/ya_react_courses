@@ -9,8 +9,7 @@ import {
   OrderCheckout,
 } from '../components';
 import '../assets/styles/index.css';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from "../services"
+import { useAppSelector, useAppDispatch, type TDispatchAction } from "../services"
 import { CHECKOUT_ACTIONS, SELECTION } from '../services/actions';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -18,7 +17,7 @@ import { useParams } from 'react-router';
 import { IIngredientState } from '../types';
 
 function RootPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch() as TDispatchAction;
   const { id: ingredientId } = useParams()
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useAppSelector } from "../services"
+import { useAppSelector, useAppDispatch, type TDispatchAction } from "../services"
 import { useParams, Link } from "react-router";
 import { SELECTION } from "../services/actions";
 import { IngredientDetails } from "../components/IngredientDetails/IngredientDetails";
@@ -8,8 +7,8 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IIngredientState } from "../types";
 
 export function IngredientSinglePage () {
-    const { id: ingredientId } = useParams();
-    const dispatch = useDispatch();
+    const { id: ingredientId } = useParams()
+    const dispatch = useAppDispatch() as TDispatchAction
     const activeIngredientId = useAppSelector((state: IIngredientState) => state.currentSelection.selectedId)
 
     useEffect(()=> {

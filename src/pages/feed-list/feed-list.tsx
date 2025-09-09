@@ -1,7 +1,6 @@
 import { useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router"
-import { useAppSelector } from "../../services"
+import { useAppSelector, useAppDispatch, type TDispatchAction } from "../../services"
 import { WS_ACTION_TYPE } from "../../services/actions"
 import { IIngredientState } from "../../types"
 import {
@@ -15,7 +14,7 @@ import style from './feed-list.module.css'
 import { ORDERS_SOCKET_WSS } from "../../constants"
 
 export function FeedList() {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch() as TDispatchAction
     const navigate = useNavigate()
     const { number } = useParams()
 

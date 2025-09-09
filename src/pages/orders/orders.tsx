@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import {
     AppHeader,
@@ -8,7 +7,7 @@ import {
     OrderCard,
     OrderFullInfo,
 } from "../../components";
-import { useAppSelector } from "../../services"
+import { useAppSelector, useAppDispatch, type TDispatchAction } from "../../services"
 import { ProfileNavMenu } from "../../components/ProfileNavMenu/profile-nav-menu";
 import { IIngredientState } from "../../types";
 import { ORDER_SINGLE_SOCKET_WSS } from "../../constants";
@@ -16,7 +15,7 @@ import { WS_ACTION_TYPE } from "../../services/actions";
 
 export function Orders() {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch() as TDispatchAction
     const { number } = useParams()
 
     const activeOrder = useAppSelector((state:IIngredientState) => {
