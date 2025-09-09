@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import {
     AppHeader,
@@ -8,6 +8,7 @@ import {
     OrderCard,
     OrderFullInfo,
 } from "../../components";
+import { useAppSelector } from "../../services"
 import { ProfileNavMenu } from "../../components/ProfileNavMenu/profile-nav-menu";
 import { IIngredientState } from "../../types";
 import { ORDER_SINGLE_SOCKET_WSS } from "../../constants";
@@ -18,7 +19,7 @@ export function Orders() {
     const dispatch = useDispatch()
     const { number } = useParams()
 
-    const activeOrder = useSelector((state:IIngredientState) => {
+    const activeOrder = useAppSelector((state:IIngredientState) => {
         if(!number) return null
         return state.socketControl.orders.find(o => o.number === parseInt(number)) || null 
     })
@@ -39,7 +40,7 @@ export function Orders() {
         navigate('/profile/orders')
     }
 
-    const orders = useSelector((state: IIngredientState) => state.socketControl.orders)
+    const orders = useAppSelector((state: IIngredientState) => state.socketControl.orders)
     
     return (<main className="profile-wrap">
         <AppHeader />

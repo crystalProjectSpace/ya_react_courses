@@ -1,6 +1,7 @@
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useNavigate, useParams } from "react-router"
+import { useAppSelector } from "../../services"
 import { WS_ACTION_TYPE } from "../../services/actions"
 import { IIngredientState } from "../../types"
 import {
@@ -22,9 +23,9 @@ export function FeedList() {
         orders,
         totalOrderCount,
         todayOrderCount
-    } = useSelector((state: IIngredientState) => state.socketControl)
+    } = useAppSelector((state: IIngredientState) => state.socketControl)
 
-    const activeOrder = useSelector((state:IIngredientState) => {
+    const activeOrder = useAppSelector((state:IIngredientState) => {
         if(!number) return null
         return state.socketControl.orders.find(o => o.number === parseInt(number)) || null 
     })

@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { useSelector } from "react-redux"
+import { useAppSelector } from "../../services"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import {OrderIngredientMore, OrderIngredientPreview } from '../OrderIngredients'
 import { STATUS_LABELS } from "../../constants"
@@ -16,14 +16,14 @@ export function OrderCard(props: TOrderCardProps) {
     /**
      * @description получить ингредиент по его id
      */
-    const getIngredientById = useSelector((state: IIngredientState) => {
+    const getIngredientById = useAppSelector((state: IIngredientState) => {
         const { items } = state.availableItems
         return (id: string) => items.find(item => item._id === id)
     })
     /**
      * @description суммарная стоимость заказа
      */
-    const totalPrice = useSelector((state: IIngredientState) => {
+    const totalPrice = useAppSelector((state: IIngredientState) => {
 		const { items } = state.availableItems
         const count = props.ingredients.length
         let result = 0

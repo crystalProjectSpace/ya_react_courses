@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "../services"
 import { useParams, Link } from "react-router";
 import { SELECTION } from "../services/actions";
 import { IngredientDetails } from "../components/IngredientDetails/IngredientDetails";
@@ -9,7 +10,7 @@ import { IIngredientState } from "../types";
 export function IngredientSinglePage () {
     const { id: ingredientId } = useParams();
     const dispatch = useDispatch();
-    const activeIngredientId = useSelector((state: IIngredientState) => state.currentSelection.selectedId)
+    const activeIngredientId = useAppSelector((state: IIngredientState) => state.currentSelection.selectedId)
 
     useEffect(()=> {
         if (!activeIngredientId) dispatch({ type: `currentSelection/${SELECTION.SET}`, payload: { id: ingredientId } })

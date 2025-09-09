@@ -1,8 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router'
 import { useDrag } from 'react-dnd'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { SELECTION } from '../../services/actions'
+import { useAppSelector } from "../../services"
 import { INGREDIENT_TYPE } from '../../constants'
 import type { TIngredientItem, IIngredientState } from '../../types'
 
@@ -19,7 +20,7 @@ export function IngredientCard(props: TIngredientItem) {
         }
 	})
 
-    const count = useSelector((state: IIngredientState) => {
+    const count = useAppSelector((state: IIngredientState) => {
         return props.type === INGREDIENT_TYPE.BUN
             ? (state.currentItems.currentBun === props._id ? 1 : 0)
             : state.currentItems.currentItems.filter(i => i.itemId === props._id).length

@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { useSelector } from "react-redux"
+import { useAppSelector } from "../../services"
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 import { OrderIngredientSummary } from '../OrderIngredients'
 import { STATUS_LABELS } from "../../constants"
@@ -19,7 +19,7 @@ export function OrderFullInfo(order: TOrderEntity & { isModal?: boolean} ) {
 
     const orderStatus = useMemo(() => STATUS_LABELS.get(order.status), [order.status])
 
-    const getIngredientById = useSelector((state: IIngredientState) => {
+    const getIngredientById = useAppSelector((state: IIngredientState) => {
         const { items } = state.availableItems
         return (id: string) => items.find(item => item._id === id)
     })
@@ -45,7 +45,7 @@ export function OrderFullInfo(order: TOrderEntity & { isModal?: boolean} ) {
         return result
     }, [order.ingredients])
 
-    const totalPrice = useSelector((state: IIngredientState) => {
+    const totalPrice = useAppSelector((state: IIngredientState) => {
 		const { items } = state.availableItems
         const count = order.ingredients.length
         let result = 0

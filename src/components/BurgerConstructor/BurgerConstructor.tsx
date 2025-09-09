@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd'
 import { useNavigate } from 'react-router';
 import {
@@ -7,6 +7,7 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ActiveIngredientWrap } from '../index';
+import { useAppSelector } from "../../services"
 import { CHECKOUT_URL, INGREDIENT_TYPE } from '../../constants'
 import { CURRENT_ITEMS } from '../../services/actions';
 import { checkoutRequest } from '../../services/reducers/checkout.reducer'
@@ -37,7 +38,7 @@ export function BurgerConstructor() {
 		}
 	})
 
-	const { bun, fillings, totalPrice, itemIds } = useSelector((state: IIngredientState) => {
+	const { bun, fillings, totalPrice, itemIds } = useAppSelector((state: IIngredientState) => {
 		const { currentBun, currentItems } = state.currentItems
 		const { items } = state.availableItems
 		const bun = items.find(item => item._id === currentBun)

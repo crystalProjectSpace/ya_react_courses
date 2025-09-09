@@ -1,7 +1,8 @@
 import { useEffect } from "react"
 import { UnknownAction } from "redux"
 import { Routes, Route, useLocation } from "react-router"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { useAppSelector } from "./services"
 import RootPage from "./pages/root"
 import LoginPage from './pages/login'
 import RegisterPage from './pages/register'
@@ -23,7 +24,7 @@ function App() {
   const isRoot = location.state?.isRoot
   const dispatch = useDispatch()
 
-  const hasLoadedIngredients = useSelector((state: IIngredientState) => state.availableItems.items.length > 0)
+  const hasLoadedIngredients = useAppSelector((state: IIngredientState) => state.availableItems.items.length > 0)
 
   useEffect(() => {
     if (!hasLoadedIngredients) dispatch(getItems(API_URL) as unknown as UnknownAction)

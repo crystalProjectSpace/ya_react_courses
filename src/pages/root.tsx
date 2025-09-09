@@ -9,7 +9,8 @@ import {
   OrderCheckout,
 } from '../components';
 import '../assets/styles/index.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from "../services"
 import { CHECKOUT_ACTIONS, SELECTION } from '../services/actions';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -24,8 +25,8 @@ function RootPage() {
     if (ingredientId) dispatch({ type: `currentSelection/${SELECTION.SET}`, payload: { id: ingredientId } })
   }, [])
   
-  const showActiveIngredient = useSelector((state: IIngredientState) => !!state.currentSelection.selectedId)
-  const orderId = useSelector((state:IIngredientState) => state.checkout.orderId)
+  const showActiveIngredient = useAppSelector((state: IIngredientState) => !!state.currentSelection.selectedId)
+  const orderId = useAppSelector((state:IIngredientState) => state.checkout.orderId)
 
   function clearCurrentSelection() {
     dispatch({ type: `currentSelection/${SELECTION.CLEAR}` })

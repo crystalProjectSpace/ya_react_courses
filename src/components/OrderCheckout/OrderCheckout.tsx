@@ -1,10 +1,10 @@
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from "../../services"
 import orderCheckout from './order-checkout.module.css'
 import { IIngredientState } from '../../types'
 
 export function OrderCheckout() {
-    const orderId = useSelector((state: IIngredientState) => state.checkout.orderId)
+    const orderId = useAppSelector((state: IIngredientState) => state.checkout.orderId)
 
     return (<div className={orderCheckout.wrap}>
         <h1 className={`text text_type_digits-large ${orderCheckout.order}`}>

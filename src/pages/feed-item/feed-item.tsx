@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services"
 import { IIngredientState, TOrderEntity } from "../../types";
 import { AppHeader, OrderFullInfo } from "../../components";
 import { getData } from "../../utils/data";
@@ -11,7 +11,7 @@ export function FeedItem() {
     const { number } = useParams()
     const [activeOrder, setActiveOrder] = useState<TOrderEntity | null>(null)
 
-    const order = useSelector((state: IIngredientState) => {
+    const order = useAppSelector((state: IIngredientState) => {
         const orderNumber = parseInt(number || '')
         return (!orderNumber || isNaN(orderNumber))
             ? null :state.socketControl.orders.find(o => o.number === orderNumber)

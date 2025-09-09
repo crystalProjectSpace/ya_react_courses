@@ -1,6 +1,6 @@
 
 import detailStyles from './ingredient-details.module.css'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from "../../services"
 import type { IIngredientState, TIngredientItem } from '../../types'
 
 export function IngredientDetails () {
@@ -11,7 +11,7 @@ export function IngredientDetails () {
         proteins,
         fat,
         carbohydrates
-    } = useSelector((state: IIngredientState) => {
+    } = useAppSelector((state: IIngredientState) => {
         const {selectedId} = state.currentSelection
         const {items} = state.availableItems
         return items.find(item => item._id === selectedId) || {} as TIngredientItem
