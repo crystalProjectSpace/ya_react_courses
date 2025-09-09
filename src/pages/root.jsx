@@ -9,9 +9,7 @@ import {
   OrderCheckout,
 } from '../components';
 import '../assets/styles/index.css';
-import { API_URL } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from '../services';
 import { CHECKOUT_ACTIONS, SELECTION } from '../services/actions';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -22,7 +20,6 @@ function RootPage() {
   const { id: ingredientId } = useParams()
 
   useEffect(() => {
-    dispatch(getItems(API_URL))
     if (ingredientId) dispatch({ type: `currentSelection/${SELECTION.SET}`, payload: { id: ingredientId } })
   }, [])
   

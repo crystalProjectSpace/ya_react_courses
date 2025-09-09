@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import type { UnknownAction } from "redux";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import {
@@ -11,16 +10,13 @@ import {
 } from "../../components";
 import { ProfileNavMenu } from "../../components/ProfileNavMenu/profile-nav-menu";
 import { IIngredientState } from "../../types";
-import { API_URL, ORDER_SINGLE_SOCKET_WSS } from "../../constants";
+import { ORDER_SINGLE_SOCKET_WSS } from "../../constants";
 import { WS_ACTION_TYPE } from "../../services/actions";
-import { getItems } from "../../services";
 
 export function Orders() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { number } = useParams()
-
-    const hasLoadedIngredients = useSelector((state: IIngredientState) => state.availableItems.items?.length > 0)
 
     const activeOrder = useSelector((state:IIngredientState) => {
         if(!number) return null
@@ -30,7 +26,6 @@ export function Orders() {
     useEffect(() => {
         const accessToken = window.sessionStorage.getItem('access')
         dispatch({ type: WS_ACTION_TYPE.WS_CONNECT, payload: { url: `${ORDER_SINGLE_SOCKET_WSS}?token=${accessToken}` } })
-        if (!hasLoadedIngredients) dispatch(getItems(API_URL) as unknown as UnknownAction)
         return () => {
             dispatch({ type: WS_ACTION_TYPE.WS_CLOSE })
         }

@@ -1,17 +1,14 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import type { UnknownAction } from "redux";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { IIngredientState, TOrderEntity } from "../../types";
 import { AppHeader, OrderFullInfo } from "../../components";
 import { getData } from "../../utils/data";
 import { useEffect } from "react";
-import { API_URL, ORDER_BY_NUMBER_URL } from "../../constants";
-import { getItems } from "../../services";
+import { ORDER_BY_NUMBER_URL } from "../../constants";
 
 export function FeedItem() {
     const { number } = useParams()
-    const dispatch = useDispatch()
     const [activeOrder, setActiveOrder] = useState<TOrderEntity | null>(null)
 
     const order = useSelector((state: IIngredientState) => {
@@ -29,7 +26,6 @@ export function FeedItem() {
             const response = await getData(orderUrl, 'orders')
             const { data } = response
             if (data?.length) setActiveOrder({ ...(data[0]) })
-            dispatch(getItems(API_URL) as unknown as UnknownAction)
         }
     }
 
