@@ -4,11 +4,12 @@ import { useParams, Link } from "react-router";
 import { SELECTION } from "../services/actions";
 import { IngredientDetails } from "../components/IngredientDetails/IngredientDetails";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { IIngredientState } from "../types";
 
 export function IngredientSinglePage () {
     const { id: ingredientId } = useParams();
     const dispatch = useDispatch();
-    const activeIngredientId = useSelector(state => state.currentSelection.selectedId)
+    const activeIngredientId = useSelector((state: IIngredientState) => state.currentSelection.selectedId)
 
     useEffect(()=> {
         if (!activeIngredientId) dispatch({ type: `currentSelection/${SELECTION.SET}`, payload: { id: ingredientId } })

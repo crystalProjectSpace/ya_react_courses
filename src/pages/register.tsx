@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import { Link } from "react-router";
 import {
     Input,
@@ -16,7 +16,7 @@ function RegisterPage () {
     const isValid = useMemo(() => !!email && !!login && !!pass
     , [email, login, pass])
 
-    function requestUserReg(evt) {
+    function requestUserReg(evt: FormEvent) {
         evt.preventDefault()
         if (!isValid) return;
         const payload = {
@@ -34,12 +34,17 @@ function RegisterPage () {
             onSubmit={requestUserReg}
         >
             <div className="form-row">
+            {
+                // @ts-ignore
                 <Input
                     type="text"
                     value={login}
                     placeholder="Имя"
                     onChange={evt => setLogin(evt.target.value)}
                 />
+                // @ts-check
+            }
+
             </div>
             <div className="form-row">
                 <EmailInput

@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, FormEvent } from 'react';
 import { Link, Navigate } from 'react-router';
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAuthContext } from '../services/use-auth';
+import { TAuthContext } from '../types';
 
 function LoginPage () {
     const [email, setEmail] = useState('')
@@ -10,9 +11,9 @@ function LoginPage () {
     const isValid = useMemo(() => !!email && !!pass
     , [email, pass])
 
-    const { user, signIn } = useAuthContext()
+    const { user, signIn } = useAuthContext() as TAuthContext
 
-    function requestUserLog(evt){
+    function requestUserLog(evt: FormEvent){
         evt.preventDefault()
         if (!isValid) return;
         signIn({ email, password: pass })
