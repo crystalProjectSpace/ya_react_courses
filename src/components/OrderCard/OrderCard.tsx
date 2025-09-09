@@ -41,13 +41,13 @@ export function OrderCard(props: TOrderCardProps) {
             const ingredient = getIngredientById(id);
             if (!ingredient) return null
             const { image_mobile: url, name } = ingredient
-            return <OrderIngredientPreview key={id} name={name} url={url} index={index}/>
+            return <OrderIngredientPreview key={`${id}_${index}`} name={name} url={url} index={index}/>
         }
         
         const { ingredients } = props
         if (ingredients.length < 6) return ingredients.map((id, i) => getIngredientIcon(id, 6 - i))
         const result = ingredients.slice(0, 5).map((id, i) => getIngredientIcon(id, 6 - i))
-        result.push(<OrderIngredientMore excess={ingredients.length - 5}/>)
+        result.push(<OrderIngredientMore key={`${props._id}`}excess={ingredients.length - 5}/>)
         return result.filter(Boolean)
     }, [props.ingredients])
     /**

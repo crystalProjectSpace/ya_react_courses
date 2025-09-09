@@ -45,7 +45,7 @@ export function IngredientCard(props: TIngredientItem) {
         </figure>
         <span className={card.priceLabel}>
             <CurrencyIcon type="primary" />
-            <span className="text text_type_main-small">
+            <span className="text text_type_main-default">
                 {props.price}
             </span>
         </span>        
