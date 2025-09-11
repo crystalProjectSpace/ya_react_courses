@@ -18,3 +18,20 @@
 .profileWrap {
     
 }
+
+.linkContent {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+    transition: color 0.3s;
+}
+
+.linkContent:link,
+.linkContent:visited {
+    color: #4c4cff;
+}
+
+.linkContent:hover,
+.linkContent:active {
+    color: #fff;
+}

@@ -1,5 +1,5 @@
 import {useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from "../../services"
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientPreview } from '../IngredientPreview/IngredientPreview';
 import { INGREDIENT_TYPE, MENU_TYPES } from '../../constants';
@@ -12,7 +12,7 @@ type TIngredientEntries = Record<INGREDIENT_TYPE, Array<TIngredientItem>>
 
 export function BurgerIngredients() {
 	const [currentTab, setCurrentTab] = useState(MENU_TYPES[0].val);
-	const ingredients = useSelector((state:IIngredientState) => {
+	const ingredients = useAppSelector((state:IIngredientState) => {
 		const {items} = state.availableItems;
 
 		return Object.entries(items.reduce((res: TIngredientEntries, item) => {

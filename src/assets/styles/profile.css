@@ -1,0 +1,31 @@
+.profile-wrap {
+    max-width: var(--container-w);
+    width: var(--container-w);
+    margin-left: auto;
+    margin-right: auto;
+    height: 100vh;
+}
+
+.profile-content {
+    display: flex;
+    align-items: stretch;
+    column-gap: 24px;
+}
+
+.profile-column._list {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    max-height: calc(100vh - 96px);
+    scrollbar-width: thin;
+    padding-right: 12px;
+}
+
+.profile-column._sidebar {
+    max-width: var(--profile-sidebar-w);
+}
+
+.profile-column-notice {
+    margin-top: 72px;
+}

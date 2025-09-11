@@ -9,32 +9,30 @@ import {
   OrderCheckout,
 } from '../components';
 import '../assets/styles/index.css';
-import { API_URL } from '../constants';
-import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from '../services';
-import { CHECKOUT_CLEAR, CLEAR_SELECTION, SET_SELECTION } from '../services/actions';
+import { useAppSelector, useAppDispatch, type TDispatchAction } from "../services"
+import { CHECKOUT_ACTIONS, SELECTION } from '../services/actions';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useParams } from 'react-router';
+import { IIngredientState } from '../types';
 
 function RootPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch() as TDispatchAction;
   const { id: ingredientId } = useParams()
 
   useEffect(() => {
-    dispatch(getItems(API_URL))
-    if (ingredientId) dispatch({ type: `currentSelection/${SET_SELECTION}`, id: ingredientId })
+    if (ingredientId) dispatch({ type: `currentSelection/${SELECTION.SET}`, payload: { id: ingredientId } })
   }, [])
   
-  const showActiveIngredient = useSelector(state => !!state.currentSelection.selectedId)
-  const orderId = useSelector(state => state.checkout.orderId)
+  const showActiveIngredient = useAppSelector((state: IIngredientState) => !!state.currentSelection.selectedId)
+  const orderId = useAppSelector((state:IIngredientState) => state.checkout.orderId)
 
   function clearCurrentSelection() {
-    dispatch({ type: `currentSelection/${CLEAR_SELECTION}` })
+    dispatch({ type: `currentSelection/${SELECTION.CLEAR}` })
   }
 
   function clearCheckout() {
-    dispatch({ type: `checkout/${CHECKOUT_CLEAR}` })
+    dispatch({ type: `checkout/${CHECKOUT_ACTIONS.CLEAR}` })
   }
 
   return (

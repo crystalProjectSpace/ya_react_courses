@@ -1,28 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from "react-router"
-
+import { Provider } from 'react-redux';
 import './assets/styles/index.css';
 import App from './App';
-import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
-import {
-  availableItemsSlice,
-  currentSelectionSlice,
-  currentItemsSlice,
-  checkoutSlice,
-} from './services';
 import { ProvideAuth } from './services/use-auth';
+import { ORDERS_SOCKET_WSS } from './constants';
+import { storeIntegration } from './services/store-integration';
 
-
-const store = configureStore({
-  reducer: {
-    availableItems: availableItemsSlice.reducer,
-    currentSelection: currentSelectionSlice.reducer,
-    currentItems: currentItemsSlice.reducer,
-    checkout: checkoutSlice.reducer,
-  },
-})
+const storeConfig = { wsUrl: ORDERS_SOCKET_WSS }
+const store = storeIntegration(storeConfig)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

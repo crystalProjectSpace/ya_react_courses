@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { SET_SELECTION , CLEAR_SELECTION } from '../actions'
+import { SELECTION } from '../actions'
 
 export const currentSelectionSlice = createSlice({
     name: 'currentSelection',
@@ -7,7 +7,7 @@ export const currentSelectionSlice = createSlice({
         selectedId: ''
     },
     reducers: {
-        [SET_SELECTION]: (state, action) => ({ selectedId: action.id }),
-        [CLEAR_SELECTION]: () => ({ selectedId: '' }),
+        [SELECTION.SET]: (state, action) => ({ selectedId: action.payload.id }),
+        [SELECTION.CLEAR]: () => ({ selectedId: '' }),
     }
 })

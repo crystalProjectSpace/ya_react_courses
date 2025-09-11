@@ -7,6 +7,16 @@
     position: relative;
 }
 
+.wrap:link,
+.wrap:visited {
+    color: var(--text-inactive-color);
+}
+
+.wrap:hover,
+.wrap:active {
+    color: #fff;
+}
+
 .figure {
     display: flex;
     justify-content: center;

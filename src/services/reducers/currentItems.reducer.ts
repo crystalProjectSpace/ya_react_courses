@@ -1,34 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-    ADD_ITEM,
-    REMOVE_ITEM,
-    SET_BUN,
-    REMOVE_BUN,
-    SWAP_ITEMS,
- } from '../actions'
+import { CURRENT_ITEMS } from '../actions'
+import type { TSelectionItem } from '../../types'
 
 export const currentItemsSlice = createSlice({
     name: 'currentItems',
     initialState: {
-        currentItems: [],
+        currentItems: [] as ReadonlyArray<TSelectionItem>,
         currentBun: '',
     },
     reducers: {
-        [SET_BUN]: (state, action) => ({ ...state, currentBun: action.id }),
-        [REMOVE_BUN]: (state) => ({ ...state, currentBun: '' }),
-        [ADD_ITEM]: (state, action) => {
-            const { id, provisionalId } = action
+        [CURRENT_ITEMS.SET_BUN]: (state, action) => ({ ...state, currentBun: action.payload.id }),
+        [CURRENT_ITEMS.REMOVE_BUN]: (state) => ({ ...state, currentBun: '' }),
+        [CURRENT_ITEMS.ADD]: (state, action) => {
+            const { id, provisionalId } = action.payload
             state.currentItems.push({
                 itemId: id,
                 id: provisionalId
             })
         },
-        [REMOVE_ITEM]: (state, action) => {
-            const { id } = action
+        [CURRENT_ITEMS.REMOVE]: (state, action) => {
+            const { id } = action.payload
             state.currentItems = state.currentItems.filter(i => i.id !== id)
         },
-        [SWAP_ITEMS]: (state, action) => {
-            const { indexNew, indexOld } = action
+        [CURRENT_ITEMS.SWAP]: (state, action) => {
+            const { indexNew, indexOld } = action.payload
             if (indexNew === indexOld) return
             const newItemList = state.currentItems.slice()
             newItemList[indexNew] = {...state.currentItems[indexOld]}

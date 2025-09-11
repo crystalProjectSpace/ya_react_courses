@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { Link } from 'react-router';
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { changePassword } from '../utils/auth';
@@ -8,7 +8,7 @@ function ResetPasswordPage () {
     const [code, setCode] = useState('')
     const [pass, setPass] = useState('')
 
-    async function resetPass(evt) {
+    async function resetPass(evt: FormEvent) {
         evt.preventDefault()
         if(!code || !pass) return
         const formData = { token: code, password: pass }
@@ -18,7 +18,7 @@ function ResetPasswordPage () {
         if (error) console.log('pass change failed')
     }
     
-    return (<section class="form-wrap">
+    return (<section className="form-wrap">
         <h3 className="form-title">Восстановление пароля</h3>
         <form
             className="form"
@@ -32,12 +32,16 @@ function ResetPasswordPage () {
                 />
             </div>
             <div className="form-row">
+            {
+                // @ts-ignore
                 <Input
                     type="text"
                     value={code}
                     placeholder="Введите код из письма"
                     onChange={evt => setCode(evt.target.value)}
                 />
+                // @ts-check
+            }
             </div>
             <div className="form-buttons">
                 <Button

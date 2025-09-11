@@ -1,0 +1,50 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 28px;
+    background-color: var(--card-bg);
+    row-gap: 8px;
+}
+
+.header {
+
+}
+            
+.meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.number {
+
+}
+
+.datetime {
+
+}
+
+.name {
+
+}
+
+
+.cardMain {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ingredientList {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+.priceWrap {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}

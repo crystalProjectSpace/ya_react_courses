@@ -1,0 +1,43 @@
+.container {
+    width: var(--container-w);
+    max-width: var(--container-w);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header {
+    padding: 28px 0;
+}
+
+.wrap {
+    --gap-x: 16px;
+    display: flex;
+    align-items: stretch;
+    column-gap: var(--gap-x);
+    height: calc(100vh - var(--header-h));
+}
+
+.column{
+    width: calc(50% - calc(0.5 * var(--gap-x)));
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    height: 100%;
+    padding-right: 8px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.stats {}
+
+.statItem {}
+
+.counter {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    margin-bottom: 24px;
+}

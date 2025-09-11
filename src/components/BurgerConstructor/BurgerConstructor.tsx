@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd'
 import { useNavigate } from 'react-router';
 import {
@@ -7,8 +6,9 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ActiveIngredientWrap } from '../index';
+import { useAppSelector, useAppDispatch, type TDispatchAction } from "../../services"
 import { CHECKOUT_URL, INGREDIENT_TYPE } from '../../constants'
-import { ADD_ITEM, REMOVE_ITEM, SET_BUN } from '../../services/actions';
+import { CURRENT_ITEMS } from '../../services/actions';
 import { checkoutRequest } from '../../services/reducers/checkout.reducer'
 import { getProvisionalId } from '../../utils/data';
 import { useAuthContext } from '../../services/use-auth';
@@ -20,7 +20,7 @@ import { IIngredientState, TIngredientItem, TAuthContext } from '../../types';
 type TExpandedIngredient = TIngredientItem & { provisionalId: string }
 
 export function BurgerConstructor() {
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch() as TDispatchAction
 	const navigate = useNavigate()
 	const { signed } = useAuthContext() as TAuthContext
 
@@ -29,15 +29,15 @@ export function BurgerConstructor() {
 		drop(item: { id: string, type: INGREDIENT_TYPE}) {
 			const { id, type } = item
 			if (type === INGREDIENT_TYPE.BUN) {
-				dispatch({ type: `currentItems/${SET_BUN}`, id })
+				dispatch({ type: `currentItems/${CURRENT_ITEMS.SET_BUN}`, payload: { id } })
 			} else {
 				const provisionalId = getProvisionalId()
-				dispatch({ type: `currentItems/${ADD_ITEM}`, id, provisionalId })
+				dispatch({ type: `currentItems/${CURRENT_ITEMS.ADD}`, payload: { id, provisionalId } })
 			}
 		}
 	})
 
-	const { bun, fillings, totalPrice, itemIds } = useSelector((state: IIngredientState) => {
+	const { bun, fillings, totalPrice, itemIds } = useAppSelector((state: IIngredientState) => {
 		const { currentBun, currentItems } = state.currentItems
 		const { items } = state.availableItems
 		const bun = items.find(item => item._id === currentBun)
@@ -68,7 +68,7 @@ export function BurgerConstructor() {
 	}
 
 	function deleteIngredient(id: string){
-		dispatch({ type: `currentItems/${REMOVE_ITEM}`, id })
+		dispatch({ type: `currentItems/${CURRENT_ITEMS.REMOVE}`, payload: { id } })
 	}
 
 	const ingredientsReady = bun || fillings.length > 0;

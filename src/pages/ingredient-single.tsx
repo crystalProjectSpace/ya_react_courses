@@ -1,21 +1,18 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch, type TDispatchAction } from "../services"
 import { useParams, Link } from "react-router";
-import { SET_SELECTION } from "../services/actions";
+import { SELECTION } from "../services/actions";
 import { IngredientDetails } from "../components/IngredientDetails/IngredientDetails";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { getItems } from "../services";
-import { API_URL } from "../constants";
+import { IIngredientState } from "../types";
 
 export function IngredientSinglePage () {
-    const { id: ingredientId } = useParams();
-    const dispatch = useDispatch();
-    const activeIngredientId = useSelector(state => state.currentSelection.selectedId)
-    const hasItems = useSelector(state => state.availableItems.items.length > 0)
+    const { id: ingredientId } = useParams()
+    const dispatch = useAppDispatch() as TDispatchAction
+    const activeIngredientId = useAppSelector((state: IIngredientState) => state.currentSelection.selectedId)
 
     useEffect(()=> {
-        if (!activeIngredientId) dispatch({ type: `currentSelection/${SET_SELECTION}`, id: ingredientId })
-        if (!hasItems) dispatch(getItems(API_URL))
+        if (!activeIngredientId) dispatch({ type: `currentSelection/${SELECTION.SET}`, payload: { id: ingredientId } })
     }, []);
 
     return (<section className="page-wrap _centered _ingredients">

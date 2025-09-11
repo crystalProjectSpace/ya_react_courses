@@ -1,0 +1,7 @@
+export enum CURRENT_ITEMS {
+    ADD = 'ADD_ITEM',
+    REMOVE = 'REMOVE_ITEM',
+    SET_BUN = 'SET_BUN',
+    REMOVE_BUN = 'REMOVE_BUN',
+    SWAP = 'SWAP_ITEMS'
+}

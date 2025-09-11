@@ -1,4 +1,6 @@
+import { useEffect } from "react"
 import { Routes, Route, useLocation } from "react-router"
+import {  useAppSelector, useAppDispatch, type TDispatchThunkAction } from "./services"
 import RootPage from "./pages/root"
 import LoginPage from './pages/login'
 import RegisterPage from './pages/register'
@@ -8,11 +10,23 @@ import ProfilePage from './pages/profile/profile'
 import { ErrorPage } from "./pages/error"
 import { IngredientSinglePage } from "./pages/ingredient-single"
 import { RouteGuard } from "./components/RouteGuard/RouteGuard"
-
+import { FeedList } from "./pages/feed-list/feed-list"
+import { FeedItem } from './pages/feed-item/feed-item'
+import { Orders } from "./pages/orders/orders"
+import type { IIngredientState } from "./types"
+import { getItems } from "./services"
+import { API_URL } from "./constants"
 
 function App() {
   const location = useLocation()
   const isRoot = location.state?.isRoot
+  const dispatch = useAppDispatch() as TDispatchThunkAction
+
+  const hasLoadedIngredients = useAppSelector((state: IIngredientState) => state.availableItems.items.length > 0)
+
+  useEffect(() => {
+    if (!hasLoadedIngredients) dispatch(getItems(API_URL))
+  }, [])
 
   return (
       <Routes>
@@ -34,6 +48,21 @@ function App() {
           path="/profile"
           element={<RouteGuard element={<ProfilePage/>}/>}
         />
+
+        <Route
+          path="/profile/orders"
+          element={<RouteGuard element={<Orders/>}/>}
+        />
+
+        <Route
+          path="/profile/orders/:number"
+          element={<RouteGuard element={ isRoot ? <Orders/> : <FeedItem/> }/>}
+        />        
+
+        <Route path="/feed" element={<FeedList/>} />
+
+        <Route path="/feed/:number" element= {isRoot ? <FeedList/> : <FeedItem/>} />
+
         <Route
           path="/ingredients/:id"
           element={
