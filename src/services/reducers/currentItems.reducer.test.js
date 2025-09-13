@@ -1,6 +1,11 @@
 
-import { currentItemsSlice } from './currentItems.reducer';
-import { configureStore } from '@reduxjs/toolkit';
+import { currentItemsSlice } from './currentItems.reducer'
+import { configureStore } from '@reduxjs/toolkit'
+
+/**
+ * @description
+ * @url https://dev.to/bionicjulia/writing-jest-tests-for-a-redux-toolkit-slice-3co3
+ */
 
 const localStore = configureStore({
     reducer: {
@@ -9,6 +14,12 @@ const localStore = configureStore({
 })
 
 const DUMMY_ID = 'dead-beaf-c0ca-co1a'
+
+const TEST_ITEMS = [
+    { id: 'aaaa', provisionalId: '0000' },
+    { id: 'aaab', provisionalId: '0001' },
+    { id: 'aabb', provisionalId: '0002'},
+]
 
 describe('Test for selection-storage reduces', () => {
     const selectActions = currentItemsSlice.actions
@@ -27,12 +38,25 @@ describe('Test for selection-storage reduces', () => {
         expect(items.currentItems.length).toEqual(currentItemsCount)
         expect(items.currentBun).toEqual('')
     })
-    /**
-     * more test tomorrow
-     */
-})
 
-/**
- * @description
- * @url https://dev.to/bionicjulia/writing-jest-tests-for-a-redux-toolkit-slice-3co3
- */
+    it('swapping items should exchange their positions and should not exchange their values', () => {
+        function getItemHash(item) {
+            return (parseInt(`${item.id}${item.provisionalId}`, 16) + parseInt(item.id, 16))/(1 + parseInt(item.itemId, 16))
+        }
+
+        const I_START = 0
+        const I_END = 2
+
+        TEST_ITEMS.forEach(item => localStore.dispatch(selectActions.ADD_ITEM(item)))
+        const preState = localStore.getState()
+        const hashFirst = getItemHash(preState.items.currentItems[I_START])
+        const hashLast = getItemHash(preState.items.currentItems[I_END])
+
+        localStore.dispatch(selectActions.SWAP_ITEMS({ indexNew: I_START, indexOld: I_END }))
+        const nowState = localStore.getState()
+        const firstToLast = hashFirst === getItemHash(nowState.items.currentItems[I_END])
+        const lastToFirst = hashLast === getItemHash(nowState.items.currentItems[I_START])
+        
+        expect(firstToLast && lastToFirst).toBeTruthy()
+    })
+})
