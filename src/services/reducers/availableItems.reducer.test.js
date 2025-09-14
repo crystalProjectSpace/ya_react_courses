@@ -33,7 +33,7 @@ const DUMMY_RESPONSE = [
 
 describe('Test for selection-storage reduces', () => {
     it('Fetching for items should add them to available ingredient list', async () => {
-        mockFetch(DUMMY_RESPONSE)
+        mockFetch({ data: DUMMY_RESPONSE, failClause: false })
     
         await localStore.dispatch(getItems('/dummy-url'))
         const loadedItems = localStore.getState().items.items
