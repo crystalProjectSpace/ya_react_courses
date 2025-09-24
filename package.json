@@ -31,7 +31,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress-test": "cd ./node_modules/.bin"
   },
   "eslintConfig": {
     "extends": [
