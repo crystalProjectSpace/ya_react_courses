@@ -71,9 +71,13 @@ export function BurgerConstructor() {
 		dispatch({ type: `currentItems/${CURRENT_ITEMS.REMOVE}`, payload: { id } })
 	}
 
+	function detectMU(evt: unknown) {
+		console.log('mouse-up detected', (evt as MouseEvent).clientX, (evt as MouseEvent).clientY)
+	}
+
 	const ingredientsReady = bun || fillings.length > 0;
 
-	return (<section className={styles.wrap} ref={dropRef}>
+	return (<section className={styles.wrap} ref={dropRef} onMouseUp={detectMU}>
 		{ingredientsReady && <>
 			{
 				!!bun ? <ConstructorElement
