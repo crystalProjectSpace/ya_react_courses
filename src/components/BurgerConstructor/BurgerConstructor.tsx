@@ -71,13 +71,9 @@ export function BurgerConstructor() {
 		dispatch({ type: `currentItems/${CURRENT_ITEMS.REMOVE}`, payload: { id } })
 	}
 
-	function detectMU(evt: unknown) {
-		console.log('mouse-up detected', (evt as MouseEvent).clientX, (evt as MouseEvent).clientY)
-	}
-
 	const ingredientsReady = bun || fillings.length > 0;
 
-	return (<section className={styles.wrap} ref={dropRef} onMouseUp={detectMU}>
+	return (<section className={styles.wrap} ref={dropRef}>
 		{ingredientsReady && <>
 			{
 				!!bun ? <ConstructorElement
@@ -85,14 +81,15 @@ export function BurgerConstructor() {
 					thumbnail={bun.image_mobile}
 					price={bun.price}
 					isLocked={true}
+					data-testid={bun._id}
 					type="top"
 				/> : null
 			}
 			<div className={styles.list}>
 				{
 					fillings.map((item, i) => {
-						const {name, image_mobile, price, provisionalId } = item;
-						return (<ActiveIngredientWrap index={i} key={provisionalId}>
+						const {name, image_mobile, price, provisionalId, _id } = item;
+						return (<ActiveIngredientWrap index={i} key={provisionalId} id={_id}>
 							<ConstructorElement								
 								text={name}
 								thumbnail={image_mobile}

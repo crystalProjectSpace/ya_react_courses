@@ -29,21 +29,12 @@ export function IngredientCard(props: TIngredientItem) {
         dispatch({ type: `currentSelection/${SELECTION.SET}`, payload: { id: props._id } })
     }
 
-    function testMD(evt: unknown) {
-        console.log('mouse-down detected-card', (evt as MouseEvent).clientX, (evt as MouseEvent).clientY)
-    }
-
-    function testDrag(evt: unknown) {
-        console.log('mouse-up detected-card', (evt as MouseEvent).clientX, (evt as MouseEvent).clientY)
-    }
-
     return (<Link
         to={`/ingredients/${props._id}`}
         state={{isRoot: true }}
         className={card.wrap}
         ref={dragRef}
-        onMouseUp={testDrag}
-        onMouseDown={testMD}
+        data-testid={ props._id }
     >
         <figure className={card.figure}>
             <img
