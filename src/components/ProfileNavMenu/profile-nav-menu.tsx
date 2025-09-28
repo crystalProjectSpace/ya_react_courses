@@ -1,4 +1,5 @@
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 import { useAuthContext } from '../../services/use-auth'
 import styles from './profile-nav-menu.module.css'
 import { TAuthContext } from '../../types';

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch, type TDispatchAction } from "../services"
-import { useParams, Link } from "react-router";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import { SELECTION } from "../services/actions";
 import { IngredientDetails } from "../components/IngredientDetails/IngredientDetails";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";

@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import { getResetCode } from '../utils/auth'
 
