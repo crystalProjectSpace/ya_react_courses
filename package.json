@@ -2,7 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "https://github.com/crystalProjectSpace/ya_react_courses",
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
     "@testing-library/dom": "^10.4.0",
