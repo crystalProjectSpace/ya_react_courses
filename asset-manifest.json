@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/crystalProjectSpace/ya_react_courses/static/css/main.76a9544d.css",
+    "main.js": "/crystalProjectSpace/ya_react_courses/static/js/main.623bf910.js",
+    "static/media/JetBrainsMono-Bold.woff": "/crystalProjectSpace/ya_react_courses/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
+    "static/media/JetBrainsMono-Regular.woff": "/crystalProjectSpace/ya_react_courses/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
+    "static/media/Roboto-Bold.woff": "/crystalProjectSpace/ya_react_courses/static/media/Roboto-Bold.6a9292a5678534d3be0f.woff",
+    "static/media/Roboto-Medium.woff": "/crystalProjectSpace/ya_react_courses/static/media/Roboto-Medium.93070d8c4d6b12e2a430.woff",
+    "static/media/Roboto-Regular.woff": "/crystalProjectSpace/ya_react_courses/static/media/Roboto-Regular.c85b1aece68e093f5e23.woff",
+    "static/media/JetBrainsMono-Bold.woff2": "/crystalProjectSpace/ya_react_courses/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
+    "static/media/JetBrainsMono-Regular.woff2": "/crystalProjectSpace/ya_react_courses/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
+    "static/media/iceland.woff": "/crystalProjectSpace/ya_react_courses/static/media/iceland.77ad7fc2baffd9305538.woff",
+    "static/media/iceland.woff2": "/crystalProjectSpace/ya_react_courses/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
+    "index.html": "/crystalProjectSpace/ya_react_courses/index.html",
+    "main.76a9544d.css.map": "/crystalProjectSpace/ya_react_courses/static/css/main.76a9544d.css.map",
+    "main.623bf910.js.map": "/crystalProjectSpace/ya_react_courses/static/js/main.623bf910.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.76a9544d.css",
+    "static/js/main.623bf910.js"
+  ]
+}
