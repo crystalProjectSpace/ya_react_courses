@@ -29,6 +29,7 @@ function ForgotPasswordPage () {
             </div>
             <div className="form-buttons">
                 <Button
+                    data-cy="submit"
                     htmlType="submit"
                     type="primary"                
                 >

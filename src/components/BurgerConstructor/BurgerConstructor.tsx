@@ -73,7 +73,11 @@ export function BurgerConstructor() {
 
 	const ingredientsReady = bun || fillings.length > 0;
 
-	return (<section className={styles.wrap} ref={dropRef}>
+	return (<section
+		className={styles.wrap}
+		ref={dropRef}
+		data-cy="ingredientDropTarget"
+	>
 		{ingredientsReady && <>
 			{
 				!!bun ? <ConstructorElement
@@ -82,6 +86,7 @@ export function BurgerConstructor() {
 					price={bun.price}
 					isLocked={true}
 					data-testid={bun._id}
+					data-cy="constructorIngredient"
 					type="top"
 				/> : null
 			}
@@ -94,6 +99,7 @@ export function BurgerConstructor() {
 								text={name}
 								thumbnail={image_mobile}
 								price={price}
+								data-cy="constructorIngredient"
 								handleClose={() => { deleteIngredient(provisionalId)}}
 							/>
 						</ActiveIngredientWrap>)
@@ -106,16 +112,18 @@ export function BurgerConstructor() {
 					thumbnail={bun.image_mobile}
 					price={bun.price}
 					isLocked={true}
+					data-cy="constructorIngredient"
 					type="bottom"
 				/> : null
 			}
 		</>}
 		<div className={styles.listOptions}>
-			<span className={styles.priceTotal}>
+			<span data-cy="priceTotal" className={styles.priceTotal}>
 				<CurrencyIcon type="primary" />
 				<span>{totalPrice}</span>
 			</span>
 			<Button
+				data-cy="submit"
 				htmlType="submit"
 				type="primary"
 				onClick={checkout}

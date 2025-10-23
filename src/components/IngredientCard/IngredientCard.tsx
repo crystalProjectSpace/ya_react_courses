@@ -34,6 +34,7 @@ export function IngredientCard(props: TIngredientItem) {
         state={{isRoot: true }}
         className={card.wrap}
         ref={dragRef}
+        data-cy="ingredientCard"
         data-testid={ props._id }
     >
         <figure className={card.figure}>

@@ -1,11 +1,11 @@
 /// <reference types="cypress" />
 
-const categoryQueryId = '[class^="ingredient-preview_previews__"]'
-const checkoutQueryId = '[class^="burger-constructor_wrap__"]'
-const cardQueryId = '[class^="ingredient-card_wrap__"]'
-const selectedQueryId = '[class="constructor-element"]'
-const totalQueryId = '[class^="burger-constructor_priceTotal__"]'
-const submitQueryId = '[type="submit"]'
+const categoryQueryId = '[data-cy="ingredientSourceTarget"]'
+const checkoutQueryId = '[data-cy="ingredientDropTarget"]'
+const cardQueryId = '[data-cy="ingredientCard"]'
+const selectedQueryId = '[data-cy="constructorIngredient"]'
+const totalQueryId = '[data-cy="priceTotal"]'
+const submitQueryId = '[data-cy="submit"]'
 
 const testIndex = 5
 

@@ -32,6 +32,7 @@ export function ActiveIngredientWrap(props: IActiveIngredientProps) {
         className={ingredientWrap.listItem}
         ref={dropIngredientRef}
         data-testid={props.id}
+        data-cy="constructorIngredient"
     >
         <span className={ingredientWrap.listItemHandle} ref={dragRef}>
             <DragIcon type="primary"/>
