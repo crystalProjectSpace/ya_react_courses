@@ -41,7 +41,7 @@ export const checkoutSlice = createSlice({
 export const checkoutRequest = ({ path, ingredients }: TCheckoutPayload) => async (dispatch: TCheckoutDispatch) => {
     dispatch({ type: `checkout/${CHECKOUT_ACTIONS.REQUEST}`})
     const response = await makeCheckoutRequest({ path, ingredients })
-    const dataAction = (response instanceof TRequestError)
+    const dataAction = (!!response?.error)
         ? { type: `checkout/${CHECKOUT_ACTIONS.FAIL}`}
         : { type: `checkout/${CHECKOUT_ACTIONS.SET_ID}`, payload: { id: response?.orderId } }
     dispatch(dataAction)

@@ -10,23 +10,14 @@ export const socketControl = createSlice({
         todayOrderCount: 0,
     },
     reducers: {
-        [WS_ACTION_TYPE.WS_CONNECT]: (state) => {
-            console.log('ws-connected')
-            return { ...state }
-        },
-        [WS_ACTION_TYPE.WS_CONNECT_SUCCESS]: (state) => ({
-            ...state
+        [WS_ACTION_TYPE.WS_CONNECT]: (state) => ({ ...state }),
+        [WS_ACTION_TYPE.WS_CONNECT_SUCCESS]: (state) => ({ ...state }),
+        [WS_ACTION_TYPE.WS_CONNECT_FAIL]: () => ({
+            orders: [],
+            totalOrderCount: 0,
+            todayOrderCount: 0,
         }),
-        [WS_ACTION_TYPE.WS_CONNECT_FAIL]: () => {
-            console.log('fail')
-            return {
-                orders: [],
-                totalOrderCount: 0,
-                todayOrderCount: 0,
-            }
-        },
         [WS_ACTION_TYPE.WS_MESSAGE]: (state, action) => {
-            console.log('onmessage trigger fired!')
             const data = JSON.parse(action.payload) as TOrderResponse;
             const { orders, total, totalToday } = data
 

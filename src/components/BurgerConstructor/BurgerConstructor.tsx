@@ -73,7 +73,11 @@ export function BurgerConstructor() {
 
 	const ingredientsReady = bun || fillings.length > 0;
 
-	return (<section className={styles.wrap} ref={dropRef}>
+	return (<section
+		className={styles.wrap}
+		ref={dropRef}
+		data-cy="ingredientDropTarget"
+	>
 		{ingredientsReady && <>
 			{
 				!!bun ? <ConstructorElement
@@ -81,18 +85,21 @@ export function BurgerConstructor() {
 					thumbnail={bun.image_mobile}
 					price={bun.price}
 					isLocked={true}
+					data-testid={bun._id}
+					data-cy="constructorIngredient"
 					type="top"
 				/> : null
 			}
 			<div className={styles.list}>
 				{
 					fillings.map((item, i) => {
-						const {name, image_mobile, price, provisionalId } = item;
-						return (<ActiveIngredientWrap index={i} key={provisionalId}>
+						const {name, image_mobile, price, provisionalId, _id } = item;
+						return (<ActiveIngredientWrap index={i} key={provisionalId} id={_id}>
 							<ConstructorElement								
 								text={name}
 								thumbnail={image_mobile}
 								price={price}
+								data-cy="constructorIngredient"
 								handleClose={() => { deleteIngredient(provisionalId)}}
 							/>
 						</ActiveIngredientWrap>)
@@ -105,16 +112,18 @@ export function BurgerConstructor() {
 					thumbnail={bun.image_mobile}
 					price={bun.price}
 					isLocked={true}
+					data-cy="constructorIngredient"
 					type="bottom"
 				/> : null
 			}
 		</>}
 		<div className={styles.listOptions}>
-			<span className={styles.priceTotal}>
+			<span data-cy="priceTotal" className={styles.priceTotal}>
 				<CurrencyIcon type="primary" />
 				<span>{totalPrice}</span>
 			</span>
 			<Button
+				data-cy="submit"
 				htmlType="submit"
 				type="primary"
 				onClick={checkout}

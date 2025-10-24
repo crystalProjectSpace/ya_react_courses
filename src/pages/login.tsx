@@ -1,5 +1,6 @@
 import { useMemo, useState, FormEvent } from 'react';
-import { Link, Navigate } from 'react-router';
+import { Navigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import { EmailInput, PasswordInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAuthContext } from '../services/use-auth';
 import { TAuthContext } from '../types';
@@ -41,6 +42,7 @@ function LoginPage () {
             </div>
             <div className="form-buttons">
                 <Button
+                    data-cy="submit"
                     htmlType="submit"
                     type="primary"
                 >

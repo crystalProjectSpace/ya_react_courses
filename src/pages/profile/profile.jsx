@@ -4,7 +4,7 @@ import {
     EmailInput,
     PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useAuthContext } from "../../services/use-auth";
 import style from './profile.module.css';
 import { useNavigate } from "react-router";

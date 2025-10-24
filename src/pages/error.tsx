@@ -1,5 +1,5 @@
 
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export function ErrorPage () {

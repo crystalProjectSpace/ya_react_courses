@@ -1,5 +1,5 @@
 import { FormEvent, useMemo, useState } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import {
     Input,
     EmailInput,
@@ -62,6 +62,7 @@ function RegisterPage () {
             </div>
             <div className="form-buttons">
                 <Button
+                    data-cy="submit"
                     htmlType="submit"
                     type="primary"
                 >

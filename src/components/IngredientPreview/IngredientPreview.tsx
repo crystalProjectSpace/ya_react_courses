@@ -24,7 +24,7 @@ export function IngredientPreview(props: IIngredientPreview) {
 			>
 				{props.ingredientLabel}
 			</h3>
-			<div className={styles.previews}>
+			<div data-cy="ingredientSourceTarget" className={styles.previews}>
 				{itemCards}
 			</div>
 		</div>

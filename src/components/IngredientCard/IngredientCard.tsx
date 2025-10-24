@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import { useDrag } from 'react-dnd'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { SELECTION } from '../../services/actions'
@@ -33,7 +33,9 @@ export function IngredientCard(props: TIngredientItem) {
         to={`/ingredients/${props._id}`}
         state={{isRoot: true }}
         className={card.wrap}
-        ref={dragRef}        
+        ref={dragRef}
+        data-cy="ingredientCard"
+        data-testid={ props._id }
     >
         <figure className={card.figure}>
             <img
